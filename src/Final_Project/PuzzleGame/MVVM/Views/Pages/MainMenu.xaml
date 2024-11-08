@@ -1,0 +1,43 @@
+﻿<Page x:Class="PuzzleGame.MVVM.Views.Pages.MainMenu"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PuzzleGame"
+      xmlns:viewmodel="clr-namespace:PuzzleGame.MVVM.ViewModels"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:viewmodels="clr-namespace:PuzzleGame.MVVM.ViewModels"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      FontFamily="{DynamicResource MaterialDesignFont}"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="920"
+      Title="MainMenu"
+      Background="Transparent"
+      DataContext="{StaticResource MainDataContext}">
+    <StackPanel Margin="323,270,322,110">
+
+
+        <Button Margin="15,15,15,5" Style="{StaticResource ResourceKey=BTN}" 
+              Width="210"  Height="90" HorizontalAlignment="Center" x:Name="startBTN"
+              Command="{Binding StartCommand}" CommandParameter="startBTN" >
+            <Button.Background>
+                <ImageBrush ImageSource="/Assets/Imgs/Start_BTN.png"></ImageBrush>
+            </Button.Background>
+        </Button>
+
+        <Button  Margin="10,10,10,5" Style="{StaticResource ResourceKey=BTN}" 
+                 Width="210"  Height="90" HorizontalAlignment="Center" 
+                 Click="QuitApp">
+            <Button.Background>
+                <ImageBrush ImageSource="/Assets/Imgs/Exit_BTN.png"></ImageBrush>
+            </Button.Background>
+        </Button>
+
+
+    </StackPanel>
+</Page>
