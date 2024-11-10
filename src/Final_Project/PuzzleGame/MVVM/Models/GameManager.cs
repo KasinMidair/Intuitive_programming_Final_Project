@@ -14,6 +14,7 @@ namespace PuzzleGame.Class_Cus
 {
     public enum GameStatus
     {
+        PreStart,
         StartGame,
         Playing,
         EndGame
@@ -92,7 +93,7 @@ namespace PuzzleGame.Class_Cus
         }
         private GameManager()
         {
-            status = GameStatus.StartGame;
+            status = GameStatus.PreStart;
             playTime = 2 * 60;
             row = 3; col = 3;
             imgsize = new Size(360, 360);
