@@ -22,6 +22,7 @@
   <ItemGroup>
     <Resource Include="Assets\Fonts\Itim.ttf" />
     <Content Include="Assets\Imgs\Exit_BTN.png" />
+    <Content Include="Assets\Imgs\Shutdown_BTN.png" />
   </ItemGroup>
 
   <ItemGroup>

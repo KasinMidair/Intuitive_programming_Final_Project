@@ -11,6 +11,7 @@ namespace PuzzleGame.Stores
     public class Navigation
     {
         private ObservableObject _currentViewModel;
+
         public ObservableObject CurrentViewModel
         {
             get => _currentViewModel;

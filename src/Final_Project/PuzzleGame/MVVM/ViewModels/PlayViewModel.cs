@@ -28,6 +28,7 @@ namespace PuzzleGame.MVVM.ViewModels
         private readonly Navigation _navigation;
         public RelayCommand<FrameworkElement> SettingCommand { get; set; }
         public RelayCommand<object> StartCommand { get; set; }
+        public RelayCommand<object> ShutdownCommand { get; set; }
         bool isSettingVisible;
         DispatcherTimer _countDownClock;
         GameRound player;
@@ -79,6 +80,10 @@ namespace PuzzleGame.MVVM.ViewModels
             {
                 UserLogin();
             });
+            ShutdownCommand = new RelayCommand<object>((o) =>
+            {
+                QuitApp();
+            });
 
 
 
@@ -95,6 +100,11 @@ namespace PuzzleGame.MVVM.ViewModels
                 isTRanss = false;
                 CurrentPage = new MainMenuViewModel();
             }
+        }
+
+        private void QuitApp()
+        {
+            Application.Current.Shutdown();
         }
 
         private void SettingMenuStatus()

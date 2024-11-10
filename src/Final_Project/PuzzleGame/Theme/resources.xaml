@@ -3,9 +3,14 @@
                     xmlns:viewmodel="clr-namespace:PuzzleGame.MVVM.ViewModels"
                     xmlns:view="clr-namespace:PuzzleGame.MVVM.Views.Pages">
 
-
+    <!-- import Animation.xaml -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Animation.xaml"/>
+    </ResourceDictionary.MergedDictionaries>    
+    
     <Style TargetType="Button" x:Key="BTN" >
         <!--  Button Deault -->
+        <Setter Property="Padding" Value="0"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -28,62 +33,15 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Trigger.EnterActions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <!-- enlarge -->
-                            <DoubleAnimation
-                                    Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
-                                    To="1.1"
-                                    Duration="0:0:0.01" />
-                            <DoubleAnimation
-                                    Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
-                                    To="1.1"
-                                    Duration="0:0:0.01" />
-                        </Storyboard>
-                    </BeginStoryboard>
+                    <BeginStoryboard Storyboard="{StaticResource EnlargeAnim}"/>
                 </Trigger.EnterActions>
                 <Trigger.ExitActions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <!-- minimize -->
-                            <DoubleAnimation
-                                    Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleX)"
-                                    To="1"
-                                    Duration="0:0:0.01" />
-                            <DoubleAnimation
-                                    Storyboard.TargetProperty="(RenderTransform).(ScaleTransform.ScaleY)"
-                                    To="1"
-                                    Duration="0:0:0.01" />
-                        </Storyboard>
-                    </BeginStoryboard>
+                    <BeginStoryboard  Storyboard="{StaticResource MinimizeAnim}"/>
                 </Trigger.ExitActions>
             </Trigger>
         </Style.Triggers>
     </Style>
-    
-    
-    
-    <!--panel animation-->
-    <!--Storyboard show panel-->
-    
-    
-    <Storyboard x:Key="SlideDownAnimation">
-        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                             To="0" Duration="0:0:5" />
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
-            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="23" />
-            <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
 
-    <!-- Storyboard hidden panel -->
-    <Storyboard x:Key="SlideUpAnimation">
-        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
-                             To="-500" Duration="0:0:0.7" />
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
-            <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="10" />
-            <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="-1000"/>
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
+   
 
 </ResourceDictionary>

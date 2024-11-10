@@ -26,10 +26,7 @@ namespace PuzzleGame.MVVM.Views.Pages
             InitializeComponent();
         }
 
-        private void QuitApp(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
+
 
 
     }

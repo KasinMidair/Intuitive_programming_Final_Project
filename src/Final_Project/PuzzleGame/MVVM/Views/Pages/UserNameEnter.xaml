@@ -27,19 +27,19 @@
         </TextBlock>
 
 
-        <Border Background="Snow" CornerRadius="35" Width="560" Height="68" 
-                Canvas.Left="180" Canvas.Top="306" HorizontalAlignment="Center" 
+        <Border Background="Snow" CornerRadius="35" Width="555" Height="80" 
+                Canvas.Left="180" Canvas.Top="320" HorizontalAlignment="Center" 
                 VerticalAlignment="Top" RenderTransformOrigin="0.5,0.595">
-            <Grid Margin="0,-3,30,3">
-                <TextBox  VerticalAlignment="Center" FontSize="20" materialDesign:HintAssist.Hint="UserName" Foreground="#15161C"
-                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="106"  Margin="18,0,0,0"
+            <Grid Margin="2,-15,-1,-15">
+                <TextBox  VerticalAlignment="Center" FontSize="24" materialDesign:HintAssist.Hint="UserName" Foreground="#15161C"
+                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="170"  Margin="28,0,0,0"
                                   RenderTransformOrigin="0.512,0.706" Text=""
                                   FontFamily="pack://application:,,,/Assets/Fonts/#Itim"/>
 
                 <Grid >
                     <Button materialDesign:ButtonAssist.CornerRadius="25" 
                                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                    FocusVisualStyle="{x:Null}"  Height="50" Margin="406,11,-21,7" >
+                                    FocusVisualStyle="{x:Null}"  Height="60" Margin="405,25,12,24" >
                         <TextBlock Text="Enter" FontFamily="pack://application:,,,/Assets/Fonts/#Itim" FontSize="24" />
                     </Button>
                 </Grid>

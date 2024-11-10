@@ -25,14 +25,13 @@
     <Grid Margin="0,0,0,0">
 
         <!--Window border-->
-        <Border Background="#212228" CornerRadius="10"  />
+        <Border Background="#212228" CornerRadius="15"  />
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Button x:Name="demo" Command="{Binding StartCommand}" CommandParameter="demo"></Button>
 
             <!--<Grid>
                 -->
@@ -47,12 +46,16 @@
             </Grid>-->
 
 
+            <!--Loading pages in frame-->
             <Frame Grid.RowSpan="2" Width="920" Height="600" NavigationUIVisibility="Hidden"
                   Content="{Binding CurrentPage,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
 
-            <Border   Background="#F5C7A4" x:Name="SettingMenu" Margin="160,82,160,94" Grid.Row="1">
-                <Border.Style>
 
+            <!--Setting panel-->
+            <Border   Background="#F5C7A4" x:Name="SettingMenu" Margin="160,82,160,94" Grid.Row="1">
+
+                <!--Pannel animation-->
+                <Border.Style>
                     <Style TargetType="Border">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsSettingVisible}" Value="True">
@@ -74,38 +77,23 @@
                 <Border.Effect>
                     <DropShadowEffect Color="LightGoldenrodYellow" BlurRadius="15" Opacity="0.4" ShadowDepth="5" Direction="225"/>
                 </Border.Effect>
-
-                <Canvas >
-
-                    <TextBlock Foreground="#15161C" FontSize="24" Canvas.Left="160.908" Canvas.Top="130"
-                               Height="29" Width="274" FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                               FontWeight="SemiBold" >
-                        ENTER YOUR USER NAME
-                    </TextBlock>
-
-
-                    <Border Background="Snow" CornerRadius="25" Width="388" Height="55" 
-                            Canvas.Left="106" Canvas.Top="195" HorizontalAlignment="Center" 
-                            RenderTransformOrigin="0.5,0.595">
-                        <Grid Margin="0,-3,30,3">
-                            <TextBox  VerticalAlignment="Center" FontSize="16px" materialDesign:HintAssist.Hint="UserName" Foreground="#15161C"
-                            Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="75"  Margin="18,0,9,0" RenderTransformOrigin="0.512,0.706" Text=""  />
-
-                            <Grid Margin="233,1,-20,-1">
-                                <Button materialDesign:ButtonAssist.CornerRadius="15" 
-                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                 FocusVisualStyle="{x:Null}" Margin="72,12,0,10">
-                                    <TextBlock Text="Enter" />
-                                </Button>
-                            </Grid>
-
-                        </Grid>
-                    </Border>
-
-                </Canvas>
             </Border>
-            <Button Grid.Row="1" Margin="40,80,805,438" VerticalAlignment="Center"
+
+
+            <!--default buttons-->
+            <Canvas Grid.RowSpan="2">
+                <Button Grid.Row="1" Margin="40,80,805,438" VerticalAlignment="Center"
                     Command="{Binding SettingCommand}" CommandParameter="{Binding ElementName=SettingMenu}"/>
+
+                <Button x:Name="ShutdownBTN" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left"
+                        Command="{Binding ShutdownCommand}" Padding="0"
+                        CommandParameter="{Binding ElementName=ShutdownBTN}" 
+                        Canvas.Left="875" Canvas.Top="15" Width="30"
+                        Background="Transparent" BorderThickness="0" Height="29">
+                    <Image Source="/Assets/Imgs/Shutdown_BTN.png" Height="29" Width="30"></Image>
+                </Button>
+
+            </Canvas>
         </Grid>
     </Grid>
 </Window>

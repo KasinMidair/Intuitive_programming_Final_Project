@@ -20,7 +20,7 @@
       Background="Transparent"
       DataContext="{StaticResource MainDataContext}">
     <StackPanel Margin="323,270,322,110">
-
+        <!--Style="{StaticResource ResourceKey=BTN}-->
 
         <Button Margin="15,15,15,5" Style="{StaticResource ResourceKey=BTN}" 
               Width="210"  Height="90" HorizontalAlignment="Center" x:Name="startBTN"
@@ -31,8 +31,9 @@
         </Button>
 
         <Button  Margin="10,10,10,5" Style="{StaticResource ResourceKey=BTN}" 
-                 Width="210"  Height="90" HorizontalAlignment="Center" 
-                 Click="QuitApp">
+                 Width="210"  Height="90" HorizontalAlignment="Center"
+                 Command="{Binding ShutdownCommand}" x:Name="ExitBTN"
+                 CommandParameter="{Binding ElementName=ExitBTN}">
             <Button.Background>
                 <ImageBrush ImageSource="/Assets/Imgs/Exit_BTN.png"></ImageBrush>
             </Button.Background>
