@@ -13,4 +13,8 @@
     <Folder Include="Image\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="testing testing\" />
+  </ItemGroup>
+
 </Project>
