@@ -126,7 +126,7 @@
                                 Style="{StaticResource ResourceKey=BTN}" Canvas.Left="-6">
 
                             <Button.Background>
-                                <ImageBrush ImageSource="/Assets/Imgs/Setting_BTN.png"></ImageBrush>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Setting_BTN.png"></ImageBrush>
                             </Button.Background>
                         </Button>
 
@@ -144,7 +144,7 @@
                         Visibility="{Binding ElementName=MainFrame, Path=CanGoBack, Converter={StaticResource IsVisible}}">
 
                 <Button.Background>
-                    <ImageBrush ImageSource="/Assets/Imgs/Back_BTN.png"></ImageBrush>
+                    <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Back_BTN.png"></ImageBrush>
                 </Button.Background>
 
                 <Button.Effect>
