@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="BUTTON\Start_BTN.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\Fonts\Itim.ttf" />
     <Resource Include="Assets\Imgs\Achievement_BTN.png" />
     <Resource Include="Assets\Imgs\Back_BTN.png" />
@@ -48,6 +52,7 @@
     <Resource Include="Assets\Imgs\Sprite-0001.png" />
     <Resource Include="Assets\Imgs\Sprite-0002.png" />
     <Resource Include="Assets\Imgs\Sprite-0003.png" />
+    <Resource Include="BUTTON\Start_BTN.png" />
   </ItemGroup>
 
 </Project>
