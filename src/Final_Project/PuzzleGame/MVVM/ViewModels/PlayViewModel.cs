@@ -15,20 +15,23 @@ using System.Windows.Controls;
 using System.ComponentModel;
 using PuzzleGame.Stores;
 using System.Security.RightsManagement;
+using System.Windows.Navigation;
+using PuzzleGame.MVVM.Views;
 
 
 namespace PuzzleGame.MVVM.ViewModels
 {
     public class PlayViewModel : ObservableObject
     {
-        public static int cnt = 0;
-        private bool isFullScr;
-        bool isLogin;
-        UserEnterNameViewModel enterName = new UserEnterNameViewModel();
-        private readonly Navigation _navigation;
+        SolidColorBrush toolBarColor;
+        public readonly Navigation _navigation;
+        public NavigationService _navigationService;
+        public readonly CusDialogService _dialogService;
         public RelayCommand<FrameworkElement> SettingCommand { get; set; }
+        public RelayCommand<object> GoBackCommand { get; set; }
         public RelayCommand<object> StartCommand { get; set; }
         public RelayCommand<object> ShutdownCommand { get; set; }
+        public RelayCommand<Window> CloseDialogCommand { get; set; }
         bool isSettingVisible;
         DispatcherTimer _countDownClock;
         GameRound player;
@@ -53,15 +56,25 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-        bool isTRanss=false;
+
+        public SolidColorBrush ToolBarColor
+        {
+            get => toolBarColor;
+            set
+            {
+                toolBarColor = value;
+                OnPropertyChanged();
+            }
+        }
 
         public event PropertyChangingEventHandler? PropertyChanging;
 
         public PlayViewModel()
         {
-            cnt++;
             _navigation = new Navigation();
+            _dialogService = new CusDialogService();
             _navigation.CurrentViewModel = new MainMenuViewModel();
+            toolBarColor = new SolidColorBrush(defaultColornum1);
             // player = new GameRound(pnlcontainer, pnlGamePlaySpace);
             _countDownClock = new DispatcherTimer();
             _countDownClock.Interval = TimeSpan.FromSeconds(30);
@@ -70,8 +83,7 @@ namespace PuzzleGame.MVVM.ViewModels
             _countDownClock.Start();
 
             isSettingVisible = false;
-            isFullScr = false;
-            isLogin = false;
+
             SettingCommand = new RelayCommand<FrameworkElement>((SettingMenu)=>{
                 SettingMenuStatus(); 
             });
@@ -82,36 +94,33 @@ namespace PuzzleGame.MVVM.ViewModels
             });
             ShutdownCommand = new RelayCommand<object>((o) =>
             {
-                QuitApp();
+                //QuitApp();
+                _dialogService.ShowDialog("hien roy ne");
+
+            });
+            GoBackCommand = new RelayCommand<object>((o) =>
+            {
+                GoBackPage();
+            }); 
+            CloseDialogCommand = new RelayCommand<Window>((o) =>
+            {
+                CloseDialog(o);
             });
 
-
-
         }
+        public void CloseDialog(Window w) => w.Close();
+        public void GoBackPage() => _navigationService?.GoBack();
+
         public void UserLogin()
         {
-            if (!isTRanss)
-            {
-                isTRanss = true;
-                CurrentPage = new UserEnterNameViewModel();
-            }
-            else
-            {
-                isTRanss = false;
-                CurrentPage = new MainMenuViewModel();
-            }
+            ToolBarColor.Color = defaultColornum2;
+            _navigationService.Navigate(new UserEnterNameViewModel());
         }
 
-        private void QuitApp()
-        {
-            Application.Current.Shutdown();
-        }
+        private void QuitApp() => Application.Current.Shutdown();
 
-        private void SettingMenuStatus()
-        {
-            IsSettingVisible = !IsSettingVisible;
 
-        }
+        private void SettingMenuStatus() => IsSettingVisible = !IsSettingVisible;
 
         /// <summary>
         /// using key press event to mowing blackPiece around

@@ -15,8 +15,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="920"
       Background="Transparent"
-      Title="UserNameEnter"
-      DataContext="{StaticResource MainDataContext}">
+      Title="UserNameEnter">
 
     <Canvas  Background="#F5C7A4" Width="920" Height="600">
 
