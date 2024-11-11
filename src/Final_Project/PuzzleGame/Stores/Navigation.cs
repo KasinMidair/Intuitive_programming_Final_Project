@@ -20,11 +20,7 @@ namespace PuzzleGame.Stores
                 _currentViewModel = value;
             }
         }
-        public Navigation(ObservableObject CurrentViewModel)
-        {
-        }
-
-        public Navigation()
+        public Navigation(ObservableObject CurrentViewModel=null)
         {
         }
     }

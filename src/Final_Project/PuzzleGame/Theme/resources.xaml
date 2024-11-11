@@ -6,8 +6,8 @@
     <!-- import Animation.xaml -->
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Animation.xaml"/>
-    </ResourceDictionary.MergedDictionaries>    
-    
+    </ResourceDictionary.MergedDictionaries>
+
     <Style TargetType="Button" x:Key="BTN" >
         <!--  Button Deault -->
         <Setter Property="Padding" Value="0"/>
