@@ -51,6 +51,7 @@
         </Image>
 
         <DataGrid Name="ImageList"
-              Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1"></DataGrid>
+              Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1">
+        </DataGrid>
     </Grid>
 </Page>

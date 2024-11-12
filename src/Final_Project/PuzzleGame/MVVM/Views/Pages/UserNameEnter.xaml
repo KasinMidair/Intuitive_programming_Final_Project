@@ -34,7 +34,7 @@
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="170"  Margin="28,0,0,0"
                                   RenderTransformOrigin="0.512,0.706" Text=""
                                   FontFamily="pack://application:,,,/Assets/Fonts/#Itim"/>
-
+                
                 <Grid >
                     <Button materialDesign:ButtonAssist.CornerRadius="25" 
                                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
