@@ -24,7 +24,7 @@
         <!--Start button-->
         <Button Margin="15,15,15,5" Style="{StaticResource ResourceKey=BTN}" 
               Width="210"  Height="90" HorizontalAlignment="Center" x:Name="startBTN"
-              Command="{Binding Source={StaticResource MainDataContext}, Path=StartCommand}" CommandParameter="startBTN" >
+              Command="{Binding StartCommand}" CommandParameter="startBTN" >
             <Button.Background>
                 <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Start_BTN.png"></ImageBrush>
             </Button.Background>

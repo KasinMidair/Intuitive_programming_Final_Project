@@ -22,7 +22,7 @@
         Background= "Transparent"
         DataContext="{StaticResource MainDataContext}">
 
-    
+
     <Grid Margin="0,0,0,0">
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseDown">
@@ -54,7 +54,8 @@
 
 
             <!--Loading pages in frame-->
-            <Frame x:Name="MainFrame" Grid.RowSpan="2" Width="920" Height="600" NavigationUIVisibility="Hidden"/>
+            <Frame x:Name="MainFrame" Grid.RowSpan="2" Width="920" Height="600"
+                   NavigationUIVisibility="Hidden"/>
 
 
             <!--Setting panel-->
@@ -124,8 +125,6 @@
                                 <ImageBrush ImageSource="/Assets/Imgs/Shutdown_BTN.png"></ImageBrush>
                             </Button.Background>
                         </Button>
-
-
                         <Button VerticalAlignment="Top" Command="{Binding SettingCommand}" 
                                 CommandParameter="{Binding ElementName=SettingMenu}" Canvas.Top="71" HorizontalAlignment="Center" 
                                BorderThickness="0" 
@@ -145,7 +144,7 @@
 
             <!--Back button-->
             <Button  Grid.Row="0" Margin="45,40,0,15" Style="{StaticResource ResourceKey=BTN}" 
-                        Width="95" HorizontalAlignment="Left"  x:Name="ExitBTN"
+                        Width="95" HorizontalAlignment="Left"  x:Name="BackBTN"
                         Command="{Binding Source={StaticResource MainDataContext}, Path=GoBackCommand}"
                         CommandParameter="{Binding ElementName=ExitBTN}"
                         Visibility="{Binding ElementName=MainFrame, Path=CanGoBack, Converter={StaticResource IsVisible}}">
@@ -160,7 +159,6 @@
                 </Button.Effect>
 
             </Button>
-
 
         </Grid>
     </Grid>
