@@ -18,7 +18,7 @@
       d:DesignHeight="600" d:DesignWidth="920"
       Title="MainMenu"
       Background="Transparent">
-    <StackPanel Margin="323,250,322,-10">
+    <StackPanel Margin="323,121,322,11">
         
         <!--Style="{StaticResource ResourceKey=BTN}-->
         
@@ -40,8 +40,18 @@
                 <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Achievement_BTN.png"></ImageBrush>
             </Button.Background>
         </Button>
-        
-        
+
+        <!--Gallery button-->
+        <Button  Margin="10,10,10,5" Style="{StaticResource ResourceKey=BTN}" 
+                Width="210"  Height="90" HorizontalAlignment="Center"
+                Command="{Binding Source={StaticResource MainDataContext}, Path=ShowGalleryCommand}" x:Name="Gallery_BTN"
+                CommandParameter="{Binding ElementName=Gallery_BTN}">
+            <Button.Background>
+                <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Gallery_BTN.jpg"></ImageBrush>
+            </Button.Background>
+        </Button>
+
+
         <!--Exit button-->
        <Button  Margin="10,10,10,5" Style="{StaticResource ResourceKey=BTN}" 
                  Width="210"  Height="90" HorizontalAlignment="Center"

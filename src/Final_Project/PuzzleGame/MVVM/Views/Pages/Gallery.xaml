@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PuzzleGame.MVVM.Views.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="920"
       Title="Gallery">
 
     <Grid>
@@ -32,14 +32,12 @@
         <Button Name="BackBTN"
             Grid.Column="1" Grid.Row="3"
                 BorderBrush="Transparent">
-            <Button.Background>
-                <ImageBrush ImageSource="/BUTTON/Start_BTN.png"></ImageBrush>
-            </Button.Background>
-
         </Button>
 
         <Button Name="DeleteBTN" Content="Delete"
-            Grid.Column="3" Grid.Row="3">
+            Grid.Column="3" Grid.Row="3"
+            Command="{Binding Source={StaticResource MainDataContext}, Path=DeleteImageCommand}"
+            CommandParameter="{Binding ElementName=DeleteBTN}">
         </Button>
 
         <Button Name="AddBTN" Content="Add"
@@ -47,11 +45,14 @@
         </Button>
 
         <Image Name="ImageHolder"
-           Grid.Column="7" Grid.Row="1" Grid.RowSpan="2">
+           Grid.Column="7" Grid.Row="1" Grid.RowSpan="3"
+               Source="\Assets\picture\pic1.jpg">
         </Image>
 
-        <DataGrid Name="ImageList"
-              Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1">
-        </DataGrid>
+        <ListView Name="ImageList"
+              Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1"
+              ItemsSource="{Binding Source={StaticResource MainDataContext}, Path=ImageList}"
+              ></ListView>
+
     </Grid>
 </Page>

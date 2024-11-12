@@ -30,5 +30,10 @@ namespace PuzzleGame.MVVM.Views.Pages
         {
 
         }
+
+        private void Gallery_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

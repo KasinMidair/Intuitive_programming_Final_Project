@@ -2,6 +2,7 @@
 using PuzzleGame.Class_Cus;
 using PuzzleGame.Core;
 using PuzzleGame.Core.Helper;
+using PuzzleGame.MVVM.Models;
 using PuzzleGame.Stores;
 using System.ComponentModel;
 using System.Security.Cryptography.Xml;
@@ -31,6 +32,9 @@ namespace PuzzleGame.MVVM.ViewModels
         public RelayCommand<Window> CloseDialogCommand { get; set; }
         public RelayCommand<Window> MoveWndCommand { get; set; }
         public RelayCommand<string> ShowMSGBoxCommand { get; set; }
+        public RelayCommand<object> ShowGalleryCommand { get; set; }
+        public RelayCommand<object> DeleteImageCommand { get; set; }
+      
 
         //EventHandler
         public event PropertyChangingEventHandler? PropertyChanging;
@@ -65,6 +69,7 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
+        public Connection _connection {  get; set; } = new Connection();
 
         public PlayViewModel()
         {
@@ -91,11 +96,14 @@ namespace PuzzleGame.MVVM.ViewModels
             SettingCommand = new RelayCommand<FrameworkElement>((SettingMenu)=>{ SettingMenuStatus(); });
             ShutdownCommand = new RelayCommand<object>((o) => {  QuitApp(); });
             GoBackCommand = new RelayCommand<object>((o) =>{ GoBackPage(); }); 
-            CloseDialogCommand = new RelayCommand<Window>((o) =>{  CloseDialog(o); });
-            MoveWndCommand = new RelayCommand<Window>((o) =>{   MoveWnd(o); });
+            CloseDialogCommand = new RelayCommand<Window>((o) =>{ CloseDialog(o); });
+            MoveWndCommand = new RelayCommand<Window>((o) => { MoveWnd(o); });
             ShowMSGBoxCommand = new RelayCommand<string>((o) => { ShowCustomDialog(o); });
-
+            ShowGalleryCommand = new RelayCommand<object>((o) => { ShowGallery(); });
+            DeleteImageCommand = new RelayCommand<object>((o) => { ShowCustomDialog((string)o); });
         }
+
+        private void ShowGallery() => FrameNavigation(new GalleryViewModel());
 
 
         // Execute RelayCommand
@@ -187,5 +195,14 @@ namespace PuzzleGame.MVVM.ViewModels
 
         //}
 
+        List<Image> _image = new List<Image>();
+        public List<Image> ImageList
+        {
+            get { return _image; }
+            set {
+                _image = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }
