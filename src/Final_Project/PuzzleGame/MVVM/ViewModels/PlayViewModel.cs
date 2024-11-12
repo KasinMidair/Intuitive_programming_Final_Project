@@ -1,50 +1,44 @@
 ﻿using PuzzleGame.Class_Cus;
 using PuzzleGame.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media.Animation;
-using System.Windows.Media;
-using System.Windows.Threading;
-using System.Windows;
 using PuzzleGame.Core.Helper;
-using System.Windows.Controls;
-using System.ComponentModel;
 using PuzzleGame.Stores;
-using System.Security.RightsManagement;
+using System.ComponentModel;
+using System.Security.Cryptography.Xml;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Navigation;
-using PuzzleGame.MVVM.Views;
+using System.Windows.Threading;
+
+
 
 
 namespace PuzzleGame.MVVM.ViewModels
 {
     public class PlayViewModel : ObservableObject
     {
+
         SolidColorBrush toolBarColor;
-        public readonly Navigation _navigation;
         public NavigationService _navigationService;
         public readonly CusDialogService _dialogService;
         public RelayCommand<FrameworkElement> SettingCommand { get; set; }
         public RelayCommand<object> GoBackCommand { get; set; }
-        public RelayCommand<object> StartCommand { get; set; }
+
         public RelayCommand<object> ShutdownCommand { get; set; }
         public RelayCommand<Window> CloseDialogCommand { get; set; }
+        public RelayCommand<Window> MoveWndCommand { get; set; }
+        public RelayCommand<object> ShowMSGBoxCommand { get; set; }
+
+        public EventAggregator EventAggregator { get; set; }
+
+       
+
         bool isSettingVisible;
         DispatcherTimer _countDownClock;
         GameRound player;
         public SolidColorBrush _wndBgr { get; }
 
-        public ObservableObject CurrentPage {
-            get => _navigation.CurrentViewModel;
-            set 
-            {
-                _navigation.CurrentViewModel = value;
-                OnPropertyChanged();
-            }
-        }
+        public ObservableObject _currentPage;
 
 
         public bool IsSettingVisible
@@ -71,9 +65,9 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public PlayViewModel()
         {
-            _navigation = new Navigation();
+            EventAggregator = (EventAggregator)Application.Current.Resources["AppEventAggregator"];
+            EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Subscribe((o) => OnCurrentPageChanged(o));
             _dialogService = new CusDialogService();
-            _navigation.CurrentViewModel = new MainMenuViewModel();
             toolBarColor = new SolidColorBrush(defaultColornum1);
             // player = new GameRound(pnlcontainer, pnlGamePlaySpace);
             _countDownClock = new DispatcherTimer();
@@ -88,14 +82,10 @@ namespace PuzzleGame.MVVM.ViewModels
                 SettingMenuStatus(); 
             });
 
-            StartCommand = new RelayCommand<object>((o) =>
-            {
-                UserLogin();
-            });
+
             ShutdownCommand = new RelayCommand<object>((o) =>
             {
-                //QuitApp();
-                _dialogService.ShowDialog("hien roy ne");
+                QuitApp();
 
             });
             GoBackCommand = new RelayCommand<object>((o) =>
@@ -106,20 +96,28 @@ namespace PuzzleGame.MVVM.ViewModels
             {
                 CloseDialog(o);
             });
+            MoveWndCommand = new RelayCommand<Window>((o) =>
+            {
+                MoveWnd(o);
+            });
+            ShowMSGBoxCommand = new RelayCommand<object>((o) =>
+            {
+                _dialogService.ShowDialog("hien roy ne");
+            });
 
         }
+        private void OnCurrentPageChanged(ObservableObject page)
+        {
+            var navPage= new UserEnterNameViewModel();
+            _currentPage = navPage;
+            _navigationService.Navigate(navPage);
+        }
+        
+        
+        public void MoveWnd(Window wnd) => wnd.DragMove();
         public void CloseDialog(Window w) => w.Close();
         public void GoBackPage() => _navigationService?.GoBack();
-
-        public void UserLogin()
-        {
-            ToolBarColor.Color = defaultColornum2;
-            _navigationService.Navigate(new UserEnterNameViewModel());
-        }
-
         private void QuitApp() => Application.Current.Shutdown();
-
-
         private void SettingMenuStatus() => IsSettingVisible = !IsSettingVisible;
 
         /// <summary>

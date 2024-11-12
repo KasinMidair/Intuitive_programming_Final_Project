@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PuzzleGame"
         xmlns:pge="clr-namespace:PuzzleGame.MVVM.Views.Pages"
         xmlns:viewmodel="clr-namespace:PuzzleGame.MVVM.ViewModels"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" d:DataContext="{d:DesignInstance Type=viewmodel:PlayViewModel}"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" d:DataContext="{d:DesignInstance Type=viewmodel:PlayViewModel}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -22,7 +22,14 @@
         Background= "Transparent"
         DataContext="{StaticResource MainDataContext}">
 
+
     <Grid Margin="0,0,0,0">
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseDown">
+                <i:InvokeCommandAction Command="{Binding Source={StaticResource MainDataContext},  Path = MoveWndCommand}"
+                                  CommandParameter="{Binding ElementName=wnd}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
 
         <!--Window border-->
         <Border Background="#212228" CornerRadius="15"  />
@@ -47,7 +54,8 @@
 
 
             <!--Loading pages in frame-->
-            <Frame x:Name="MainFrame" Grid.RowSpan="2" Width="920" Height="600" NavigationUIVisibility="Hidden"/>
+            <Frame x:Name="MainFrame" Grid.RowSpan="2" Width="920" Height="600"
+                   NavigationUIVisibility="Hidden"/>
 
 
             <!--Setting panel-->
@@ -117,8 +125,6 @@
                                 <ImageBrush ImageSource="/Assets/Imgs/Shutdown_BTN.png"></ImageBrush>
                             </Button.Background>
                         </Button>
-
-
                         <Button VerticalAlignment="Top" Command="{Binding SettingCommand}" 
                                 CommandParameter="{Binding ElementName=SettingMenu}" Canvas.Top="71" HorizontalAlignment="Center" 
                                BorderThickness="0" 
@@ -138,7 +144,7 @@
 
             <!--Back button-->
             <Button  Grid.Row="0" Margin="45,40,0,15" Style="{StaticResource ResourceKey=BTN}" 
-                        Width="95" HorizontalAlignment="Left"  x:Name="ExitBTN"
+                        Width="95" HorizontalAlignment="Left"  x:Name="BackBTN"
                         Command="{Binding Source={StaticResource MainDataContext}, Path=GoBackCommand}"
                         CommandParameter="{Binding ElementName=ExitBTN}"
                         Visibility="{Binding ElementName=MainFrame, Path=CanGoBack, Converter={StaticResource IsVisible}}">
@@ -153,7 +159,6 @@
                 </Button.Effect>
 
             </Button>
-
 
         </Grid>
     </Grid>

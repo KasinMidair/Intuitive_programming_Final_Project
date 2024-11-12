@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PuzzleGame.MVVM.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,7 @@ namespace PuzzleGame.MVVM.Views
             InitializeComponent();
             CusDialogMsg.Text = msg;
         }
+
+
     }
 }

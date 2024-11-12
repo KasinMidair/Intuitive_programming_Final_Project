@@ -3,20 +3,31 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PuzzleGame.MVVM.Views"
+        xmlns:local="clr-namespace:PuzzleGame.MVVM.Views" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Background="Transparent"
          WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         Title="CustonDialog" Height="255" Width="362"
-        x:Name="DialogWnd">
+        x:Name="DialogWnd"
+>
+    
+    
     <Border Margin="0,20,10,0">
+         <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDown">
+                    <i:InvokeCommandAction Command="{Binding Source={StaticResource MainDataContext},  Path = MoveWndCommand}"
+                                           CommandParameter="{Binding ElementName=DialogWnd}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         <Border.Background>
             <ImageBrush ImageSource="/Assets/Imgs/DialogFrame.png"></ImageBrush>
         </Border.Background>
         <Grid>
-            <TextBlock x:Name="CusDialogMsg" Margin="76,110,34,40"></TextBlock>
+            <TextBlock x:Name="CusDialogMsg" Margin="76,110,34,40" FontSize="16"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontFamily="pack://application:,,,/Assets/Fonts/#Itim"></TextBlock>
             
             <Button Background="Transparent" BorderThickness="0" Width="20" Height="20"
                     Command="{Binding Source={StaticResource MainDataContext}, Path=CloseDialogCommand}" x:Name="CloseBTN"
