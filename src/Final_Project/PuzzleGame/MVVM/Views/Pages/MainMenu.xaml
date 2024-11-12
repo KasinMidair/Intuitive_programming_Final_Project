@@ -19,6 +19,7 @@
       Title="MainMenu"
       Background="Transparent">
     <StackPanel Margin="323,250,322,-10">
+        
         <!--Style="{StaticResource ResourceKey=BTN}-->
         
         <!--Start button-->
@@ -34,7 +35,7 @@
          <Button  Margin="10,10,10,5" Style="{StaticResource ResourceKey=BTN}" 
                  Width="210"  Height="90" HorizontalAlignment="Center"
                  Command="{Binding Source={StaticResource MainDataContext}, Path=ShowMSGBoxCommand}" x:Name="AchievementBTN"
-                 CommandParameter="{Binding ElementName=AchievementBTN}">
+                 CommandParameter="Hien roy ne!">
             <Button.Background>
                 <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Achievement_BTN.png"></ImageBrush>
             </Button.Background>
@@ -45,7 +46,8 @@
        <Button  Margin="10,10,10,5" Style="{StaticResource ResourceKey=BTN}" 
                  Width="210"  Height="90" HorizontalAlignment="Center"
                  Command="{Binding Source={StaticResource MainDataContext}, Path=ShutdownCommand}" x:Name="ExitBTN"
-                 CommandParameter="{Binding ElementName=ExitBTN}">
+                 CommandParameter="{Binding ElementName=ExitBTN}"
+                IsEnabled="{Binding Source={StaticResource MainDataContext},Path=IsSettingVisible}">
             <Button.Background>
                 <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Exit_BTN.png"></ImageBrush>
             </Button.Background>
