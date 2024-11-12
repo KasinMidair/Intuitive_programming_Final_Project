@@ -32,6 +32,9 @@ namespace PuzzleGame.MVVM.ViewModels
         public RelayCommand<object> StartCommand { get; set; }
         public RelayCommand<object> ShutdownCommand { get; set; }
         public RelayCommand<Window> CloseDialogCommand { get; set; }
+        public RelayCommand<Window> MoveWndCommand { get; set; }
+        public RelayCommand<object> ShowMSGBoxCommand { get; set; }
+
         bool isSettingVisible;
         DispatcherTimer _countDownClock;
         GameRound player;
@@ -94,8 +97,7 @@ namespace PuzzleGame.MVVM.ViewModels
             });
             ShutdownCommand = new RelayCommand<object>((o) =>
             {
-                //QuitApp();
-                _dialogService.ShowDialog("hien roy ne");
+                QuitApp();
 
             });
             GoBackCommand = new RelayCommand<object>((o) =>
@@ -106,8 +108,17 @@ namespace PuzzleGame.MVVM.ViewModels
             {
                 CloseDialog(o);
             });
+            MoveWndCommand = new RelayCommand<Window>((o) =>
+            {
+                MoveWnd(o);
+            });
+            ShowMSGBoxCommand = new RelayCommand<object>((o) =>
+            {
+                _dialogService.ShowDialog("hien roy ne");
+            });
 
         }
+        public void MoveWnd(Window wnd) => wnd.DragMove();
         public void CloseDialog(Window w) => w.Close();
         public void GoBackPage() => _navigationService?.GoBack();
 

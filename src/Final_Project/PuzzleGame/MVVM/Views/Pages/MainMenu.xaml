@@ -33,7 +33,7 @@
         <!--Achievement button-->
          <Button  Margin="10,10,10,5" Style="{StaticResource ResourceKey=BTN}" 
                  Width="210"  Height="90" HorizontalAlignment="Center"
-                 Command="{Binding Source={StaticResource MainDataContext}, Path=ShutdownCommand}" x:Name="AchievementBTN"
+                 Command="{Binding Source={StaticResource MainDataContext}, Path=ShowMSGBoxCommand}" x:Name="AchievementBTN"
                  CommandParameter="{Binding ElementName=AchievementBTN}">
             <Button.Background>
                 <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Achievement_BTN.png"></ImageBrush>
