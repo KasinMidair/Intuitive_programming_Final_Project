@@ -8,8 +8,8 @@ namespace PuzzleGame.Core
 {
     public class ObservableObject : INotifyPropertyChanged
     {
-        protected Color defaultColornum2 = Color.FromArgb(255, 21, 22, 18);
-        protected Color defaultColornum1 = Color.FromArgb(255, 245, 199, 164);
+        protected SolidColorBrush defaultColornum1 = new SolidColorBrush( Color.FromArgb(255, 21, 22, 18));
+        protected SolidColorBrush defaultColornum2 = new SolidColorBrush(Color.FromArgb(255, 245, 199, 164)); 
         protected bool isDarkBG;
 
         public event PropertyChangedEventHandler? PropertyChanged;

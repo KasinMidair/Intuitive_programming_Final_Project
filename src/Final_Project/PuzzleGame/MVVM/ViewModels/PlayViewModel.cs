@@ -1,10 +1,12 @@
-﻿using PuzzleGame.Class_Cus;
+﻿using MaterialDesignColors.ColorManipulation;
+using PuzzleGame.Class_Cus;
 using PuzzleGame.Core;
 using PuzzleGame.Core.Helper;
 using PuzzleGame.Stores;
 using System.ComponentModel;
 using System.Security.Cryptography.Xml;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
@@ -17,30 +19,31 @@ namespace PuzzleGame.MVVM.ViewModels
 {
     public class PlayViewModel : ObservableObject
     {
-
-        SolidColorBrush toolBarColor;
+        //Service and EventAggreator
         public NavigationService _navigationService;
         public readonly CusDialogService _dialogService;
+        public EventAggregator EventAggregator { get; set; }
+
+        //Command
         public RelayCommand<FrameworkElement> SettingCommand { get; set; }
         public RelayCommand<object> GoBackCommand { get; set; }
-
         public RelayCommand<object> ShutdownCommand { get; set; }
         public RelayCommand<Window> CloseDialogCommand { get; set; }
         public RelayCommand<Window> MoveWndCommand { get; set; }
-        public RelayCommand<object> ShowMSGBoxCommand { get; set; }
+        public RelayCommand<string> ShowMSGBoxCommand { get; set; }
 
-        public EventAggregator EventAggregator { get; set; }
+        //EventHandler
+        public event PropertyChangingEventHandler? PropertyChanging;
 
-       
 
-        bool isSettingVisible;
         DispatcherTimer _countDownClock;
         GameRound player;
         public SolidColorBrush _wndBgr { get; }
 
-        public ObservableObject _currentPage;
 
+        public ObservableObject _currentPage; //  the page show in Frame in realtime
 
+        bool isSettingVisible;
         public bool IsSettingVisible
         {
             get => isSettingVisible;
@@ -51,6 +54,7 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
+        SolidColorBrush toolBarColor;
         public SolidColorBrush ToolBarColor
         {
             get => toolBarColor;
@@ -61,64 +65,69 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
-        public event PropertyChangingEventHandler? PropertyChanging;
 
         public PlayViewModel()
         {
             EventAggregator = (EventAggregator)Application.Current.Resources["AppEventAggregator"];
             EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Subscribe((o) => OnCurrentPageChanged(o));
+
+
             _dialogService = new CusDialogService();
-            toolBarColor = new SolidColorBrush(defaultColornum1);
+
+
+            toolBarColor = defaultColornum2;
+            _wndBgr = defaultColornum1;
+            isSettingVisible = true;
+
+
             // player = new GameRound(pnlcontainer, pnlGamePlaySpace);
             _countDownClock = new DispatcherTimer();
             _countDownClock.Interval = TimeSpan.FromSeconds(30);
-            _wndBgr = new SolidColorBrush(Color.FromArgb(255, 21, 22, 28));
             //player.StartGame();
             _countDownClock.Start();
 
-            isSettingVisible = false;
 
-            SettingCommand = new RelayCommand<FrameworkElement>((SettingMenu)=>{
-                SettingMenuStatus(); 
-            });
-
-
-            ShutdownCommand = new RelayCommand<object>((o) =>
-            {
-                QuitApp();
-
-            });
-            GoBackCommand = new RelayCommand<object>((o) =>
-            {
-                GoBackPage();
-            }); 
-            CloseDialogCommand = new RelayCommand<Window>((o) =>
-            {
-                CloseDialog(o);
-            });
-            MoveWndCommand = new RelayCommand<Window>((o) =>
-            {
-                MoveWnd(o);
-            });
-            ShowMSGBoxCommand = new RelayCommand<object>((o) =>
-            {
-                _dialogService.ShowDialog("hien roy ne");
-            });
+            //init command 
+            SettingCommand = new RelayCommand<FrameworkElement>((SettingMenu)=>{ SettingMenuStatus(); });
+            ShutdownCommand = new RelayCommand<object>((o) => {  QuitApp(); });
+            GoBackCommand = new RelayCommand<object>((o) =>{ GoBackPage(); }); 
+            CloseDialogCommand = new RelayCommand<Window>((o) =>{  CloseDialog(o); });
+            MoveWndCommand = new RelayCommand<Window>((o) =>{   MoveWnd(o); });
+            ShowMSGBoxCommand = new RelayCommand<string>((o) => { ShowCustomDialog(o); });
 
         }
+
+
+        // Execute RelayCommand
+        private void SettingMenuStatus() => IsSettingVisible = !IsSettingVisible;
+        private void QuitApp() => Application.Current.Shutdown();
+        public void GoBackPage()
+        {
+            _navigationService?.GoBack();
+            _currentPage = (ObservableObject)_navigationService.Content;
+        }
+        public void CloseDialog(Window w) => w.Close();
+        public void MoveWnd(Window wnd) => wnd.DragMove();
+        private void ShowCustomDialog(string o) => _dialogService.ShowDialog(o);
+
+
+        /// <summary>
+        /// handle msg giving by Aggreator.Navigation to UserNameEnter Page 
+        /// </summary>
+        /// <param name="page"></param>
         private void OnCurrentPageChanged(ObservableObject page)
         {
-            var navPage= new UserEnterNameViewModel();
-            _currentPage = navPage;
-            _navigationService.Navigate(navPage);
+            FrameNavigation(page);
         }
-        
-        
-        public void MoveWnd(Window wnd) => wnd.DragMove();
-        public void CloseDialog(Window w) => w.Close();
-        public void GoBackPage() => _navigationService?.GoBack();
-        private void QuitApp() => Application.Current.Shutdown();
-        private void SettingMenuStatus() => IsSettingVisible = !IsSettingVisible;
+
+        private void ToolBarUpdateColor()=> ToolBarColor = (_wndBgr.Color.IsDarkColor()) ? defaultColornum1 : defaultColornum2;
+
+        private void FrameNavigation(ObservableObject cur)
+        {
+            _currentPage = cur;
+            _navigationService.Navigate(_currentPage);
+            ToolBarUpdateColor();
+        }
 
         /// <summary>
         /// using key press event to mowing blackPiece around

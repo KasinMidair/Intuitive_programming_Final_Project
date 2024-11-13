@@ -24,6 +24,8 @@
 
 
     <Grid Margin="0,0,0,0">
+        
+        <!--Declaring triggers in the interactivity to create ability to move wnd-->
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseDown">
                 <i:InvokeCommandAction Command="{Binding Source={StaticResource MainDataContext},  Path = MoveWndCommand}"
@@ -59,13 +61,13 @@
 
 
             <!--Setting panel-->
-            <Border   Background="#F5C7A4" x:Name="SettingMenu" Margin="160,82,160,94" Grid.Row="1">
+            <Border   Background="#F5C7A4" x:Name="SettingMenu" Margin="133,73,133,102" Grid.RowSpan="2">
 
                 <!--Pannel animation-->
                 <Border.Style>
                     <Style TargetType="Border">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsSettingVisible}" Value="True">
+                            <DataTrigger Binding="{Binding IsSettingVisible}" Value="False">
                                 <DataTrigger.EnterActions>
                                     <BeginStoryboard x:Name="SlideDownStoryboard" Storyboard="{StaticResource SlideDownAnimation}"/>
                                 </DataTrigger.EnterActions>
@@ -86,12 +88,17 @@
                 </Border.Effect>
             </Border>
 
+
+
+            <!--ToolBar-->
             <Border x:Name="ToolBar" Background="Transparent"
                     CornerRadius="20" Margin="802,50,18,350" Grid.RowSpan="2">
 
                 <Border.RenderTransform>
                     <TranslateTransform X="80"/>
                 </Border.RenderTransform>
+                
+                <!--Toolbar sliding anim-->
                 <Border.Style>
                     <Style TargetType="Border" >
                         <Style.Triggers>
@@ -107,9 +114,7 @@
                     </Style>
                 </Border.Style>
 
-
-
-
+                
                 <!--default buttons-->
                 <Border Background="{Binding ToolBarColor}"
                     CornerRadius="15" Margin="25,0,35,0">
