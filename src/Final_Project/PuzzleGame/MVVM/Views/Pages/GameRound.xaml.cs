@@ -1,5 +1,4 @@
-﻿using PuzzleGame.MVVM.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,25 +9,20 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PuzzleGame.MVVM.Views.Pages
 {
-
-    public partial class MainMenu : Page
+    /// <summary>
+    /// Interaction logic for GameRound.xaml
+    /// </summary>
+    public partial class GameRound : Page
     {
-
-        public MainMenu()
+        public GameRound()
         {
             InitializeComponent();
-        }
-
-        private void startBTN_Click()
-        {
-
         }
     }
 }

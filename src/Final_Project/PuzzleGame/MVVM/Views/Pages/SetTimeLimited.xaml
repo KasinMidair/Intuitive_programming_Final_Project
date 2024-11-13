@@ -12,12 +12,12 @@
       TextOptions.TextRenderingMode="Auto"
       FontFamily="{DynamicResource MaterialDesignFont}"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="920"
       Title="SetTimeLimited"
       Background="Transparent">
 
     <Grid>
-        <materialDesign:Clock Width="auto"
+        <materialDesign:Clock Width="auto" 
                   DisplayAutomation="CycleWithSeconds"
                   Is24Hours="True" Background="Transparent"
                   Style="{StaticResource MaterialDesignClockHorizontal}" />

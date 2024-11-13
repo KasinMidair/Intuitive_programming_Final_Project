@@ -20,6 +20,7 @@ namespace PuzzleGame
             Play_Window play_Window = new Play_Window();
             play_Window.Show();
 
+
             base.OnStartup(e);
         }
     }

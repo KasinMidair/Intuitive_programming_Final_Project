@@ -1,49 +1,49 @@
-﻿using PuzzleGame.Class_Cus;
+﻿using MaterialDesignColors.ColorManipulation;
+using PuzzleGame.Class_Cus;
 using PuzzleGame.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media.Animation;
-using System.Windows.Media;
-using System.Windows.Threading;
-using System.Windows;
 using PuzzleGame.Core.Helper;
-using System.Windows.Controls;
-using System.ComponentModel;
 using PuzzleGame.Stores;
-using System.Security.RightsManagement;
+using System.ComponentModel;
+using System.Security.Cryptography.Xml;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Navigation;
+using System.Windows.Threading;
+
+
 
 
 namespace PuzzleGame.MVVM.ViewModels
 {
     public class PlayViewModel : ObservableObject
     {
-        public static int cnt = 0;
-        private bool isFullScr;
-        bool isLogin;
-        UserEnterNameViewModel enterName = new UserEnterNameViewModel();
-        private readonly Navigation _navigation;
+        //Service and EventAggreator
+        public NavigationService _navigationService;
+        public readonly CusDialogService _dialogService;
+        public EventAggregator EventAggregator { get; set; }
+
+        //Command
         public RelayCommand<FrameworkElement> SettingCommand { get; set; }
-        public RelayCommand<object> StartCommand { get; set; }
+        public RelayCommand<object> GoBackCommand { get; set; }
         public RelayCommand<object> ShutdownCommand { get; set; }
-        bool isSettingVisible;
+        public RelayCommand<Window> CloseDialogCommand { get; set; }
+        public RelayCommand<Window> MoveWndCommand { get; set; }
+        public RelayCommand<string> ShowMSGBoxCommand { get; set; }
+
+        //EventHandler
+        public event PropertyChangingEventHandler? PropertyChanging;
+
+
         DispatcherTimer _countDownClock;
         GameRound player;
         public SolidColorBrush _wndBgr { get; }
 
-        public ObservableObject CurrentPage {
-            get => _navigation.CurrentViewModel;
-            set 
-            {
-                _navigation.CurrentViewModel = value;
-                OnPropertyChanged();
-            }
-        }
 
+        public ObservableObject _currentPage; //  the page show in Frame in realtime
 
+        bool isSettingVisible;
         public bool IsSettingVisible
         {
             get => isSettingVisible;
@@ -53,64 +53,80 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-        bool isTRanss=false;
 
-        public event PropertyChangingEventHandler? PropertyChanging;
+        SolidColorBrush toolBarColor;
+        public SolidColorBrush ToolBarColor
+        {
+            get => toolBarColor;
+            set
+            {
+                toolBarColor = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public PlayViewModel()
         {
-            cnt++;
-            _navigation = new Navigation();
-            _navigation.CurrentViewModel = new MainMenuViewModel();
+            EventAggregator = (EventAggregator)Application.Current.Resources["AppEventAggregator"];
+            EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Subscribe((o) => OnCurrentPageChanged(o));
+
+
+            _dialogService = new CusDialogService();
+
+
+            toolBarColor = defaultColornum2;
+            _wndBgr = defaultColornum1;
+            isSettingVisible = true;
+
+
             // player = new GameRound(pnlcontainer, pnlGamePlaySpace);
             _countDownClock = new DispatcherTimer();
             _countDownClock.Interval = TimeSpan.FromSeconds(30);
-            _wndBgr = new SolidColorBrush(Color.FromArgb(255, 21, 22, 28));
             //player.StartGame();
             _countDownClock.Start();
 
-            isSettingVisible = false;
-            isFullScr = false;
-            isLogin = false;
-            SettingCommand = new RelayCommand<FrameworkElement>((SettingMenu)=>{
-                SettingMenuStatus(); 
-            });
 
-            StartCommand = new RelayCommand<object>((o) =>
-            {
-                UserLogin();
-            });
-            ShutdownCommand = new RelayCommand<object>((o) =>
-            {
-                QuitApp();
-            });
-
-
+            //init command 
+            SettingCommand = new RelayCommand<FrameworkElement>((SettingMenu)=>{ SettingMenuStatus(); });
+            ShutdownCommand = new RelayCommand<object>((o) => {  QuitApp(); });
+            GoBackCommand = new RelayCommand<object>((o) =>{ GoBackPage(); }); 
+            CloseDialogCommand = new RelayCommand<Window>((o) =>{  CloseDialog(o); });
+            MoveWndCommand = new RelayCommand<Window>((o) =>{   MoveWnd(o); });
+            ShowMSGBoxCommand = new RelayCommand<string>((o) => { ShowCustomDialog(o); });
 
         }
-        public void UserLogin()
+
+
+        // Execute RelayCommand
+        private void SettingMenuStatus() => IsSettingVisible = !IsSettingVisible;
+        private void QuitApp() => Application.Current.Shutdown();
+        public void GoBackPage()
         {
-            if (!isTRanss)
-            {
-                isTRanss = true;
-                CurrentPage = new UserEnterNameViewModel();
-            }
-            else
-            {
-                isTRanss = false;
-                CurrentPage = new MainMenuViewModel();
-            }
+            _navigationService?.GoBack();
+            _currentPage = (ObservableObject)_navigationService.Content;
+        }
+        public void CloseDialog(Window w) => w.Close();
+        public void MoveWnd(Window wnd) => wnd.DragMove();
+        private void ShowCustomDialog(string o) => _dialogService.ShowDialog(o);
+
+
+        /// <summary>
+        /// handle msg giving by Aggreator.Navigation to UserNameEnter Page 
+        /// </summary>
+        /// <param name="page"></param>
+        private void OnCurrentPageChanged(ObservableObject page)
+        {
+            FrameNavigation(page);
         }
 
-        private void QuitApp()
-        {
-            Application.Current.Shutdown();
-        }
+        private void ToolBarUpdateColor()=> ToolBarColor = (_wndBgr.Color.IsDarkColor()) ? defaultColornum1 : defaultColornum2;
 
-        private void SettingMenuStatus()
+        private void FrameNavigation(ObservableObject cur)
         {
-            IsSettingVisible = !IsSettingVisible;
-
+            _currentPage = cur;
+            _navigationService.Navigate(_currentPage);
+            ToolBarUpdateColor();
         }
 
         /// <summary>

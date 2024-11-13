@@ -10,25 +10,22 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PuzzleGame.MVVM.Views.Pages
+namespace PuzzleGame.MVVM.Views
 {
-
-    public partial class MainMenu : Page
+    /// <summary>
+    /// Interaction logic for CustonDialog.xaml
+    /// </summary>
+    public partial class CustomDialog : Window
     {
-
-        public MainMenu()
+        public CustomDialog(string msg)
         {
             InitializeComponent();
+            CusDialogMsg.Text = msg;
         }
 
-        private void startBTN_Click()
-        {
 
-        }
     }
 }

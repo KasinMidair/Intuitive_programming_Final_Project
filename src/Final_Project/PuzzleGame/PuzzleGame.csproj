@@ -21,8 +21,12 @@
 
   <ItemGroup>
     <Resource Include="Assets\Fonts\Itim.ttf" />
-    <Content Include="Assets\Imgs\Exit_BTN.png" />
-    <Content Include="Assets\Imgs\Shutdown_BTN.png" />
+    <Resource Include="Assets\Imgs\Achievement_BTN.png" />
+    <Resource Include="Assets\Imgs\Back_BTN.png" />
+    <Resource Include="Assets\Imgs\DialogFrame.png" />
+    <Resource Include="Assets\Imgs\Exit_BTN.png" />
+    <Resource Include="Assets\Imgs\Setting_BTN.png" />
+    <Resource Include="Assets\Imgs\Shutdown_BTN.png" />
   </ItemGroup>
 
   <ItemGroup>

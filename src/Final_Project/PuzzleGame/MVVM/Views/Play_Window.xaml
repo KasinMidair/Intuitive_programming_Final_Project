@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PuzzleGame"
         xmlns:pge="clr-namespace:PuzzleGame.MVVM.Views.Pages"
         xmlns:viewmodel="clr-namespace:PuzzleGame.MVVM.ViewModels"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" d:DataContext="{d:DesignInstance Type=viewmodel:PlayViewModel}"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" d:DataContext="{d:DesignInstance Type=viewmodel:PlayViewModel}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -18,17 +18,26 @@
         AllowsTransparency="True"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        x:Name="wnd"
+        x:Name="wnd" 
         Background= "Transparent"
         DataContext="{StaticResource MainDataContext}">
 
+
     <Grid Margin="0,0,0,0">
+        
+        <!--Declaring triggers in the interactivity to create ability to move wnd-->
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseDown">
+                <i:InvokeCommandAction Command="{Binding Source={StaticResource MainDataContext},  Path = MoveWndCommand}"
+                                  CommandParameter="{Binding ElementName=wnd}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
 
         <!--Window border-->
         <Border Background="#212228" CornerRadius="15"  />
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="100"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
@@ -47,18 +56,18 @@
 
 
             <!--Loading pages in frame-->
-            <Frame Grid.RowSpan="2" Width="920" Height="600" NavigationUIVisibility="Hidden"
-                  Content="{Binding CurrentPage,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+            <Frame x:Name="MainFrame" Grid.RowSpan="2" Width="920" Height="600"
+                   NavigationUIVisibility="Hidden"/>
 
 
             <!--Setting panel-->
-            <Border   Background="#F5C7A4" x:Name="SettingMenu" Margin="160,82,160,94" Grid.Row="1">
+            <Border   Background="#F5C7A4" x:Name="SettingMenu" Margin="133,73,133,102" Grid.RowSpan="2">
 
                 <!--Pannel animation-->
                 <Border.Style>
                     <Style TargetType="Border">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsSettingVisible}" Value="True">
+                            <DataTrigger Binding="{Binding IsSettingVisible}" Value="False">
                                 <DataTrigger.EnterActions>
                                     <BeginStoryboard x:Name="SlideDownStoryboard" Storyboard="{StaticResource SlideDownAnimation}"/>
                                 </DataTrigger.EnterActions>
@@ -80,20 +89,82 @@
             </Border>
 
 
-            <!--default buttons-->
-            <Canvas Grid.RowSpan="2">
-                <Button Grid.Row="1" Margin="40,80,805,438" VerticalAlignment="Center"
-                    Command="{Binding SettingCommand}" CommandParameter="{Binding ElementName=SettingMenu}"/>
 
-                <Button x:Name="ShutdownBTN" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left"
-                        Command="{Binding ShutdownCommand}" Padding="0"
-                        CommandParameter="{Binding ElementName=ShutdownBTN}" 
-                        Canvas.Left="875" Canvas.Top="15" Width="30"
-                        Background="Transparent" BorderThickness="0" Height="29">
-                    <Image Source="/Assets/Imgs/Shutdown_BTN.png" Height="29" Width="30"></Image>
-                </Button>
+            <!--ToolBar-->
+            <Border x:Name="ToolBar" Background="Transparent"
+                    CornerRadius="20" Margin="802,50,18,350" Grid.RowSpan="2">
 
-            </Canvas>
+                <Border.RenderTransform>
+                    <TranslateTransform X="80"/>
+                </Border.RenderTransform>
+                
+                <!--Toolbar sliding anim-->
+                <Border.Style>
+                    <Style TargetType="Border" >
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard x:Name="SlideDownStoryboard" Storyboard="{StaticResource SlideLeftAnimation}"/>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard x:Name="SlideUpStoryboard" Storyboard="{StaticResource SlideRightAnimation}"/>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
+                
+                <!--default buttons-->
+                <Border Background="{Binding ToolBarColor}"
+                    CornerRadius="15" Margin="25,0,35,0">
+
+                    <Canvas Margin="12,0,-12,0" >
+                        <Button x:Name="ShutdownBTN" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                Command="{Binding ShutdownCommand}" Padding="0"
+                                CommandParameter="{Binding ElementName=ShutdownBTN}" Canvas.Top="25" Width="34"
+                                BorderThickness="0" Height="35"
+                                Style="{StaticResource ResourceKey=BTN}" Canvas.Left="-9">
+
+                            <Button.Background>
+                                <ImageBrush ImageSource="/Assets/Imgs/Shutdown_BTN.png"></ImageBrush>
+                            </Button.Background>
+                        </Button>
+                        <Button VerticalAlignment="Top" Command="{Binding SettingCommand}" 
+                                CommandParameter="{Binding ElementName=SettingMenu}" Canvas.Top="71" HorizontalAlignment="Center" 
+                               BorderThickness="0" 
+                                Height="32" Width="28"
+                                Style="{StaticResource ResourceKey=BTN}" Canvas.Left="-6">
+
+                            <Button.Background>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Setting_BTN.png"></ImageBrush>
+                            </Button.Background>
+                        </Button>
+
+                    </Canvas>
+
+                </Border>
+
+            </Border>
+
+            <!--Back button-->
+            <Button  Grid.Row="0" Margin="45,40,0,15" Style="{StaticResource ResourceKey=BTN}" 
+                        Width="95" HorizontalAlignment="Left"  x:Name="BackBTN"
+                        Command="{Binding Source={StaticResource MainDataContext}, Path=GoBackCommand}"
+                        CommandParameter="{Binding ElementName=ExitBTN}"
+                        Visibility="{Binding ElementName=MainFrame, Path=CanGoBack, Converter={StaticResource IsVisible}}">
+
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Back_BTN.png"></ImageBrush>
+                </Button.Background>
+
+                <Button.Effect>
+                    <DropShadowEffect Color="#D46F6A" BlurRadius="15" Opacity="0.4" 
+                                      ShadowDepth="4" Direction="-45"/>
+                </Button.Effect>
+
+            </Button>
+
         </Grid>
     </Grid>
 </Window>
