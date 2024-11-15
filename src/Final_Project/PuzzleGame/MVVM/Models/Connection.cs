@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace PuzzleGame.MVVM.Models
 {
+    //connection
     public partial class Connection
     {
         public static  string connStr = "data source=Lenovo_Legion_5;initial catalog=SLIDING_PUZZLE_DB;user id=SlidingPuzzle;password=123456789";
@@ -18,12 +19,14 @@ namespace PuzzleGame.MVVM.Models
         public  DataTable dt = new DataTable();
     }
 
+    //tables
     public class img
     {
         public string imgname { get; set; }
         public string imgpath { get; set; }
     }
 
+    //get data from database then fill to table and convert to list
     public class GalleryConnection : Connection
     {
         public List<img> imglist = new List<img>();
