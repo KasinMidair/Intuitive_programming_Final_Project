@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,47 +11,38 @@ namespace PuzzleGame.MVVM.Models
 {
     public partial class Connection
     {
-        public SqlConnection connection = new SqlConnection(@"data source=Lenovo_Legion_5;initial catalog=SlidingPuzzle_DB;user id=SlidingPuzzle;password=<<123456789>>");
-        public SqlDataAdapter adapter;
-        public DataSet dataSet;
-        public DataTable dataTable;
-        string sqlStr;
+        public static  string connStr = "data source=Lenovo_Legion_5;initial catalog=SLIDING_PUZZLE_DB;user id=SlidingPuzzle;password=123456789";
+        public SqlConnection conn = new SqlConnection(connStr);
+        public SqlDataAdapter dataAdapter;
+        public DataSet ds = new DataSet();
+        public  DataTable dt = new DataTable();
+    }
 
-        public class Image()
+    public class img
+    {
+        public string imgname { get; set; }
+        public string imgpath { get; set; }
+    }
+
+    public class GalleryConnection : Connection
+    {
+        public List<img> imglist = new List<img>();
+
+        void LoadPicList()
         {
-            public string imageName { get; set; }
-            public string imagePath { get; set; }
-        }
-        
-        public List<Image> LoadGALLERY()
-        {
-            connection.Open();
-            sqlStr = "Select * GALLERY";
+            conn.Open();
 
-            adapter = new SqlDataAdapter(sqlStr, connection);
-            dataSet = new DataSet();
-            adapter.Fill(dataSet, "GALLERY");
-            dataTable = dataSet.Tables["GALLERY"];
+            dataAdapter = new SqlDataAdapter("Select * from PICTURE", connStr);
 
-            List<Image> imageList = new List<Image>();
-            for (int i = 0; i < dataTable.Rows.Count; i++)
+            dataAdapter.Fill(ds, "PICTURE");
+            dt = ds.Tables["PICTURE"];
+
+            conn.Close();
+            foreach (DataRow dr in dt.Rows)
             {
-                Image image = new Image();
-                image.imageName = dataTable.Rows[i]["ImageName"].ToString();
-                image.imagePath = dataTable.Rows[i]["Address"].ToString();
-                imageList.Add(image);
+                imglist.Add(new img { imgname = Convert.ToString(dr["imgname"]), imgpath = Convert.ToString(dr["imgpath"]) });
             }
 
-            return imageList;
         }
-    
-
-
-        public void CloseConnection()
-        {
-            connection.Close();
-        }
-
-
     }
 }

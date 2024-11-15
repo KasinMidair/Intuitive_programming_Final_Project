@@ -100,7 +100,7 @@ namespace PuzzleGame.MVVM.ViewModels
             MoveWndCommand = new RelayCommand<Window>((o) => { MoveWnd(o); });
             ShowMSGBoxCommand = new RelayCommand<string>((o) => { ShowCustomDialog(o); });
             ShowGalleryCommand = new RelayCommand<object>((o) => { ShowGallery(); });
-            DeleteImageCommand = new RelayCommand<object>((o) => { ShowCustomDialog((string)o); });
+            DeleteImageCommand = new RelayCommand<object>((o) => { GoBackPage(); });
         }
 
         private void ShowGallery() => FrameNavigation(new GalleryViewModel());

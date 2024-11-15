@@ -11,6 +11,6 @@ namespace PuzzleGame.MVVM.ViewModels
 {
     public class GalleryViewModel : ObservableObject
     {
-
+        
     }
 }
