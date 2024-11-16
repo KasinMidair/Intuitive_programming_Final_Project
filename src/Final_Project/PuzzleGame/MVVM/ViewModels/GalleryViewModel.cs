@@ -1,26 +1,49 @@
-﻿using PuzzleGame.Core;
-using PuzzleGame.MVVM.Models;
+﻿using PuzzleGame.MVVM.Models;
 using System;
 using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+using PuzzleGame.Core;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
-    public class GalleryViewModel : ObservableObject
+    class GalleryViewModel : ObservableObject
     {
-        ListView _ImageList = new ListView();
+        Connection connection = new Connection();
+        public List<Picture> _PictureList = new List<Picture>();
 
-        GalleryConnection GalConn = new GalleryConnection();
-
-        void LoadImageList()
+        public List<Picture> PictureList
         {
-            foreach (img image in GalConn.imglist)
+            get { return _PictureList; }
+            set
             {
-                _ImageList.Items.Add(image.imgname);
+                _PictureList = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public GalleryViewModel()
+        {
+
+            PictureList = new List<Picture>();
+
+            LoadPicList();
+
+        }
+
+        void LoadPicList()
+        {
+            connection.dataAdapter = new SqlDataAdapter("Select * from PICTURE", connection.connStr);
+
+            connection.dataAdapter.Fill(connection.ds, "PICTURE");
+            connection.dt = connection.ds.Tables["PICTURE"];
+
+            foreach (DataRow dr in connection.dt.Rows)
+            {
+                PictureList.Add(new Picture { Name = Convert.ToString(dr["PICNAME"]), Url = Convert.ToString(dr["PICPATH"]) });
             }
         }
     }

@@ -29,30 +29,35 @@
             <RowDefinition Height="20"></RowDefinition>
         </Grid.RowDefinitions>
 
+        <!--Back button-->
         <Button Name="BackBTN"
             Grid.Column="1" Grid.Row="3"
                 BorderBrush="Transparent">
         </Button>
 
+        <!--Delete Button-->
         <Button Name="DeleteBTN" Content="Delete"
             Grid.Column="3" Grid.Row="3"
             Command="{Binding Source={StaticResource MainDataContext}, Path=DeleteImageCommand}"
             CommandParameter="{Binding ElementName=DeleteBTN}">
         </Button>
 
+        <!--Add Button-->
         <Button Name="AddBTN" Content="Add"
             Grid.Column="5" Grid.Row="3">
         </Button>
 
+        <!--Image holder-->
         <Image Name="ImageHolder"
            Grid.Column="7" Grid.Row="1" Grid.RowSpan="3"
                Source="\Assets\picture\pic1.jpg">
         </Image>
 
-        <ListView Name="ImageList"
+        <!--Picture list-->
+        <ListView Name="PictureList"
               Grid.Column="1" Grid.ColumnSpan="5" Grid.Row="1"
-              ItemsSource="{Binding Source={StaticResource MainDataContext}, Path=_ImageList}"
-              ></ListView>
+              ItemsSource="{Binding Source={StaticResource MainDataContext}, Path=PictureList}">
+        </ListView>
 
     </Grid>
 </Page>

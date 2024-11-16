@@ -204,5 +204,6 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
+
     }
 }
