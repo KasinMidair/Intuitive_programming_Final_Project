@@ -13,17 +13,8 @@ namespace PuzzleGame.MVVM.ViewModels
     class GalleryViewModel : ObservableObject
     {
         Connection connection = new Connection();
-        public List<Picture> _PictureList = new List<Picture>();
-
-        public List<Picture> PictureList
-        {
-            get { return _PictureList; }
-            set
-            {
-                _PictureList = value;
-                OnPropertyChanged();
-            }
-        }
+        public string SelectedPicUrl;
+        public List<Picture> PictureList {  get; set; }
 
         public GalleryViewModel()
         {
@@ -31,7 +22,7 @@ namespace PuzzleGame.MVVM.ViewModels
             PictureList = new List<Picture>();
 
             LoadPicList();
-
+            
         }
 
         void LoadPicList()
@@ -45,6 +36,11 @@ namespace PuzzleGame.MVVM.ViewModels
             {
                 PictureList.Add(new Picture { Name = Convert.ToString(dr["PICNAME"]), Url = Convert.ToString(dr["PICPATH"]) });
             }
+        }
+
+        void PictureList_Selectionchanged()
+        {
+
         }
     }
 }
