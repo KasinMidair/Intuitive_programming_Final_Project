@@ -15,8 +15,7 @@ namespace PuzzleGame.MVVM.ViewModels
     {
 
         private ObservableObject _currentPage;
-        public RelayCommand<object> StartCommand { get; set; }
-        public EventAggregator EventAggregator { get; set; } = (EventAggregator)Application.Current.Resources["AppEventAggregator"];
+        public RelayCommand<object> StartCommand { get; set; } //command for start button
 
         public ObservableObject CurrentPage
         {
@@ -32,7 +31,7 @@ namespace PuzzleGame.MVVM.ViewModels
         }
         public MainMenuViewModel()
         {
-
+            _wndBgr = defaultColornum1;
             StartCommand = new RelayCommand<object>((o) =>
             {
                 CurrentPage = new UserEnterNameViewModel();

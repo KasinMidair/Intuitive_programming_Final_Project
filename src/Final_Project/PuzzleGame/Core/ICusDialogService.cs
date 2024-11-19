@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PuzzleGame.MVVM.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace PuzzleGame.Core
 {
     public interface ICusDialogService
     {
-        public abstract void ShowDialog(string msg);
+        public abstract void ShowDialog(string msg,bool rslt=false);
     }
 }

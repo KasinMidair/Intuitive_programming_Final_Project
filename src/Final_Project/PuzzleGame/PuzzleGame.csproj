@@ -20,6 +20,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Assets\Imgs\Achievement_Frame.png" />
+    <Resource Include="Assets\Imgs\Focus_Frame.png" />
+    <Resource Include="Assets\Imgs\Decorate_01.png" />
+    <Resource Include="Assets\Imgs\GamePlay_Frame.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Imgs\Dialog_BTN.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Imgs\Gallery_BTN.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\Fonts\Itim.ttf" />
     <Resource Include="Assets\Imgs\Achievement_BTN.png" />
     <Resource Include="Assets\Imgs\Back_BTN.png" />
@@ -47,7 +62,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Imgs\Sprite-0001.png" />
     <Resource Include="Assets\Imgs\Sprite-0002.png" />
     <Resource Include="Assets\Imgs\Sprite-0003.png" />
   </ItemGroup>

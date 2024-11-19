@@ -20,10 +20,9 @@ namespace PuzzleGame.MVVM.Views
     /// </summary>
     public partial class CustomDialog : Window
     {
-        public CustomDialog(string msg)
+        public CustomDialog()
         {
             InitializeComponent();
-            CusDialogMsg.Text = msg;
         }
 
 

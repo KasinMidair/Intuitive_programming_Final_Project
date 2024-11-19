@@ -24,11 +24,7 @@ namespace PuzzleGame.MVVM.Views.Pages
         public MainMenu()
         {
             InitializeComponent();
-        }
-
-        private void startBTN_Click()
-        {
-
+            
         }
     }
 }
