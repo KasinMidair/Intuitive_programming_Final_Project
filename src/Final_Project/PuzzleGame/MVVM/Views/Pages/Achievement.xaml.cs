@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace PuzzleGame.MVVM.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for GameSetupNormalLevel.xaml
+    /// Interaction logic for Achievement.xaml
     /// </summary>
-    public partial class GameSetupNormalLevel : Page
+    public partial class Achievement : Page
     {
-        public GameSetupNormalLevel()
+        public Achievement()
         {
             InitializeComponent();
         }

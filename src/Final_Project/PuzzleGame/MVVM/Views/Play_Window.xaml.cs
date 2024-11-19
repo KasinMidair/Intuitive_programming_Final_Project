@@ -1,5 +1,4 @@
 ﻿using MaterialDesignThemes.Wpf;
-using PuzzleGame.Class_Cus;
 using PuzzleGame.MVVM.ViewModels;
 using PuzzleGame.Stores;
 using System;
@@ -18,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using PuzzleGame.MVVM.Models;
 
 namespace PuzzleGame.MVVM.Views
 {
@@ -33,6 +33,8 @@ namespace PuzzleGame.MVVM.Views
             viewModel._navigationService = MainFrame.NavigationService;
             viewModel._navigationService.Navigate(new MainMenuViewModel());
             DataContext = viewModel;
+
+            MainFrame.Focusable = false;
 
         }
     }

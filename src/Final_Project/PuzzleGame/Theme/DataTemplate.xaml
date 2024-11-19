@@ -2,13 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:viewmodel="clr-namespace:PuzzleGame.MVVM.ViewModels"
                     xmlns:view="clr-namespace:PuzzleGame.MVVM.Views.Pages">
+    
     <DataTemplate DataType="{x:Type viewmodel:MainMenuViewModel}">
         <view:MainMenu/>
     </DataTemplate>
     <DataTemplate DataType="{x:Type viewmodel:UserEnterNameViewModel}">
         <view:UserNameEnter/>
     </DataTemplate>
-    <DataTemplate DataType="{x:Type viewmodel:GalleryViewModel}">
-        <view:Gallery/>
+    <DataTemplate DataType="{x:Type viewmodel:GameRoundViewModel}">
+        <view:GameRound/>
     </DataTemplate>
 </ResourceDictionary>

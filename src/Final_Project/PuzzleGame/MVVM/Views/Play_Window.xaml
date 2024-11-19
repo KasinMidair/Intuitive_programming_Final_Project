@@ -24,16 +24,7 @@
         Background= "Transparent"
         DataContext="{StaticResource MainDataContext}">
 
-
     <Grid Margin="0,0,0,0">
-        
-        <!--Declaring triggers in the interactivity to create ability to move wnd-->
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="MouseDown">
-                <i:InvokeCommandAction Command="{Binding Source={StaticResource MainDataContext},  Path = MoveWndCommand}"
-                                  CommandParameter="{Binding ElementName=wnd}" />
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
 
         <!--Window border-->
         <Border Background="#212228" CornerRadius="15"  />
@@ -59,7 +50,7 @@
 
             <!--Loading pages in frame-->
             <Frame x:Name="MainFrame" Grid.RowSpan="2" Width="920" Height="600"
-                   NavigationUIVisibility="Hidden"/>
+                   NavigationUIVisibility="Hidden" JournalOwnership="OwnsJournal"/>
 
 
             <!--Setting panel-->
@@ -94,12 +85,12 @@
 
             <!--ToolBar-->
             <Border x:Name="ToolBar" Background="Transparent"
-                    CornerRadius="20" Margin="802,50,18,350" Grid.RowSpan="2">
+                    CornerRadius="20" Margin="802,76,18,324" Grid.RowSpan="2">
 
                 <Border.RenderTransform>
                     <TranslateTransform X="80"/>
                 </Border.RenderTransform>
-                
+
                 <!--Toolbar sliding anim-->
                 <Border.Style>
                     <Style TargetType="Border" >
@@ -116,15 +107,15 @@
                     </Style>
                 </Border.Style>
 
-                
+
                 <!--default buttons-->
                 <Border Background="{Binding ToolBarColor}"
-                    CornerRadius="15" Margin="25,0,35,0">
+                    CornerRadius="20" Margin="25,0,35,0">
 
                     <Canvas Margin="12,0,-12,0" >
-                        <Button x:Name="ShutdownBTN" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left"
+                        <Button x:Name="ShutdownBTN" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center"
                                 Command="{Binding ShutdownCommand}" Padding="0"
-                                CommandParameter="{Binding ElementName=ShutdownBTN}" Canvas.Top="25" Width="34"
+                                CommandParameter="{Binding ElementName=ShutdownBTN}" Canvas.Top="15" Width="34"
                                 BorderThickness="0" Height="35"
                                 Style="{StaticResource ResourceKey=BTN}" Canvas.Left="-9">
 
@@ -133,7 +124,7 @@
                             </Button.Background>
                         </Button>
                         <Button VerticalAlignment="Top" Command="{Binding SettingCommand}" 
-                                CommandParameter="{Binding ElementName=SettingMenu}" Canvas.Top="71" HorizontalAlignment="Center" 
+                                CommandParameter="{Binding ElementName=SettingMenu}" Canvas.Top="64" HorizontalAlignment="Center" 
                                BorderThickness="0" 
                                 Height="32" Width="28"
                                 Style="{StaticResource ResourceKey=BTN}" Canvas.Left="-6">
@@ -150,19 +141,44 @@
             </Border>
 
             <!--Back button-->
-            <Button  Grid.Row="0" Margin="45,40,0,15" Style="{StaticResource ResourceKey=BTN}" 
-                        Width="95" HorizontalAlignment="Left"  x:Name="BackBTN"
+            <Button  Grid.Row="0" Margin="0,0,0,35" Style="{StaticResource ResourceKey=BTN}" 
+                        Width="70" HorizontalAlignment="Left"  x:Name="BackBTN"
                         Command="{Binding Source={StaticResource MainDataContext}, Path=GoBackCommand}"
-                        CommandParameter="{Binding ElementName=ExitBTN}"
-                        Visibility="{Binding ElementName=MainFrame, Path=CanGoBack, Converter={StaticResource IsVisible}}">
+                        CommandParameter="{Binding ElementName=BackBTN}"
+                        Visibility="{Binding IsGoBack, Converter={StaticResource IsVisible}}">
 
                 <Button.Background>
                     <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Back_BTN.png"></ImageBrush>
                 </Button.Background>
 
                 <Button.Effect>
-                    <DropShadowEffect Color="#D46F6A" BlurRadius="15" Opacity="0.4" 
-                                      ShadowDepth="4" Direction="-45"/>
+                    <DropShadowEffect Color="#D46F6A" BlurRadius="5" Opacity="0.2" 
+                                      ShadowDepth="4" Direction="135"/>
+                </Button.Effect>
+
+            </Button>
+            <!--GoForward button-->
+            <Button  Grid.Row="0" Margin="852,0,0,35" Style="{StaticResource ResourceKey=BTN}" 
+            Width="68" HorizontalAlignment="Left"  x:Name="GoForwardBTN"
+            Command="{Binding Source={StaticResource MainDataContext}, Path=GoForwardCommand}"
+            CommandParameter="{Binding ElementName=GoForwardBTN}"
+            Visibility="{Binding IsGoForward, Converter={StaticResource IsVisible}}">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Back_BTN.png"></ImageBrush>
+                </Button.Background>
+
+                <Button.Effect>
+                    <DropShadowEffect Color="#D46F6A" BlurRadius="5" Opacity="0.2" 
+                          ShadowDepth="4" Direction="135"/>
                 </Button.Effect>
 
             </Button>
