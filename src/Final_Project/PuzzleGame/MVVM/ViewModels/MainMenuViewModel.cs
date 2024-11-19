@@ -16,6 +16,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
         private ObservableObject _currentPage;
         public RelayCommand<object> StartCommand { get; set; } //command for start button
+        public RelayCommand<object> OpenGalleryCommand { get; set; } //command for Gallery button
 
         public ObservableObject CurrentPage
         {
@@ -36,6 +37,11 @@ namespace PuzzleGame.MVVM.ViewModels
             {
                 CurrentPage = new UserEnterNameViewModel();
 
+            });
+
+            OpenGalleryCommand = new RelayCommand<object>((o) =>
+            {
+                CurrentPage = new GalleryViewModel();
             });
         }
 

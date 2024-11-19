@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\Imgs\Achievement_Frame.png" />
+    <Resource Include="Assets\Imgs\Achievement_Frame.png" />
     <Resource Include="Assets\Imgs\Focus_Frame.png" />
     <Resource Include="Assets\Imgs\Decorate_01.png" />
     <Resource Include="Assets\Imgs\GamePlay_Frame.png" />
@@ -59,6 +59,7 @@
     <PackageReference Include="Prism.DryIoc" Version="9.0.537" />
     <PackageReference Include="Prism.Unity" Version="9.0.537" />
     <PackageReference Include="Prism.Wpf" Version="9.0.537" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
   </ItemGroup>
 
   <ItemGroup>
