@@ -7,18 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PuzzleGame.Core;
+using MaterialDesignColors.ColorManipulation;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
     class GalleryViewModel : ObservableObject
     {
+        
+
+
         Connection connection = new Connection();
         public string SelectedPicUrl;
         public List<Picture> PictureList {  get; set; }
 
         public GalleryViewModel()
         {
-
+            _wndBgr = defaultColornum1;
             PictureList = new List<Picture>();
 
             LoadPicList();

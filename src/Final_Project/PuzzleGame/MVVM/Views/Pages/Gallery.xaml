@@ -1,10 +1,10 @@
-﻿<Page
+﻿<Page x:Class="PuzzleGame.MVVM.Views.Pages.Gallery"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PuzzleGame.MVVM.Views.Pages"
-      xmlns:ViewModels="clr-namespace:PuzzleGame.MVVM.ViewModels" x:Class="PuzzleGame.MVVM.Views.Pages.Gallery"
+      xmlns:ViewModels="clr-namespace:PuzzleGame.MVVM.ViewModels" 
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="920"
       Title="Gallery">
