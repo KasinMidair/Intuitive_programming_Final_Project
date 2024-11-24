@@ -26,7 +26,7 @@
                    FontSize="32" 
                    TextAlignment="Center"/>
         <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-            <Image Source="/Assets/Imgs/Sprite-0001.png"
+            <Image Source="pack://application:,,,/Assets/Imgs/Sprite-0002.png"
                    Width="64"
                    Height="64"
                    HorizontalAlignment="Left"
