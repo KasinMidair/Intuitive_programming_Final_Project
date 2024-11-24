@@ -33,9 +33,10 @@ namespace PuzzleGame.Stores
                 {
                     CroppedBitmap pieceImg;
 
-                    if (index==0)
+                    if (index==GameModel.Instance.row*GameModel.Instance.col-1)
                     {
                         pieceImg = new CroppedBitmap(GameModel.Instance.blckBoxImg, new Int32Rect(0, 0, (int)GameModel.Instance.UnitX, (int)GameModel.Instance.UnitY));
+                        GameModel.Instance.BlackBox_Indx = index ;
                     }
                     else
                     {
@@ -78,7 +79,7 @@ namespace PuzzleGame.Stores
                 Swap(ImgIndex, i, randIndex);
             };
 
-            ImgIndex.Remove(0);
+            ImgIndex.Remove(GameModel.Instance.row*GameModel.Instance.col-1);
             return InversionCountingService.CountInversions(ImgIndex);
         }
 

@@ -76,8 +76,7 @@ namespace PuzzleGame.MVVM.Models
 
             SrcImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0002.png", UriKind.Absolute));
             blckBoxImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0003.png", UriKind.Absolute));
-            row = 5; col = 5;
-            BlackBox_Indx = 0;
+            row = 50; col = 50;
             status = GameStatus.PreStart;
             playTime = 2 * 60;
             UnitX = SrcImg.Width / col;
