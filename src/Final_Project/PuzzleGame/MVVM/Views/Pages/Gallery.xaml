@@ -60,13 +60,14 @@
         <!--Picture list-->
         <ListView x:Name="PictureList"
               Grid.Column="1" Grid.ColumnSpan="7" Grid.Row="1"
-              ItemsSource="{Binding PictureList}">
+              ItemsSource="{Binding PictureList}" Margin="0,48,0,0">
             <ListView.ItemTemplate>
             <DataTemplate>
                 <Grid>
                     <Border Background="Transparent">
                         <TextBlock Text="{Binding Name}"   
-                               FontSize="30" Foreground="#15161C"></TextBlock>
+                                FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                                FontSize="20" Foreground="#15161C" FontWeight="SemiBold"></TextBlock>
                     </Border>
                 </Grid>
             </DataTemplate>

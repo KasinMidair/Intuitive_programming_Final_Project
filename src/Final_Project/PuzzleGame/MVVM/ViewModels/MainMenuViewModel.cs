@@ -41,11 +41,8 @@ namespace PuzzleGame.MVVM.ViewModels
 
             OpenGalleryCommand = new RelayCommand<object>((o) =>
             {
-                CurrentPage = new GalleryViewModel();
+                CurrentPage = new LevelSelectionViewModel();
             });
         }
-
-
-
     }
 }

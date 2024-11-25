@@ -12,4 +12,10 @@
     <DataTemplate DataType="{x:Type viewmodel:GameRoundViewModel}">
         <view:GameRound/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:GalleryViewModel}">
+        <view:Gallery/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:LevelSelectionViewModel}">
+        <view:LevelSelection/>
+    </DataTemplate>
 </ResourceDictionary>

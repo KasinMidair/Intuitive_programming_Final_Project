@@ -20,6 +20,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\picture\pic1.jpg" />
+    <Resource Include="Assets\picture\pic2.jpg" />
+    <Resource Include="Assets\picture\pic3.jpg" />
+    <Resource Include="Assets\picture\pic4.jpg" />
+    <Resource Include="Assets\picture\pic5.jpg" />
+    <Resource Include="Assets\picture\pic6.jpg" />
+    <Resource Include="Assets\picture\pic7.jpg" />
+    <Resource Include="Assets\picture\pic8.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\Imgs\Achievement_Frame.png" />
     <Resource Include="Assets\Imgs\Focus_Frame.png" />
     <Resource Include="Assets\Imgs\Decorate_01.png" />
