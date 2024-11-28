@@ -13,6 +13,10 @@
         <ViewModels:LevelSelectionViewModel/>
     </Page.DataContext>
 
+    <Page.Resources>
+        <ViewModels:LevelSelectionViewModel x:Key="vm"></ViewModels:LevelSelectionViewModel>
+    </Page.Resources>
+
     <Grid Background="#FFCFAB">
 
 
@@ -34,13 +38,16 @@
 
         <!-- Image holder -->
         <Image x:Name="ImageHolder"
-               Grid.Column="3" Grid.Row="1"
-               Source="\Assets\picture\pic1.jpg" Grid.RowSpan="2"/>
+               Grid.Column="3" Grid.Row="1" Grid.RowSpan="2"
+               Source="{Binding SelectedPicture.Url}"/>
 
         <!-- Number seclection combobox-->
         <ComboBox x:Name="NumberSelection_Combobox" 
                   Grid.Column="1" HorizontalAlignment="Center" Margin="0,126,0,0" Grid.Row="1" VerticalAlignment="Top" Width="260"
-                  Background="Snow">
+                  Background="Snow"
+                  SelectedIndex="0"
+                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                  FontSize="20" Foreground="#15161C" FontWeight="SemiBold">
             <ComboBoxItem Content="3 x 3"/>
             <ComboBoxItem Content="4 x 4"/>
             <ComboBoxItem Content="5 x 5"/>
@@ -54,20 +61,13 @@
         <ComboBox x:Name="PictureSelection_Combobox" 
                   Grid.Column="1" HorizontalAlignment="Right" Margin="0,219,10,0" Grid.Row="1" VerticalAlignment="Top" Width="260"
                   Background="Snow"
-                  ItemsSource="{Binding PictureList}">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Border>
-                            <TextBlock Text="{Binding Name}"
-                                       FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-                                       FontSize="20" Foreground="#15161C" FontWeight="SemiBold"></TextBlock>
-                        </Border>
-                    </Grid>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
+                  ItemsSource="{Binding PictureList}"
+                  SelectedItem="{Binding SelectedPicture}"
+                  DisplayMemberPath="Name"
+                  SelectedIndex="0"
+                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                  FontSize="20" Foreground="#15161C" FontWeight="SemiBold">
         </ComboBox>
-
         <!-- Text block -->
         <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="10,91,0,0" Grid.Row="1"
                    TextWrapping="Wrap" VerticalAlignment="Top"

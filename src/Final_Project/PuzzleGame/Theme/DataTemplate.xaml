@@ -18,4 +18,7 @@
     <DataTemplate DataType="{x:Type viewmodel:LevelSelectionViewModel}">
         <view:LevelSelection/>
     </DataTemplate>
+    <DataTemplate DataType="{x:Type viewmodel:AddPicturePageViewModel}">
+        <view:AddPicturePage/>
+    </DataTemplate>
 </ResourceDictionary>

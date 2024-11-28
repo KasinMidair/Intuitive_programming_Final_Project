@@ -50,28 +50,24 @@
 
         <!--Add Button-->
         <Button x:Name="AddBTN" Content="Add"
-            Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="3" Margin="0,0,0,18" Grid.RowSpan="2"/>
+            Grid.Column="5" Grid.Row="3" Grid.ColumnSpan="3" Margin="0,0,0,18" Grid.RowSpan="2"
+                Command="{Binding AddPicturePageOpenCommand}"/>
 
         <!--Image holder-->
         <Image x:Name="ImageHolder"
            Grid.Column="9" Grid.Row="1" Grid.RowSpan="3"
-               Source="\Assets\picture\pic1.jpg"/>
+               Source="{Binding SelectedPicture.Url}"/>
 
         <!--Picture list-->
         <ListView x:Name="PictureList"
               Grid.Column="1" Grid.ColumnSpan="7" Grid.Row="1"
-              ItemsSource="{Binding PictureList}" Margin="0,48,0,0">
-            <ListView.ItemTemplate>
-            <DataTemplate>
-                <Grid>
-                    <Border Background="Transparent">
-                        <TextBlock Text="{Binding Name}"   
-                                FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-                                FontSize="20" Foreground="#15161C" FontWeight="SemiBold"></TextBlock>
-                    </Border>
-                </Grid>
-            </DataTemplate>
-            </ListView.ItemTemplate>
+              Margin="0,48,0,0"
+              FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+              FontSize="20" Foreground="#15161C" FontWeight="SemiBold"
+              SelectedIndex="0"
+              ItemsSource="{Binding PictureList}"
+              SelectedItem="{Binding SelectedPicture}"
+              DisplayMemberPath="Name">
         </ListView>
 
     </Grid>

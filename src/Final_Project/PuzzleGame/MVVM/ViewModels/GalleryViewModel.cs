@@ -8,17 +8,43 @@ using System.Text;
 using System.Threading.Tasks;
 using PuzzleGame.Core;
 using MaterialDesignColors.ColorManipulation;
+using PuzzleGame.Core.Helper;
+using System.Windows;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
     class GalleryViewModel : ObservableObject
     {
-        
-
+        private ObservableObject _currentPage;
+        public ObservableObject CurrentPage
+        {
+            get => _currentPage;
+            set
+            {
+                if (_currentPage != value)
+                {
+                    _currentPage = value;
+                    EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Publish(CurrentPage);
+                }
+            }
+        }
 
         Connection connection = new Connection();
         public string SelectedPicUrl;
         public List<Picture> PictureList {  get; set; }
+
+        Picture _selectedPicture;
+        public Picture SelectedPicture
+        {
+            get { return _selectedPicture; }
+            set
+            {
+                _selectedPicture = value;
+                OnPropertyChanged("SelectedPicture");
+            }
+        }
+
+        public RelayCommand<object> AddPicturePageOpenCommand { get; set; }
 
         public GalleryViewModel()
         {
@@ -26,7 +52,13 @@ namespace PuzzleGame.MVVM.ViewModels
             PictureList = new List<Picture>();
 
             LoadPicList();
-            
+
+            AddPicturePageOpenCommand = new RelayCommand<object>((o) =>
+            {
+                CurrentPage = new AddPicturePageViewModel();
+
+            });
+
         }
 
         void LoadPicList()

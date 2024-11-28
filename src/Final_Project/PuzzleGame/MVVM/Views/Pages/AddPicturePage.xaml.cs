@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace PuzzleGame.MVVM.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for LevelSelection.xaml
+    /// Interaction logic for AddPicturePage.xaml
     /// </summary>
-    public partial class LevelSelection : Page
+    public partial class AddPicturePage : Page
     {
-        public LevelSelection()
+        public AddPicturePage()
         {
             InitializeComponent();
-        }
-
-        private void PictureSelection_Combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

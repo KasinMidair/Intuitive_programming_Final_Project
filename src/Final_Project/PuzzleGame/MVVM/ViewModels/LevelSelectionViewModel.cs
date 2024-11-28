@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using PuzzleGame.Core;
 using PuzzleGame.MVVM.Models;
 using PuzzleGame.Core.Helper;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Caliburn.Micro;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
@@ -32,10 +35,19 @@ namespace PuzzleGame.MVVM.ViewModels
 
 
         Connection connection = new Connection();
-        public string SelectedPicUrl;
         public List<Picture> PictureList { get; set; }
         public int hour, minute, second;
-        public string curruntPic;
+
+        Picture _selectedPicture;
+        public Picture SelectedPicture
+        {
+            get { return _selectedPicture; }
+            set
+            { 
+                _selectedPicture = value;
+                OnPropertyChanged("SelectedPicture");
+            }
+        }
 
         public LevelSelectionViewModel()
         {
@@ -65,7 +77,6 @@ namespace PuzzleGame.MVVM.ViewModels
                 PictureList.Add(new Picture { Name = Convert.ToString(dr["PICNAME"]), Url = Convert.ToString(dr["PICPATH"]) });
             }
         }
-
 
     }
 }
