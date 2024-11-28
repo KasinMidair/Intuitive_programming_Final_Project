@@ -54,23 +54,21 @@
         <Button x:Name="Add_BTN" Content="Add"
                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                 FontSize="20" Foreground="Snow" FontWeight="SemiBold"
-                Grid.Column="3" Grid.Row="5"/>
+                Grid.Column="3" Grid.Row="5"
+                Command="{Binding AddPictureCommand}"/>
 
         <TextBox x:Name="ImageName_TB"
                  Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"
                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                  FontSize="20" Foreground="Black" FontWeight="SemiBold"
-                 Text="{Binding NewPicName, Mode=TwoWay}"
+                 Text="{Binding NewPicName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  Background="snow">
-            <TextBox.InputBindings>
-                <KeyBinding Command=""></KeyBinding>
-            </TextBox.InputBindings>
         </TextBox>
 
         <TextBlock Grid.ColumnSpan="3" Margin="10,0,10,0" Grid.Column="1"
                    Background="snow"
                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                    FontSize="20" Foreground="Black" FontWeight="SemiBold"
-                   Text="{Binding NewPicName, Mode=TwoWay}"></TextBlock>
+                   Text="{Binding NewPic.Url, Mode=OneWay}"></TextBlock>
     </Grid>
 </Page>
