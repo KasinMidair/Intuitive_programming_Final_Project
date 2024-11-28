@@ -37,14 +37,19 @@
         </Grid.RowDefinitions>
 
         <Image x:Name="PictreHolder"
-               Grid.Column="1" Grid.ColumnSpan="3"
-               Grid.Row="1"
-               Source="\Assets\picture\pic1.jpg"/>
+               Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1"
+               Source="{Binding NewPicUrl, Mode=OneWay}">
+            <Image.InputBindings>
+                <MouseBinding Gesture="LeftClick" Command="{Binding ChoosePictureCommand}"></MouseBinding>
+            </Image.InputBindings>
+        </Image>
 
-        <Button x:Name="Back_BTN" Content="Back"
+
+        <Button x:Name="ChoosePicture_BTN" Content="Choose Picture"
                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                 FontSize="20" Foreground="Snow" FontWeight="SemiBold"
-                Grid.Column="1" Grid.Row="5"/>
+                Grid.Column="1" Grid.Row="5"
+                Command="{Binding ChoosePictureCommand}"/>
 
         <Button x:Name="Add_BTN" Content="Add"
                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
@@ -55,13 +60,17 @@
                  Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"
                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                  FontSize="20" Foreground="Black" FontWeight="SemiBold"
-                 Text="{Binding Name, Mode=TwoWay}"
-                 Background="snow"/>
+                 Text="{Binding NewPicName, Mode=TwoWay}"
+                 Background="snow">
+            <TextBox.InputBindings>
+                <KeyBinding Command=""></KeyBinding>
+            </TextBox.InputBindings>
+        </TextBox>
 
         <TextBlock Grid.ColumnSpan="3" Margin="10,0,10,0" Grid.Column="1"
                    Background="snow"
                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                    FontSize="20" Foreground="Black" FontWeight="SemiBold"
-                   Text="{Binding Name, Mode=TwoWay}"></TextBlock>
+                   Text="{Binding NewPicName, Mode=TwoWay}"></TextBlock>
     </Grid>
 </Page>

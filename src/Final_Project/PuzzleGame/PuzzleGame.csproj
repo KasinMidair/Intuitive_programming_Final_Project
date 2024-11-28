@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Imgs\AddPicBackGround.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\picture\pic1.jpg" />
     <Resource Include="Assets\picture\pic2.jpg" />
     <Resource Include="Assets\picture\pic3.jpg" />
