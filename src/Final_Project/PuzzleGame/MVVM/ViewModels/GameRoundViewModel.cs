@@ -67,17 +67,26 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
         private TimeSpan _lastGameTime;
-        private string _lastGameTimestr;
-        public string LastGameTimestr
+        private string _lastGameTimeStr;
+        public string LastGameTimeStr
         {
-            get => _lastGameTimestr;
+            get => _lastGameTimeStr;
             set
             {
-                _lastGameTimestr = value;
+                _lastGameTimeStr = value;
                 OnPropertyChanged();
             }
         }
-
+        bool isEndGameVissible;
+        public bool IsEndGameVissible
+        {
+            get => isEndGameVissible;
+            set
+            {
+                isEndGameVissible = value;
+                OnPropertyChanged();
+            }
+        }
 
         private int _focusPieceX;
         public int FocusPieceX
@@ -104,8 +113,8 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public GameRoundViewModel()
         {
+            EventAggregator.GetEvent<PubSubEvent<bool>>().Subscribe((o) => IsTimerCounting(o));
             _imageProcessingService = new ImageProcessingService();
-
             _wndBgr = defaultColornum1;
             IsFocused = true;
             imgPieces = new ObservableCollection<CusPieceViewModel>();
@@ -114,11 +123,18 @@ namespace PuzzleGame.MVVM.ViewModels
             _clock = new DispatcherTimer();
             _clock.Tick += _countDownClock_Tick;
             _clock.Interval = TimeSpan.FromSeconds(1);
-            _lastGameTime = new TimeSpan(0,0,0); 
+            _lastGameTime = new TimeSpan(0,0,0);
+            LastGameTimeStr = _lastGameTime.ToString(@"hh\:mm\:ss");
             GameModel.Instance.Status=GameStatus.StartGame;
             HandleKeyCommand = new RelayCommand<object>(o => { Game_Control((string)o) ;}); 
             StartGame();
 
+        }
+
+        private void IsTimerCounting(bool isCounting)
+        {
+            if(isCounting==false) _clock.Stop();
+            else _clock.Start();
         }
 
         private void _countDownClock_Tick(object? sender, EventArgs e)
@@ -128,7 +144,7 @@ namespace PuzzleGame.MVVM.ViewModels
                 if (--GameModel.Instance.PlayTime == 0)    IsLose();
             }
             _lastGameTime= _lastGameTime.Add(TimeSpan.FromSeconds(1));
-            LastGameTimestr = _lastGameTime.ToString(@"hh\:mm\:ss");
+            LastGameTimeStr = _lastGameTime.ToString(@"hh\:mm\:ss");
         }
 
 
@@ -261,6 +277,7 @@ namespace PuzzleGame.MVVM.ViewModels
         public void IsLose()
         {
             GameModel.Instance.Status = GameStatus.EndGame;
+            ReleaseClock();
             EventAggregator.GetEvent<PubSubEvent<string>>().Publish("Lose!");
         }
 
@@ -268,9 +285,13 @@ namespace PuzzleGame.MVVM.ViewModels
         public void IsWin()
         {
             GameModel.Instance.Status = GameStatus.EndGame;
-            EventAggregator.GetEvent<PubSubEvent<string>>().Publish("win");
+            ReleaseClock();
         }
-
+        private void ReleaseClock()
+        {
+            _clock.Tick -= _countDownClock_Tick;
+            _clock = null;
+        }
 
 
     }

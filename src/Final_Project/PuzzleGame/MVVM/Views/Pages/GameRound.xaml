@@ -4,11 +4,21 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PuzzleGame.MVVM.Views.Pages"
-      xmlns:store="clr-namespace:PuzzleGame.Store" xmlns:core="clr-namespace:PuzzleGame.Core" d:DataContext="{d:DesignInstance Type=core:ObservableObject}"
+      xmlns:store="clr-namespace:PuzzleGame.Store" 
+      xmlns:core="clr-namespace:PuzzleGame.Core" 
+      d:DataContext="{d:DesignInstance Type=core:ObservableObject}"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:viewmodels="clr-namespace:PuzzleGame.MVVM.ViewModels"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      FontFamily="{DynamicResource MaterialDesignFont}"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="920"
       Title="GameRound"
-      store:FocusHelper.IsFocused="{Binding IsFocused}" Focusable="True" >
+      store:FocusHelper.IsFocused="{Binding IsFocused}" Focusable="True" FocusVisualStyle="{x:Null}" >
 
 
     <!-- Merge ResourceDictionary-->
@@ -80,17 +90,61 @@
         </TextBlock>
 
 
-        <TextBlock  Text="{Binding LastGameTimeStr}" 
+        <TextBlock  Text="{Binding LastGameTimeStr,FallbackValue='00:00:00'}" 
             Canvas.ZIndex="5" TextAlignment="Center" Foreground="#15161C" FontSize="20" Canvas.Left="585" Canvas.Top="420"
-            Height="50" Width="236" FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-            FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Top">
+            FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+            FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Width="235">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
 
         </TextBlock>
 
 
         <!--Background Image-->
         <Image Canvas.ZIndex="4" Source="pack://application:,,,/Assets/Imgs/GamePlay_Frame.png" HorizontalAlignment="Center"
-                VerticalAlignment="Top"/>
+            VerticalAlignment="Top"/>
+
+
+        <!--GameCompleted panel-->
+        <Border  Background="#F5C7A4" x:Name="SettingMenu" Grid.RowSpan="2" 
+                 Width="500" Height="90" HorizontalAlignment="Left" 
+                 FocusVisualStyle="{x:Null}"
+                 Canvas.Top="530" VerticalAlignment="Top"
+                 Canvas.ZIndex="5" Canvas.Left="235">
+
+            <!--Pannel animation-->
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsEndGameVissible}" Value="False">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard x:Name="SlideDownStoryboard" Storyboard="{StaticResource SlideDownAnimation}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard x:Name="SlideUpStoryboard" Storyboard="{StaticResource SlideUpAnimation}"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+
+            <Border.RenderTransform>
+                <TranslateTransform Y="-1000"/>
+            </Border.RenderTransform>
+
+            <Border.Effect>
+                <DropShadowEffect Color="LightGoldenrodYellow" BlurRadius="15" Opacity="0.4" ShadowDepth="5" Direction="225"/>
+            </Border.Effect>
+            <Canvas/>
+
+
+        </Border>
 
 
     </Canvas>

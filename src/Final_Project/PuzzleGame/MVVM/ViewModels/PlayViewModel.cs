@@ -56,7 +56,15 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-
+        public SolidColorBrush WndBgr
+        {
+            get => _wndBgr;
+            set
+            {
+                _wndBgr = value;
+                OnPropertyChanged();
+            }
+        }
 
         ObservableObject _currentPage;
         public ObservableObject CurrentPage
@@ -65,14 +73,15 @@ namespace PuzzleGame.MVVM.ViewModels
             set
             {
                 _currentPage = value;
-                ToolBarUpdateColor(_currentPage);
+                WndBgr = _currentPage.GetWndBgr();
+                ToolBarUpdateColor();
             }
         } //  the page show in Frame in realtime
 
-        bool isSettingVisible;
+        private bool isSettingVisible;
         public bool IsSettingVisible
         {
-            get => isSettingVisible;
+            get => isSettingVisible; 
             set
             {
                 isSettingVisible = value;
@@ -121,7 +130,11 @@ namespace PuzzleGame.MVVM.ViewModels
 
 
         // Execute RelayCommand
-        private void SettingMenuStatus() => IsSettingVisible = !IsSettingVisible;
+        private void SettingMenuStatus() 
+        { 
+            IsSettingVisible = !IsSettingVisible;
+            EventAggregator.GetEvent<PubSubEvent<bool>>().Publish(IsSettingVisible);
+        }
         private void QuitApp() => Application.Current.Shutdown();
         public void CloseDialog(Window w) => w.Close();
         public void MoveWnd(Window wnd) => wnd.DragMove();
@@ -172,7 +185,7 @@ namespace PuzzleGame.MVVM.ViewModels
         }
 
         //change toolbar color 
-        private void ToolBarUpdateColor(ObservableObject page )=> ToolBarColor = (page._wndBgr.Color.IsDarkColor()) ? defaultColornum2 : defaultColornum1;
+        private void ToolBarUpdateColor()=> ToolBarColor = (WndBgr.Color.IsDarkColor()) ? defaultColornum2 : defaultColornum1;
 
         /// <summary>
         /// Naviagte to "cur" page
