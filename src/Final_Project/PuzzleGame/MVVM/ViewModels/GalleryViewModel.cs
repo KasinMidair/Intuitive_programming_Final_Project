@@ -10,11 +10,14 @@ using PuzzleGame.Core;
 using MaterialDesignColors.ColorManipulation;
 using PuzzleGame.Core.Helper;
 using System.Windows;
+using PuzzleGame.Stores;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
     class GalleryViewModel : ObservableObject
     {
+        public readonly LoadPictureListService _loadPicListService = new LoadPictureListService();
+
         private ObservableObject _currentPage;
         public ObservableObject CurrentPage
         {
@@ -51,31 +54,12 @@ namespace PuzzleGame.MVVM.ViewModels
             _wndBgr = defaultColornum1;
             PictureList = new List<Picture>();
 
-            LoadPicList();
+            _loadPicListService.LoadPictureList(PictureList);
 
             AddPicturePageOpenCommand = new RelayCommand<object>((o) =>
             {
                 CurrentPage = new AddPicturePageViewModel();
-
             });
-
-        }
-
-        void LoadPicList()
-        {
-            connection.dataAdapter = new SqlDataAdapter("Select * from PICTURE", connection.connStr);
-
-            connection.dataAdapter.Fill(connection.ds, "PICTURE");
-            connection.dt = connection.ds.Tables["PICTURE"];
-
-            foreach (DataRow dr in connection.dt.Rows)
-            {
-                PictureList.Add(new Picture { Name = Convert.ToString(dr["PICNAME"]), Url = Convert.ToString(dr["PICPATH"]) });
-            }
-        }
-
-        void PictureList_Selectionchanged()
-        {
 
         }
     }

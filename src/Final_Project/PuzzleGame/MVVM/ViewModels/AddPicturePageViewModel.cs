@@ -19,7 +19,7 @@ namespace PuzzleGame.MVVM.ViewModels
 {
     class AddPicturePageViewModel: ObservableObject
     {
-        public readonly CusDialogService _dialogService;
+        public readonly GalleryViewModel _galleryViewModel = new GalleryViewModel();
 
         private ObservableObject _currentPage;
         public ObservableObject CurrentPage
@@ -103,11 +103,27 @@ namespace PuzzleGame.MVVM.ViewModels
 
             AddPictureCommand = new RelayCommand<object>((o) =>
             {
-                if (NewPicName == null)
+                bool check = false;
+                
+                if (NewPicName == null || NewPicName == "")
                 {
                     MessageBox.Show("Chua nhap ten tranh");
+                    check = true;
                 }
                 else
+                {
+                     foreach (Picture pic in _galleryViewModel.PictureList)
+                    {
+                        if (NewPicName == pic.Name)
+                        {
+                            MessageBox.Show("Ten tranh da ton tai");
+                            check = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (check == false)
                 {
                     NewPic = new Picture
                     {

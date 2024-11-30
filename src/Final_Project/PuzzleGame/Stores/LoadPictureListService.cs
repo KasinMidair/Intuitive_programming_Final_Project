@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 
 namespace PuzzleGame.Stores
 {
-    class LoadPictureListService
+    public class LoadPictureListService
     {
         Connection connection = new Connection();
-        void LoadPictureList(List<Picture> PicList)
+
+        public void LoadPictureList(List<Picture> PicList)
         {
             connection.dataAdapter = new SqlDataAdapter("Select * from PICTURE", connection.connStr);
 
