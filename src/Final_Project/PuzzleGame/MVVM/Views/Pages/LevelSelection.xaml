@@ -47,14 +47,15 @@
                   Background="Snow"
                   SelectedIndex="0"
                   FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-                  FontSize="20" Foreground="#15161C" FontWeight="SemiBold">
-            <ComboBoxItem Content="3 x 3"/>
-            <ComboBoxItem Content="4 x 4"/>
-            <ComboBoxItem Content="5 x 5"/>
-            <ComboBoxItem Content="6 x 6"/>
-            <ComboBoxItem Content="7 x 7"/>
-            <ComboBoxItem Content="8 x 8"/>
-            <ComboBoxItem Content="9 x 9"/>
+                  FontSize="20" Foreground="#15161C" FontWeight="SemiBold"
+                  SelectedItem="{Binding NumberOfPieces}">
+            <ComboBoxItem Content="3"/>
+            <ComboBoxItem Content="4"/>
+            <ComboBoxItem Content="5"/>
+            <ComboBoxItem Content="6"/>
+            <ComboBoxItem Content="7"/>
+            <ComboBoxItem Content="8"/>
+            <ComboBoxItem Content="9"/>
         </ComboBox>
 
         <!-- Picture selection combobox-->
@@ -119,8 +120,6 @@
             Background="Snow"
             FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
             Foreground="#15161C" FontSize="25" FontWeight="SemiBold"/>
-
-
     </Grid>
 
 </Page>

@@ -52,6 +52,17 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
+        string _numberOfPieces;
+        public string NumberOfPieces
+        {
+            get => _numberOfPieces;
+            set
+            {
+                _numberOfPieces = value;
+                OnPropertyChanged();
+            }
+        }
+
         public LevelSelectionViewModel()
         {
             _wndBgr = defaultColornum1;
@@ -61,10 +72,6 @@ namespace PuzzleGame.MVVM.ViewModels
             OpenGalleryCommand = new RelayCommand<object>((o) =>
             {
                 CurrentPage = new GalleryViewModel();
-            });
-
-            SelectPictureCommand = new RelayCommand<object>((o) =>
-            {
             });
         }
     }

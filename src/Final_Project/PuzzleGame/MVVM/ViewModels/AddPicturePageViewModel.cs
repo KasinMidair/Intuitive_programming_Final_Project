@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using DryIoc.FastExpressionCompiler.LightExpression;
 using Microsoft.Win32;
@@ -84,8 +85,14 @@ namespace PuzzleGame.MVVM.ViewModels
         public RelayCommand<object> ChoosePictureCommand { get; set; }
         public RelayCommand<object> AddPictureCommand { get; set; }
 
+
+        public string path { get; set; }
+
+
         public AddPicturePageViewModel()
         {
+
+
             _wndBgr = defaultColornum1;
             NewPicUrl = @"/Assets/Imgs/AddPicBackGround.jpg";
 
@@ -128,7 +135,7 @@ namespace PuzzleGame.MVVM.ViewModels
                     NewPic = new Picture
                     {
                         Name = NewPicName,
-                        Url = "F:\\School\\IT008\\Intuitive_programming_Final_Project\\src\\Final_Project\\PuzzleGame\\Assets\\picture\\" + NewPicName + ".jpg"
+                        Url = Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + @"Assets\picture\" + NewPicName + ".jpg"
                     };
                     FileInfo info = new FileInfo(NewPicUrl);
                     info.CopyTo(NewPic.Url);
@@ -136,5 +143,7 @@ namespace PuzzleGame.MVVM.ViewModels
                 }
             });
         }
+
+
     }
 }
