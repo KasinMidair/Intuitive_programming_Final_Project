@@ -45,7 +45,7 @@
         <!--Delete Button-->
         <Button x:Name="DeleteBTN" Content="Delete"
             Grid.Column="3" Grid.Row="3"
-            Command="{Binding DeleteImageCommand, Source={StaticResource MainDataContext}}"
+            Command="{Binding DeletePictureCommand}"
             CommandParameter="{Binding ElementName=DeleteBTN}" Margin="0,0,0,18" Grid.RowSpan="2"/>
 
         <!--Add Button-->
@@ -65,10 +65,13 @@
               FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
               FontSize="20" Foreground="#15161C" FontWeight="SemiBold"
               SelectedIndex="0"
-              ItemsSource="{Binding PictureList}"
+              ItemsSource="{Binding PictureList, Mode=TwoWay}"
               SelectedItem="{Binding SelectedPicture}"
               DisplayMemberPath="Name">
         </ListView>
+
+        <TextBlock Background="snow" Grid.ColumnSpan="7" Margin="0,0,10,467" Grid.RowSpan="2"
+                   Text="{Binding SelectedPicture.Name}"></TextBlock>
 
     </Grid>
 </Page>

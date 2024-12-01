@@ -20,6 +20,7 @@ namespace PuzzleGame.MVVM.ViewModels
 {
     class AddPicturePageViewModel: ObservableObject
     {
+        public readonly CusDialogService _cusDialogService = new CusDialogService();
         public readonly GalleryViewModel _galleryViewModel = new GalleryViewModel();
 
         private ObservableObject _currentPage;
@@ -93,6 +94,7 @@ namespace PuzzleGame.MVVM.ViewModels
         {
 
 
+
             _wndBgr = defaultColornum1;
             NewPicUrl = @"/Assets/Imgs/AddPicBackGround.jpg";
 
@@ -114,7 +116,13 @@ namespace PuzzleGame.MVVM.ViewModels
                 
                 if (NewPicName == null || NewPicName == "")
                 {
-                    MessageBox.Show("Chua nhap ten tranh");
+                    _cusDialogService.ShowDialog("Chua nhap ten tranh", true);
+                    check = true;
+                }
+                else if(
+                NewPicUrl == null)
+                {
+                    _cusDialogService.ShowDialog("Chua chon tranh");
                     check = true;
                 }
                 else
@@ -123,7 +131,7 @@ namespace PuzzleGame.MVVM.ViewModels
                     {
                         if (NewPicName == pic.Name)
                         {
-                            MessageBox.Show("Ten tranh da ton tai");
+                            _cusDialogService.ShowDialog("Ten tranh da ton tai");
                             check = true;
                             break;
                         }
@@ -139,7 +147,7 @@ namespace PuzzleGame.MVVM.ViewModels
                     };
                     FileInfo info = new FileInfo(NewPicUrl);
                     info.CopyTo(NewPic.Url);
-                    MessageBox.Show("Da luu tranh");
+                    _cusDialogService.ShowDialog("Ten tranh da ton tai");
                 }
             });
         }

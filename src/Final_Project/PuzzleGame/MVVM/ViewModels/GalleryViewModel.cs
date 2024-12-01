@@ -32,9 +32,21 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
+        //Connection...
         Connection connection = new Connection();
         public string SelectedPicUrl;
-        public List<Picture> PictureList {  get; set; }
+
+        //Pictures...
+        List<Picture> _pictureList {  get; set; }
+        public List<Picture> PictureList
+        {
+            get => _pictureList;
+            set
+            {
+                _pictureList = value;
+                OnPropertyChanged();
+            }
+        }
 
         Picture _selectedPicture;
         public Picture SelectedPicture
@@ -47,7 +59,9 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
+        //Command...
         public RelayCommand<object> AddPicturePageOpenCommand { get; set; }
+        public RelayCommand<Object> DeletePictureCommand { get; set; }
 
         public GalleryViewModel()
         {
@@ -56,11 +70,15 @@ namespace PuzzleGame.MVVM.ViewModels
 
             _loadPicListService.LoadPictureList(PictureList);
 
-            AddPicturePageOpenCommand = new RelayCommand<object>((o) =>
-            {
-                CurrentPage = new AddPicturePageViewModel();
-            });
+            AddPicturePageOpenCommand = new RelayCommand<object>((o) => { CurrentPage = new AddPicturePageViewModel(); });
+            DeletePictureCommand = new RelayCommand<object>((o) => { DeleteSelectedPicture(); });
+        }
 
+        void DeleteSelectedPicture()
+        {
+            PictureList.Remove(SelectedPicture);
+            connection.dataAdapter = new SqlDataAdapter($"DELETE FROM PICTURE WHERE PICNAME = {SelectedPicture.Name}", connection.connStr);
+            _loadPicListService.LoadPictureList(PictureList);
         }
     }
 }

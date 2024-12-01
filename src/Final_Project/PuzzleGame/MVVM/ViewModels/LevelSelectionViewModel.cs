@@ -35,6 +35,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public RelayCommand<object> OpenGalleryCommand { get; set; } //command for Gallery button
         public RelayCommand<object> SelectPictureCommand { get; set; }
+        public RelayCommand<object> PlayCommand { get; set; }
 
 
         Connection connection = new Connection();
@@ -69,10 +70,9 @@ namespace PuzzleGame.MVVM.ViewModels
             PictureList = new List<Picture>();
             _loadPicListService.LoadPictureList(PictureList);
 
-            OpenGalleryCommand = new RelayCommand<object>((o) =>
-            {
-                CurrentPage = new GalleryViewModel();
-            });
+            OpenGalleryCommand = new RelayCommand<object>((o) => {CurrentPage = new GalleryViewModel();});
+
+            PlayCommand = new RelayCommand<object>((o) => {CurrentPage = new GameRoundViewModel();});
         }
     }
 }
