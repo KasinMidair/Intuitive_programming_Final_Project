@@ -11,11 +11,11 @@
     <DataTemplate DataType="{x:Type viewmodel:UserEnterNameViewModel}">
         <view:UserNameEnter/>
     </DataTemplate>
-    
+
     <DataTemplate DataType="{x:Type viewmodel:GameRoundViewModel}">
         <view:GameRound/>
     </DataTemplate>
-    
+
     <DataTemplate DataType="{x:Type viewmodel:GameCompleteViewModel}">
         <view:GameComplete/>
     </DataTemplate>
@@ -27,9 +27,8 @@
     <DataTemplate DataType="{x:Type viewmodel:LevelSelectionViewModel}">
         <view:LevelSelection/>
     </DataTemplate>
-    
+
     <DataTemplate DataType="{x:Type viewmodel:AddPicturePageViewModel}">
-       <view:AddPicturePage/>
+        <view:AddPicturePage/>
     </DataTemplate>
-    
 </ResourceDictionary>
