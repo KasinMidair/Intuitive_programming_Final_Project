@@ -18,7 +18,7 @@
       d:DesignHeight="600" d:DesignWidth="920"
       Title="MainMenu"
       Background="Transparent">
-    <StackPanel Margin="323,250,322,-10">
+    <StackPanel Margin="323,235,322,11">
         
         <!--Style="{StaticResource ResourceKey=BTN}-->
         
@@ -32,7 +32,7 @@
         </Button>
 
         <!--Achievement button-->
-         <Button  Margin="10,10,10,5" Style="{StaticResource ResourceKey=BTN}" 
+        <Button  Margin="10,10,10,5" Style="{StaticResource ResourceKey=BTN}" 
                  Width="210"  Height="90" HorizontalAlignment="Center"
                  Command="{Binding Source={StaticResource MainDataContext}, Path=ShowMSGBoxCommand}" x:Name="AchievementBTN"
                  CommandParameter="Hien roy ne!">
@@ -40,8 +40,7 @@
                 <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Achievement_BTN.png"></ImageBrush>
             </Button.Background>
         </Button>
-        
-        
+
         <!--Exit button-->
        <Button  Margin="10,10,10,5" Style="{StaticResource ResourceKey=BTN}" 
                  Width="210"  Height="90" HorizontalAlignment="Center"

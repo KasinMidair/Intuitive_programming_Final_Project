@@ -111,41 +111,5 @@
             VerticalAlignment="Top"/>
 
 
-        <!--GameCompleted panel-->
-        <Border  Background="#F5C7A4" x:Name="SettingMenu" Grid.RowSpan="2" 
-                 Width="500" Height="90" HorizontalAlignment="Left" 
-                 FocusVisualStyle="{x:Null}"
-                 Canvas.Top="530" VerticalAlignment="Top"
-                 Canvas.ZIndex="5" Canvas.Left="235">
-
-            <!--Pannel animation-->
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsEndGameVissible}" Value="False">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard x:Name="SlideDownStoryboard" Storyboard="{StaticResource SlideDownAnimation}"/>
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <BeginStoryboard x:Name="SlideUpStoryboard" Storyboard="{StaticResource SlideUpAnimation}"/>
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
-
-            <Border.RenderTransform>
-                <TranslateTransform Y="-1000"/>
-            </Border.RenderTransform>
-
-            <Border.Effect>
-                <DropShadowEffect Color="LightGoldenrodYellow" BlurRadius="15" Opacity="0.4" ShadowDepth="5" Direction="225"/>
-            </Border.Effect>
-            <Canvas/>
-
-
-        </Border>
-
-
     </Canvas>
 </Page>

@@ -15,8 +15,6 @@ namespace PuzzleGame.MVVM.ViewModels
     {
 
         private ObservableObject _currentPage;
-        public RelayCommand<object> StartCommand { get; set; } //command for start button
-
         public ObservableObject CurrentPage
         {
             get => _currentPage;
@@ -29,6 +27,10 @@ namespace PuzzleGame.MVVM.ViewModels
                 }
             }
         }
+
+        public RelayCommand<object> StartCommand { get; set; } //command for start button
+        public RelayCommand<object> OpenGalleryCommand { get; set; } //command for Gallery button
+
         public MainMenuViewModel()
         {
             _wndBgr = defaultColornum1;
@@ -37,9 +39,11 @@ namespace PuzzleGame.MVVM.ViewModels
                 CurrentPage = new UserEnterNameViewModel();
 
             });
+
+            OpenGalleryCommand = new RelayCommand<object>((o) =>
+            {
+                CurrentPage = new LevelSelectionViewModel();
+            });
         }
-
-
-
     }
 }

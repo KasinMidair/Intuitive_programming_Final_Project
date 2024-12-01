@@ -1,0 +1,128 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PuzzleGame.MVVM.Views.Pages"
+      xmlns:ViewModels="clr-namespace:PuzzleGame.MVVM.ViewModels" x:Class="PuzzleGame.MVVM.Views.Pages.LevelSelection"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="920"
+      Title="LevelSelection">
+
+    <Page.DataContext>
+        <ViewModels:LevelSelectionViewModel/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <ViewModels:LevelSelectionViewModel x:Key="vm"></ViewModels:LevelSelectionViewModel>
+    </Page.Resources>
+
+    <Grid Background="#FFCFAB">
+
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="520"/>
+            <ColumnDefinition Width="40"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="370.667"/>
+            <RowDefinition Height="149.333"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+
+        <!-- Image holder -->
+        <Image x:Name="ImageHolder"
+               Grid.Column="3" Grid.Row="1" Grid.RowSpan="2"
+               Source="{Binding SelectedPicture.Url}"/>
+
+        <!-- Number seclection combobox-->
+        <ComboBox x:Name="NumberSelection_Combobox" 
+                  Grid.Column="1" HorizontalAlignment="Center" Margin="0,126,0,0" Grid.Row="1" VerticalAlignment="Top" Width="260"
+                  Background="Snow"
+                  SelectedIndex="0"
+                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                  FontSize="20" Foreground="#15161C" FontWeight="SemiBold">
+            <ComboBoxItem Content="3 x 3"/>
+            <ComboBoxItem Content="4 x 4"/>
+            <ComboBoxItem Content="5 x 5"/>
+            <ComboBoxItem Content="6 x 6"/>
+            <ComboBoxItem Content="7 x 7"/>
+            <ComboBoxItem Content="8 x 8"/>
+            <ComboBoxItem Content="9 x 9"/>
+        </ComboBox>
+
+        <!-- Picture selection combobox-->
+        <ComboBox x:Name="PictureSelection_Combobox" 
+                  Grid.Column="1" HorizontalAlignment="Right" Margin="0,219,10,0" Grid.Row="1" VerticalAlignment="Top" Width="260"
+                  Background="Snow"
+                  ItemsSource="{Binding PictureList}"
+                  SelectedItem="{Binding SelectedPicture}"
+                  DisplayMemberPath="Name"
+                  SelectedIndex="0"
+                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                  FontSize="20" Foreground="#15161C" FontWeight="SemiBold">
+        </ComboBox>
+        <!-- Text block -->
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="10,91,0,0" Grid.Row="1"
+                   TextWrapping="Wrap" VerticalAlignment="Top"
+                   FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                   Foreground="#15161C" FontSize="25" FontWeight="SemiBold"><Run Text="Number of pieces:"/></TextBlock>
+
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="10,184,0,0" Grid.Row="1"
+           TextWrapping="Wrap" VerticalAlignment="Top"
+           FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+           Foreground="#15161C" FontSize="25" FontWeight="SemiBold"><Run Text="Picture name:"/></TextBlock>
+
+        <!-- Play button -->
+        <Button x:Name="Play_BTN" Grid.Column="1" Grid.Row="2" Margin="0,99,0,0"
+                Background="#9DB899" Width="280" Height="50"
+                Foreground="snow" FontSize="30" FontWeight="Black" Content="Play"/>
+
+        <!-- Gallery button -->
+        <Button x:Name="Gallery_BTN" Grid.Column="1" Grid.Row="2" Margin="0,18,0,81"
+            Background="#9DB899" Width="280" Height="50"
+            Foreground="snow" FontSize="30" FontWeight="Black" Content="Gallery"
+            Command="{Binding OpenGalleryCommand}"/>
+
+        <!-- Timer checkbox -->
+        <CheckBox Name="Timer_CB" Grid.Column="1" Content="Timer:" HorizontalAlignment="Left" Margin="10,271,0,0" Grid.Row="1" VerticalAlignment="Top"
+                  VerticalContentAlignment="Center"
+                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                  Foreground="#15161C" FontSize="25" FontWeight="SemiBold" Height="40" Width="133"/>
+
+
+
+        <ScrollBar Name="Hour_SB" Grid.Column="1" HorizontalAlignment="Left" Margin="61,316,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ScrollBar Name="Minute_SB" Grid.Column="1" HorizontalAlignment="Left" Margin="134,316,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <ScrollBar Name="Second_SB" Grid.Column="1" HorizontalAlignment="Left" Margin="207,316,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+        <TextBox Name="hour_TB" 
+                 Grid.Column="1" HorizontalAlignment="Left" Margin="10,311,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" Height="44"
+                 Text="00"
+                 Background="Snow"
+                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                 Foreground="#15161C" FontSize="25" FontWeight="SemiBold"/>
+        <TextBox x:Name="hour_TB_Copy" 
+            Grid.Column="1" HorizontalAlignment="Left" Margin="83,311,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" Height="44"
+            Text="00"
+            Background="Snow"
+            FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+            Foreground="#15161C" FontSize="25" FontWeight="SemiBold"/>
+        <TextBox x:Name="hour_TB_Copy1" 
+            Grid.Column="1" HorizontalAlignment="Left" Margin="156,311,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" Height="44"
+            Text="00"
+            Background="Snow"
+            FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+            Foreground="#15161C" FontSize="25" FontWeight="SemiBold"/>
+
+
+    </Grid>
+
+</Page>
+    
+    

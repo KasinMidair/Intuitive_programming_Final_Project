@@ -34,7 +34,7 @@
                                   Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="170"  Margin="28,0,161,0"
                                   RenderTransformOrigin="0.512,0.706" Text=""
                                   FontFamily="pack://application:,,,/Assets/Fonts/#Itim"/>
-
+                
                 <Grid >
                     <!--Enter button-->
                     <Button materialDesign:ButtonAssist.CornerRadius="25" x:Name="EnterBTN"

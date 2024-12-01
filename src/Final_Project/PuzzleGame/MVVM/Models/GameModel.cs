@@ -21,14 +21,14 @@ namespace PuzzleGame.MVVM.Models
     }
     public class GameModel
     {
-        public double UnitX { get;set;}
+        public double UnitX { get; set; }
         public double UnitY { get; private set; }
-        public BitmapSource SrcImg; 
+        public BitmapSource SrcImg;
         public BitmapSource blckBoxImg;
         public int BlackBox_Indx;
 
         int playTime;
-        public bool isSetCountDown {  get; set; }
+        public bool isSetCountDown { get; set; }
         public int row, col;
         private static volatile GameModel _instance;
         private GameStatus status;
@@ -37,7 +37,7 @@ namespace PuzzleGame.MVVM.Models
         {
             get
             {
-                if (_instance == null || _instance.Status==GameStatus.EndGame)
+                if (_instance == null || _instance.Status == GameStatus.EndGame)
                 {
                     lock (key)
                     {
@@ -73,19 +73,44 @@ namespace PuzzleGame.MVVM.Models
         }
         private GameModel()
         {
-
-            SrcImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0002.png", UriKind.Absolute));
+            string srcPath = "pack://application:,,,/Assets/picture/pic1.jpg";
+            SrcImg = ChangeDPI(new BitmapImage(new Uri(srcPath, UriKind.Absolute)), 96, 96);
             blckBoxImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0003.png", UriKind.Absolute));
             row = 5; col = 5;
             status = GameStatus.PreStart;
             playTime = 2 * 60;
-            UnitX = SrcImg.Width / col;
-            UnitY = SrcImg.Height / row;
+            UnitX = 450 / col;
+            UnitY = 450 / row;
             isSetCountDown = false;
 
         }
-        
 
-       
+        public BitmapSource ChangeDPI(BitmapSource source, double newDpiX, double newDpiY)
+        {
+            int width = source.PixelWidth;
+            int height = source.PixelHeight;
+
+            // Tính stride: số byte trên mỗi dòng (chiều rộng ảnh x số byte mỗi pixel)
+            int bytesPerPixel = (source.Format.BitsPerPixel + 7) / 8;
+            int stride = width * bytesPerPixel;
+
+            // Lấy dữ liệu pixel từ ảnh gốc
+            byte[] pixelData = new byte[height * stride];
+            source.CopyPixels(pixelData, stride, 0);
+
+            // Tạo ảnh mới với DPI được thay đổi
+            BitmapSource newBitmap = BitmapSource.Create(
+                width,          // Chiều rộng (pixels)
+                height,         // Chiều cao (pixels)
+                newDpiX,        // DPI X
+                newDpiY,        // DPI Y
+                source.Format,  // Pixel format
+                source.Palette, // Palette (null nếu không có)
+                pixelData,      // Dữ liệu pixel
+                stride          // Stride
+            );
+
+            return newBitmap;
+        }
     }
 }
