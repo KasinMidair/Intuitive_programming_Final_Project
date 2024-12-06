@@ -13,52 +13,82 @@
       TextElement.FontSize="13"
       TextOptions.TextFormattingMode="Ideal"
       TextOptions.TextRenderingMode="Auto"
-      FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-      FontSize="24"
       mc:Ignorable="d"
       d:DesignHeight="600"
       d:DesignWidth="920"
       Title="MainMenu"
-      Background="Transparent">
+      Background="LightGoldenrodYellow">
     <StackPanel HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-        <TextBlock Text="You won!"
-                   FontSize="32" 
-                   TextAlignment="Center"/>
-        <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+        <StackPanel.Resources>
+            <Style x:Key="buttonStyle"
+                   TargetType="Button"
+                   BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="IsEnabled"
+                        Value="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
+                <Setter Property="Background"
+                        Value="#9cb898" />
+                <Setter Property="BorderBrush"
+                        Value="#9cb898" />
+                <Setter Property="materialDesign:ButtonAssist.CornerRadius"
+                        Value="25" />
+                <Setter Property="FontFamily"
+                        Value="pack: //application:,,,/Assets/Fonts/#Itim" />
+                <Setter Property="FontSize"
+                        Value="24" />
+            </Style>
+            <Style TargetType="TextBlock"
+                   x:Key="textBlockStyle">
+                <Setter Property="FontSize"
+                        Value="24" />
+                <Setter Property="FontFamily"
+                        Value="pack: //application:,,,/Assets/Fonts/#Itim" />
+            </Style>
+        </StackPanel.Resources>
+        <TextBlock Style="{StaticResource textBlockStyle}"
+                   Text="You won!"
+                   FontSize="32"
+                   TextAlignment="Center" />
+        <StackPanel Orientation="Horizontal"
+                    Margin="0,30,0,0">
             <Image Source="pack://application:,,,/Assets/Imgs/Sprite-0002.png"
                    Width="64"
                    Height="64"
                    HorizontalAlignment="Left"
                    VerticalAlignment="Top" />
             <StackPanel Orientation="Vertical"
-                        Margin="5, 0, 0, 0">
+                        Margin="10, 0, 0, 0">
                 <TextBlock x:Name="TB_Username"
-                           TextWrapping="Wrap"
+                           Style="{StaticResource textBlockStyle}"
                            Text="User" />
                 <StackPanel Orientation="Horizontal"
                             VerticalAlignment="Center">
                     <TextBlock x:Name="TB_UserID"
-                               TextWrapping="Wrap"
+                               Style="{StaticResource textBlockStyle}"
                                Text="(ID string)" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>
-        <TextBlock Text="Score:" Margin="0,10,0,0"/>
-        <TextBlock Text="Time:" />
-        <TextBlock Text="Current streak:" />
+        <TextBlock Style="{StaticResource textBlockStyle}"
+                   Text="Score:"
+                   Margin="0,20,0,0" />
+        <TextBlock Style="{StaticResource textBlockStyle}"
+                   Margin="0,20,0,0"
+                   Text="Time:" />
+        <TextBlock Style="{StaticResource textBlockStyle}"
+                   Margin="0,20,0,0"
+                   Text="Current streak:" />
         <Button x:Name="BTN_Continue"
                 Width="150"
-                Margin="0, 10, 0, 0"
-                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                Style="{StaticResource MaterialDesignRaisedButton}"
-                ToolTip="Resource name: MaterialDesignRaisedButton"
+                Margin="0, 20, 0, 0"
+                Style="{StaticResource buttonStyle}"
                 Content="Continue"
-                Background="#9cb898"
-                BorderBrush="#9cb898"
-                Height="40"
-                FontSize="24"
-                materialDesign:ButtonAssist.CornerRadius="25"
-                VerticalAlignment="Center" />
+                Height="40" />
+        <Button x:Name="BTN_PlayAgain"
+                Width="150"
+                Margin="0, 20, 0, 0"
+                Style="{StaticResource buttonStyle}"
+                Content="Play Again"
+                Height="40" />
     </StackPanel>
 </Page>
