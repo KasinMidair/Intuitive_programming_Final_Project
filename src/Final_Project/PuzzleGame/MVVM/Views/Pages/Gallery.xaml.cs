@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PuzzleGame.MVVM.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,11 +17,11 @@ using System.Windows.Shapes;
 namespace PuzzleGame.MVVM.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for GameSetupNormalLevel.xaml
+    /// Interaction logic for Gallery.xaml
     /// </summary>
-    public partial class GameSetupNormalLevel : Page
+    public partial class Gallery : Page
     {
-        public GameSetupNormalLevel()
+        public Gallery()
         {
             InitializeComponent();
         }

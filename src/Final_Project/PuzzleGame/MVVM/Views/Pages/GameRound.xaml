@@ -4,11 +4,112 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PuzzleGame.MVVM.Views.Pages"
+      xmlns:store="clr-namespace:PuzzleGame.Store" 
+      xmlns:core="clr-namespace:PuzzleGame.Core" 
+      d:DataContext="{d:DesignInstance Type=core:ObservableObject}"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:viewmodels="clr-namespace:PuzzleGame.MVVM.ViewModels"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="13"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto"
+      FontFamily="{DynamicResource MaterialDesignFont}"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="GameRound">
+      d:DesignHeight="600" d:DesignWidth="920"
+      Title="GameRound"
+      store:FocusHelper.IsFocused="{Binding IsFocused}" Focusable="True" FocusVisualStyle="{x:Null}" >
 
-    <Grid>
-        
-    </Grid>
+
+    <!-- Merge ResourceDictionary-->
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Theme/KeyBindings.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <!-- Attach Game Control InputBindings  -->
+    <Page.InputBindings>
+        <StaticResource ResourceKey="Up" />
+        <StaticResource ResourceKey="Down" />
+        <StaticResource ResourceKey="Right" />
+        <StaticResource ResourceKey="Left" />
+        <StaticResource ResourceKey="A" />
+        <StaticResource ResourceKey="W" />
+        <StaticResource ResourceKey="S" />
+        <StaticResource ResourceKey="D" />
+    </Page.InputBindings>
+
+
+    <Canvas Background="Transparent">
+
+
+        <!--Game Play Frame-->
+        <Canvas  Width="450" Height="450" Margin="78,100,392,50">
+
+            <!--Using ItemsControl to display Pieces-->
+            <ItemsControl ItemsSource="{Binding ImgPieces}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="{Binding Col}" Columns="{Binding Row}" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding Img}" Width="{Binding Path=Img.Width}" Height="{Binding Path =Img.Height}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Image Source="pack://application:,,,/Assets/Imgs/Focus_Frame.png" Width="{Binding ImgPieces[0].Img.Width}" 
+                   Stretch="Uniform" Canvas.Left="{Binding FocusPieceX}" Canvas.Top="{Binding FocusPieceY}"></Image>
+        </Canvas>
+        <TextBlock Canvas.ZIndex="5" Foreground="#15161C" FontSize="24" Canvas.Left="170" Canvas.Top="50"
+            Height="50" Width="411" FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+            FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Top">
+            LET'S HAVE SOME FUN!
+        </TextBlock>
+
+
+        <!--Original Picture-->
+        <Image x:Name="oringinPicPanel" Source="{Binding OriginPic}" Stretch="Uniform" Width="250" Height="250" Margin="574,80,101,275" />
+        <TextBlock Canvas.ZIndex="5"  Foreground="#15161C" FontSize="20" Canvas.Left="655" Canvas.Top="52"
+                Height="34" Width="111" FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Top">
+                ORIGINAL
+        </TextBlock>
+
+
+        <!--Timer-->
+        <TextBlock  Canvas.ZIndex="5" Foreground="#15161C" FontSize="24" Canvas.Left="667" Canvas.Top="356"
+        Height="50" Width="78" FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+        FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center">
+        TIMER
+        </TextBlock>
+
+
+        <TextBlock  Text="{Binding LastGameTimeStr,FallbackValue='00:00:00'}" 
+            Canvas.ZIndex="5" TextAlignment="Center" Foreground="#15161C" FontSize="20" Canvas.Left="585" Canvas.Top="420"
+            FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+            FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Width="235">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+
+        </TextBlock>
+
+
+        <!--Background Image-->
+        <Image Canvas.ZIndex="4" Source="pack://application:,,,/Assets/Imgs/GamePlay_Frame.png" HorizontalAlignment="Center"
+            VerticalAlignment="Top"/>
+
+
+    </Canvas>
 </Page>

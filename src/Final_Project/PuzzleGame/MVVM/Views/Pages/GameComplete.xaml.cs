@@ -1,5 +1,4 @@
-﻿using PuzzleGame.MVVM.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,20 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PuzzleGame.MVVM.Views
+namespace PuzzleGame.MVVM.Views.Pages
 {
     /// <summary>
-    /// Interaction logic for CustonDialog.xaml
+    /// Interaction logic for GameComplete.xaml
     /// </summary>
-    public partial class CustomDialog : Window
+    public partial class GameComplete : Page
     {
-        public CustomDialog()
+        public GameComplete()
         {
             InitializeComponent();
         }
-
-
     }
 }

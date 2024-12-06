@@ -3,35 +3,110 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PuzzleGame.MVVM.Views" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:PuzzleGame.MVVM.Views" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:viewmodels="clr-namespace:PuzzleGame.MVVM.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:CustomDialogViewModel}"
         mc:Ignorable="d"
         Background="Transparent"
          WindowStyle="None"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
-        Title="CustonDialog" Height="255" Width="362"
+        Title="CustonDialog" Height="300" Width="400"
         x:Name="DialogWnd"
 >
-    
-    
+
+
     <Border Margin="0,20,10,0">
-         <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDown">
-                    <i:InvokeCommandAction Command="{Binding Source={StaticResource MainDataContext},  Path = MoveWndCommand}"
-                                           CommandParameter="{Binding ElementName=DialogWnd}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
+        
+        <!--Using trigger to catch MouseDown event-->
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseDown">
+                <i:InvokeCommandAction Command="{Binding Source={StaticResource MainDataContext},  Path = MoveWndCommand}"
+                                       CommandParameter="{Binding ElementName=DialogWnd}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        
+        
         <Border.Background>
             <ImageBrush ImageSource="/Assets/Imgs/DialogFrame.png"></ImageBrush>
         </Border.Background>
         <Grid>
-            <TextBlock x:Name="CusDialogMsg" Margin="76,110,34,40" FontSize="16"
-                       HorizontalAlignment="Center" VerticalAlignment="Center"
-                       FontFamily="pack://application:,,,/Assets/Fonts/#Itim"></TextBlock>
             
-            <Button Background="Transparent" BorderThickness="0" Width="20" Height="20"
+            <!--Message textbox-->
+            <TextBlock x:Name="CusDialogMsg" Margin="76,80,34,40" FontSize="20"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                       Text="{Binding Message}"/>
+
+            <!--Exit button-->
+            <Button Background="Transparent" BorderThickness="0" Height="20"
                     Command="{Binding Source={StaticResource MainDataContext}, Path=CloseDialogCommand}" x:Name="CloseBTN"
-                    CommandParameter="{Binding ElementName=DialogWnd}" Margin="307,50,23,165"/>
+                    CommandParameter="{Binding ElementName=DialogWnd}" Margin="342,62,27,198"
+                    Style="{StaticResource ResourceKey=BTN}"/>
+
+
+
+            <Grid  Margin="100,202,65,22">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                
+                <!-- CusDialogResult.No button-->
+                <Button Grid.Column="0" BorderThickness="0" Height="40" Width="70"
+                        Command="{Binding Source={StaticResource MainDataContext}, Path=CloseDialogCommand}" x:Name="NoBTN"
+                        CommandParameter="{Binding ElementName=NoBTN}"
+                        Style="{StaticResource ResourceKey=BTN}"
+                        Visibility="{Binding IsYsNoIcon, Converter={StaticResource IsVisible}}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Dialog_BTN.png"
+                                    Viewport="0,0,70,60"
+                                    ViewportUnits="Absolute"
+                                    Viewbox="242,30,100,40"
+                                    ViewboxUnits="Absolute"
+                                    Stretch="Uniform"/>
+                    </Button.Background>
+
+                </Button>
+
+
+                <!-- CusDialogResult.OK button-->
+                <Button Grid.Column="1" BorderThickness="0" Height="40" Width="70"
+                     Command="{Binding Source={StaticResource MainDataContext}, Path=CloseDialogCommand}" x:Name="OKBTN"
+                     CommandParameter="{Binding ElementName=OKBTN}"
+                     Style="{StaticResource ResourceKey=BTN}"
+                     Visibility="{Binding IsOKIcon, Converter={StaticResource IsVisible}}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Dialog_BTN.png"
+                                Viewport="0,0,70,60"
+                                ViewportUnits="Absolute"
+                                Viewbox="120,30,100,40"
+                                 ViewboxUnits="Absolute"
+                                 Stretch="Uniform"/>
+                    </Button.Background>
+
+                </Button>
+
+                <!-- CusDialogResult.Yes button-->
+                <Button Grid.Column="2" BorderThickness="0" Height="40" Width="70"
+                        Command="{Binding Source={StaticResource MainDataContext}, Path=CloseDialogCommand}" x:Name="YesBTN"
+                        CommandParameter="{Binding ElementName=YesBTN}"
+                        Style="{StaticResource ResourceKey=BTN}"
+                        Visibility="{Binding IsYsNoIcon, Converter={StaticResource IsVisible}}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Dialog_BTN.png"
+                                    Viewport="0,0,70,60"
+                                    ViewportUnits="Absolute"
+                                    Viewbox="0,30,100,40"
+                                    ViewboxUnits="Absolute"
+                                    Stretch="Uniform"/>
+                    </Button.Background>
+
+                </Button>
+
+            </Grid>
+
+
         </Grid>
     </Border>
 </Window>

@@ -17,7 +17,7 @@
       Background="Transparent"
       Title="UserNameEnter">
 
-    <Canvas  Background="#F5C7A4" Width="920" Height="600">
+    <Canvas  Width="920" Height="600">
 
         <TextBlock Foreground="#15161C" FontSize="32" Canvas.Left="254.5" Canvas.Top="220"
                    Height="50" Width="411" FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
@@ -25,26 +25,38 @@
             ENTER YOUR USER NAME
         </TextBlock>
 
-
-        <Border Background="Snow" CornerRadius="35" Width="555" Height="80" 
-                Canvas.Left="180" Canvas.Top="320" HorizontalAlignment="Center" 
+        <!--Enter Username Box-->
+        <Border Background="Snow" CornerRadius="35" Width="555" Height="76" 
+                Canvas.Left="180" Canvas.Top="300" HorizontalAlignment="Center" 
                 VerticalAlignment="Top" RenderTransformOrigin="0.5,0.595">
             <Grid Margin="2,-15,-1,-15">
                 <TextBox  VerticalAlignment="Center" FontSize="24" materialDesign:HintAssist.Hint="UserName" Foreground="#15161C"
-                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="170"  Margin="28,0,0,0"
+                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="170"  Margin="28,0,161,0"
                                   RenderTransformOrigin="0.512,0.706" Text=""
                                   FontFamily="pack://application:,,,/Assets/Fonts/#Itim"/>
-
+                
                 <Grid >
-                    <Button materialDesign:ButtonAssist.CornerRadius="25" 
-                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                                    FocusVisualStyle="{x:Null}"  Height="60" Margin="405,25,12,24" >
-                        <TextBlock Text="Enter" FontFamily="pack://application:,,,/Assets/Fonts/#Itim" FontSize="24" />
+                    <!--Enter button-->
+                    <Button materialDesign:ButtonAssist.CornerRadius="25" x:Name="EnterBTN"
+                                    Command="{Binding EnterNameCommand}" CommandParameter="{Binding ElementName=EnterBTN}"
+                                    FocusVisualStyle="{x:Null}"  Height="60" Margin="408,24,9,22" >
+                        <TextBlock Text="Enter" FontSize="24"
+                                   FontFamily="pack://application:,,,/Assets/Fonts/#Itim"  />
                     </Button>
                 </Grid>
 
             </Grid>
         </Border>
+        
+        <!--Decorate Image-->
+        <Image Source="pack://application:,,,/Assets/Imgs/Decorate_01.png" 
+               Canvas.Left="788" Canvas.Top="410" HorizontalAlignment="Left" 
+               Height="165" VerticalAlignment="Top">
+            <Image.Effect>
+                <DropShadowEffect Color="LightGoldenrodYellow" BlurRadius="15" Opacity="0.4" ShadowDepth="5" Direction="225"/>
+            </Image.Effect>
+
+        </Image>
 
     </Canvas>
 

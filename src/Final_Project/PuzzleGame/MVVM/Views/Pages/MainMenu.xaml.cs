@@ -24,9 +24,10 @@ namespace PuzzleGame.MVVM.Views.Pages
         public MainMenu()
         {
             InitializeComponent();
+            
         }
 
-        private void startBTN_Click()
+        private void Gallery_Click(object sender, RoutedEventArgs e)
         {
 
         }
