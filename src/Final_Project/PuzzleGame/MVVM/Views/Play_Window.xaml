@@ -131,7 +131,7 @@
                                 <Setter Property="TickPlacement"
                                         Value="BottomRight" />
                                 <Setter Property="Foreground"
-                                        Value="#f14666" />
+                                        Value="#ee8980" />
                             </Style>
                             <Style TargetType="TextBlock"
                                    x:Key="textBlockStyle">
@@ -140,7 +140,7 @@
                                 <Setter Property="FontFamily"
                                         Value="pack: //application:,,,/Assets/Fonts/#Itim" />
                                 <Setter Property="Foreground"
-                                        Value="White" />
+                                        Value="#f14666" />
                             </Style>
                         </StackPanel.Resources>
                         <TextBlock x:Name="TB_Settings"
