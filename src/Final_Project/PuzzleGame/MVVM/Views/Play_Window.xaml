@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:PuzzleGame"
         xmlns:pge="clr-namespace:PuzzleGame.MVVM.Views.Pages"
         xmlns:viewmodel="clr-namespace:PuzzleGame.MVVM.ViewModels"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" d:DataContext="{d:DesignInstance Type=viewmodel:PlayViewModel}"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        d:DataContext="{d:DesignInstance Type=viewmodel:PlayViewModel}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -14,243 +16,341 @@
         TextOptions.TextRenderingMode="Auto"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="Play_Window" Height="600" Width="920"
+        Title="Play_Window"
+        Height="600"
+        Width="920"
         AllowsTransparency="True"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        x:Name="wnd" 
-        Background= "Transparent"
+        x:Name="wnd"
+        Background="Transparent"
         DataContext="{StaticResource MainDataContext}">
 
-
     <Grid Margin="0,0,0,0">
-        
-        <!--Declaring triggers in the interactivity to create ability to move wnd-->
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="MouseDown">
-                <i:InvokeCommandAction Command="{Binding Source={StaticResource MainDataContext},  Path = MoveWndCommand}"
-                                  CommandParameter="{Binding ElementName=wnd}" />
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
 
         <!--Window border-->
-        <Border Background="#212228" CornerRadius="15"  />
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100"></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
+        <Border Background="{Binding WndBgr}"
+                CornerRadius="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
 
 
-            <!--<Grid>
-                -->
-            <!--Base Grid-->
-            <!--
-                <Canvas x:Name="pnlcontainer" Margin="241,38,276,38" Grid.Column="1">
-                    <Canvas x:Name="pnlGamePlaySpace" Width="360" Height="360" Canvas.Left="10" Canvas.Top="10" 
-                            HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.495,0.495">
+                <!--<Grid>
+                    -->
+                <!--Base Grid-->
+                <!--
+                    <Canvas x:Name="pnlcontainer" Margin="241,38,276,38" Grid.Column="1">
+                        <Canvas x:Name="pnlGamePlaySpace" Width="360" Height="360" Canvas.Left="10" Canvas.Top="10" 
+                                HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.495,0.495">
+                        </Canvas>
                     </Canvas>
-                </Canvas>
             
-            </Grid>-->
+                </Grid>-->
 
 
-            <!--Loading pages in frame-->
-            <Frame x:Name="MainFrame" Grid.RowSpan="2" Width="920" Height="600"
-                   NavigationUIVisibility="Hidden"/>
+                <!--Loading pages in frame-->
+                <Frame x:Name="MainFrame"
+                       Width="920"
+                       Height="600"
+                       FocusVisualStyle="{x:Null}"
+                       Grid.RowSpan="2"
+                       NavigationUIVisibility="Hidden"
+                       JournalOwnership="OwnsJournal" />
 
 
-            <!--Setting panel-->
-            <Border   Background="#212228" BorderBrush="#ee8980" BorderThickness="5" x:Name="SettingMenu" Margin="133,73,133,102" Grid.RowSpan="2" >
+                <!--Setting panel-->
+                <Border   Background="{Binding ToolBarColor}"
+                          x:Name="SettingMenu"
+                          Margin="133,73,133,102"
+                          Grid.RowSpan="2">
 
-                <!--Pannel animation-->
-                <Border.Style>
-                    <Style TargetType="Border">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsSettingVisible}" Value="False">
-                                <DataTrigger.EnterActions>
-                                    <BeginStoryboard x:Name="SlideDownStoryboard" Storyboard="{StaticResource SlideDownAnimation}"/>
-                                </DataTrigger.EnterActions>
-                                <DataTrigger.ExitActions>
-                                    <BeginStoryboard x:Name="SlideUpStoryboard" Storyboard="{StaticResource SlideUpAnimation}"/>
-                                </DataTrigger.ExitActions>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
-
-                <Border.RenderTransform>
-                    <TranslateTransform Y="-1000"/>
-                </Border.RenderTransform>
-
-                <Border.Effect>
-                    <DropShadowEffect Color="LightGoldenrodYellow" BlurRadius="15" Opacity="0.4" ShadowDepth="5" Direction="225"/>
-                </Border.Effect>
-
-                <StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <StackPanel.Resources>
-                        <Style x:Key="buttonStyle" TargetType="Button"
-                               BasedOn="{StaticResource MaterialDesignRaisedButton}">
-                            <Setter Property="IsEnabled"
-                                    Value="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
-                            <Setter Property="Background"
-                                    Value="#9cb898" />
-                            <Setter Property="BorderBrush"
-                                    Value="#9cb898" />
-                            <Setter Property="materialDesign:ButtonAssist.CornerRadius"
-                                    Value="25" />
-                            <Setter Property="FontFamily"
-                                    Value="pack: //application:,,,/Assets/Fonts/#Itim" />
-                            <Setter Property="FontSize"
-                                    Value="24" />
+                    <!--Pannel animation-->
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSettingVisible}"
+                                             Value="False">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard x:Name="SlideDownStoryboard"
+                                                         Storyboard="{StaticResource SlideDownAnimation}" />
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard x:Name="SlideUpStoryboard"
+                                                         Storyboard="{StaticResource SlideUpAnimation}" />
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                            </Style.Triggers>
                         </Style>
-                        <Style x:Key="sliderStyle"
-                               TargetType="Slider"
-                               BasedOn="{StaticResource MaterialDesignDiscreteSlider}">
-                            <Setter Property="FontFamily"
-                                    Value="pack: //application:,,,/Assets/Fonts/#Itim" />
-                            <Setter Property="FontSize"
-                                    Value="24" />
-                            <Setter Property="Minimum"
-                                    Value="0" />
-                            <Setter Property="Maximum"
-                                    Value="10" />
-                            <Setter Property="TickPlacement"
-                                    Value="BottomRight" />
-                            <Setter Property="Foreground"
-                                    Value="#f14666" />
-                        </Style>
-                        <Style TargetType="TextBlock" x:Key="textBlockStyle">
-                            <Setter Property="FontSize"
-                                    Value="24" />
-                            <Setter Property="FontFamily"
-                                    Value="pack: //application:,,,/Assets/Fonts/#Itim" />
-                            <Setter Property="Foreground"
-                                    Value="White" />
-                        </Style> 
-                    </StackPanel.Resources>
-                    <TextBlock x:Name="TB_Settings" HorizontalAlignment="Center" Style="{StaticResource textBlockStyle}" Text="Settings" FontSize="32" Margin="0,0,0,30"/>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="pack://application:,,,/Assets/Imgs/sprite-0001.png" Width="64" Height="64" HorizontalAlignment="Left"/>
-                        <StackPanel Orientation="Vertical" Margin="10, 0, 0, 0">
-                            <TextBlock x:Name="TB_Username"
-                                       Text="User"
-                                       Style="{StaticResource textBlockStyle}" />
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <TextBlock x:Name="TB_UserID"
-                                           Text="(ID string)"
-                                           Style="{StaticResource textBlockStyle}"/>
-                                <Button x:Name="BTN_Copy" Style="{StaticResource buttonStyle}" Width="75" Margin="10, 0, 0, 0"
-                                        Content="Copy" FontSize="20" Height="35"/>
+                    </Border.Style>
+
+                    <Border.RenderTransform>
+                        <TranslateTransform Y="-1000" />
+                    </Border.RenderTransform>
+
+                    <Border.Effect>
+                        <DropShadowEffect Color="LightGoldenrodYellow"
+                                          BlurRadius="15"
+                                          Opacity="0.4"
+                                          ShadowDepth="5"
+                                          Direction="225" />
+                    </Border.Effect>
+
+                    <StackPanel  HorizontalAlignment="Center"
+                                 VerticalAlignment="Center">
+                        <StackPanel.Resources>
+                            <Style x:Key="buttonStyle"
+                                   TargetType="Button"
+                                   BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                                <Setter Property="IsEnabled"
+                                        Value="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
+                                <Setter Property="Background"
+                                        Value="#9cb898" />
+                                <Setter Property="BorderBrush"
+                                        Value="#9cb898" />
+                                <Setter Property="materialDesign:ButtonAssist.CornerRadius"
+                                        Value="25" />
+                                <Setter Property="FontFamily"
+                                        Value="pack: //application:,,,/Assets/Fonts/#Itim" />
+                                <Setter Property="FontSize"
+                                        Value="24" />
+                            </Style>
+                            <Style x:Key="sliderStyle"
+                                   TargetType="Slider"
+                                   BasedOn="{StaticResource MaterialDesignDiscreteSlider}">
+                                <Setter Property="FontFamily"
+                                        Value="pack: //application:,,,/Assets/Fonts/#Itim" />
+                                <Setter Property="FontSize"
+                                        Value="24" />
+                                <Setter Property="Minimum"
+                                        Value="0" />
+                                <Setter Property="Maximum"
+                                        Value="10" />
+                                <Setter Property="TickPlacement"
+                                        Value="BottomRight" />
+                                <Setter Property="Foreground"
+                                        Value="#f14666" />
+                            </Style>
+                            <Style TargetType="TextBlock"
+                                   x:Key="textBlockStyle">
+                                <Setter Property="FontSize"
+                                        Value="24" />
+                                <Setter Property="FontFamily"
+                                        Value="pack: //application:,,,/Assets/Fonts/#Itim" />
+                                <Setter Property="Foreground"
+                                        Value="White" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <TextBlock x:Name="TB_Settings"
+                                   HorizontalAlignment="Center"
+                                   Style="{StaticResource textBlockStyle}"
+                                   Text="Settings"
+                                   FontSize="32"
+                                   Margin="0,0,0,30" />
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="pack://application:,,,/Assets/Imgs/Sprite-0002.png"
+                                   Width="64"
+                                   Height="64"
+                                   HorizontalAlignment="Left" />
+                            <StackPanel Orientation="Vertical"
+                                        Margin="10, 0, 0, 0">
+                                <TextBlock x:Name="TB_Username"
+                                           Text="User"
+                                           Style="{StaticResource textBlockStyle}" />
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center">
+                                    <TextBlock x:Name="TB_UserID"
+                                               Text="(ID string)"
+                                               Style="{StaticResource textBlockStyle}" />
+                                    <Button x:Name="BTN_Copy"
+                                            Style="{StaticResource buttonStyle}"
+                                            Width="75"
+                                            Margin="10, 0, 0, 0"
+                                            Content="Copy"
+                                            FontSize="20"
+                                            Height="35" />
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
+                        <StackPanel x:Name="SP_Music"
+                                    Margin="0, 20, 0, 0"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
+                            <TextBlock x:Name="TB_Music"
+                                       Text="Music"
+                                       Style="{StaticResource textBlockStyle}" />
+                            <Slider x:Name="SLIDER_Music"
+                                    Style="{StaticResource sliderStyle}"
+                                    Margin="10, 0, 0, 0"
+                                    Width="400"
+                                    Height="30" />
+                        </StackPanel>
+                        <StackPanel x:Name="SP_SFX"
+                                    Margin="20, 20, 0, 0"
+                                    Orientation="Horizontal">
+                            <TextBlock x:Name="TB_SFX"
+                                       Text="SFX"
+                                       Style="{StaticResource textBlockStyle}" />
+                            <Slider x:Name="SLIDER_SFX"
+                                    Style="{StaticResource sliderStyle}"
+                                    Margin="10, 0, 0, 0"
+                                    Width="400"
+                                    Height="30" />
+                        </StackPanel>
+                        <Button x:Name="BTN_MainMenu"
+                                Width="150"
+                                Margin="0, 20, 0, 0"
+                                Style="{StaticResource buttonStyle}"
+                                Content="Main Menu"
+                                Height="40" />
+                        <Button x:Name="BTN_Continue"
+                                Width="150"
+                                Margin="0, 20, 0, 0"
+                                Style="{StaticResource buttonStyle}"
+                                Content="Continue"
+                                Height="40" />
                     </StackPanel>
-                    <StackPanel x:Name="SP_Music" Margin="0, 20, 0, 0" Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock x:Name="TB_Music"
-                                   Text="Music"
-                                   Style="{StaticResource textBlockStyle}" />
-                        <Slider x:Name="SLIDER_Music"
-                                Style="{StaticResource sliderStyle}"
-                                Margin="10, 0, 0, 0"
-                                Width="400"
-                                Height="30"/>
-                    </StackPanel>
-                    <StackPanel x:Name="SP_SFX" Margin="20, 20, 0, 0" Orientation="Horizontal">
-                        <TextBlock x:Name="TB_SFX"
-                                   Text="SFX"
-                                   Style="{StaticResource textBlockStyle}" />
-                        <Slider x:Name="SLIDER_SFX"
-                                Style="{StaticResource sliderStyle}"
-                                Margin="10, 0, 0, 0"
-                                Width="400"
-                                Height="30"/>
-                    </StackPanel>
-                    <Button x:Name="BTN_MainMenu" Width="150" Margin="0, 20, 0, 0"
-                            Style="{StaticResource buttonStyle}"
-                            Content="Main Menu" Height="40"/>
-                    <Button x:Name="BTN_Continue" Width="150" Margin="0, 20, 0, 0"
-                            Style="{StaticResource buttonStyle}"
-                            Content="Continue" Height="40"/>
-                </StackPanel>
-            </Border>
+                </Border>
 
 
 
-            <!--ToolBar-->
-            <Border x:Name="ToolBar" Background="Transparent"
-                    CornerRadius="20" Margin="802,50,18,350" Grid.RowSpan="2">
+                <!--ToolBar-->
+                <Border x:Name="ToolBar"
+                        Background="Transparent"
+                        CornerRadius="20"
+                        Margin="802,76,18,324"
+                        Grid.RowSpan="2">
 
-                <Border.RenderTransform>
-                    <TranslateTransform X="80"/>
-                </Border.RenderTransform>
-                
-                <!--Toolbar sliding anim-->
-                <Border.Style>
-                    <Style TargetType="Border" >
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard x:Name="SlideDownStoryboard" Storyboard="{StaticResource SlideLeftAnimation}"/>
-                                </Trigger.EnterActions>
-                                <Trigger.ExitActions>
-                                    <BeginStoryboard x:Name="SlideUpStoryboard" Storyboard="{StaticResource SlideRightAnimation}"/>
-                                </Trigger.ExitActions>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
+                    <Border.RenderTransform>
+                        <TranslateTransform X="80" />
+                    </Border.RenderTransform>
 
-                
-                <!--default buttons-->
-                <Border Background="{Binding ToolBarColor}"
-                    CornerRadius="15" Margin="25,0,35,0">
+                    <!--Toolbar sliding anim-->
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver"
+                                         Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard x:Name="SlideDownStoryboard"
+                                                         Storyboard="{StaticResource SlideLeftAnimation}" />
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard x:Name="SlideUpStoryboard"
+                                                         Storyboard="{StaticResource SlideRightAnimation}" />
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
 
-                    <Canvas Margin="12,0,-12,0" >
-                        <Button x:Name="ShutdownBTN" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left"
-                                Command="{Binding ShutdownCommand}" Padding="0"
-                                CommandParameter="{Binding ElementName=ShutdownBTN}" Canvas.Top="25" Width="34"
-                                BorderThickness="0" Height="35"
-                                Style="{StaticResource ResourceKey=BTN}" Canvas.Left="-9">
 
-                            <Button.Background>
-                                <ImageBrush ImageSource="/Assets/Imgs/Shutdown_BTN.png"></ImageBrush>
-                            </Button.Background>
-                        </Button>
-                        <Button VerticalAlignment="Top" Command="{Binding SettingCommand}" 
-                                CommandParameter="{Binding ElementName=SettingMenu}" Canvas.Top="71" HorizontalAlignment="Center" 
-                               BorderThickness="0" 
-                                Height="32" Width="28"
-                                Style="{StaticResource ResourceKey=BTN}" Canvas.Left="-6">
+                    <!--default buttons-->
+                    <Border Background="{Binding ToolBarColor}"
+                            CornerRadius="20"
+                            Margin="25,0,35,0">
 
-                            <Button.Background>
-                                <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Setting_BTN.png"></ImageBrush>
-                            </Button.Background>
-                        </Button>
+                        <Canvas Margin="12,0,-12,0">
+                            <Button x:Name="ShutdownBTN"
+                                    Grid.Row="1"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Center"
+                                    Command="{Binding ShutdownCommand}"
+                                    Padding="0"
+                                    CommandParameter="{Binding ElementName=ShutdownBTN}"
+                                    Canvas.Top="15"
+                                    Width="34"
+                                    BorderThickness="0"
+                                    Height="35"
+                                    Style="{StaticResource ResourceKey=BTN}"
+                                    Canvas.Left="-9">
 
-                    </Canvas>
+                                <Button.Background>
+                                    <ImageBrush ImageSource="/Assets/Imgs/Shutdown_BTN.png"></ImageBrush>
+                                </Button.Background>
+                            </Button>
+                            <Button VerticalAlignment="Top"
+                                    Command="{Binding SettingCommand}"
+                                    CommandParameter="{Binding ElementName=SettingMenu}"
+                                    Canvas.Top="64"
+                                    HorizontalAlignment="Center"
+                                    BorderThickness="0"
+                                    Height="32"
+                                    Width="28"
+                                    Style="{StaticResource ResourceKey=BTN}"
+                                    Canvas.Left="-6">
+
+                                <Button.Background>
+                                    <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Setting_BTN.png"></ImageBrush>
+                                </Button.Background>
+                            </Button>
+
+                        </Canvas>
+
+                    </Border>
 
                 </Border>
 
-            </Border>
+                <!--Back button-->
+                <Button  Grid.Row="0"
+                         Margin="0,0,0,35"
+                         Style="{StaticResource ResourceKey=BTN}"
+                         Width="70"
+                         HorizontalAlignment="Left"
+                         x:Name="BackBTN"
+                         Command="{Binding GoBackCommand}"
+                         CommandParameter="{Binding ElementName=BackBTN}"
+                         Visibility="{Binding IsGoBack, Converter={StaticResource IsVisible}}">
 
-            <!--Back button-->
-            <Button  Grid.Row="0" Margin="45,40,0,15" Style="{StaticResource ResourceKey=BTN}" 
-                        Width="95" HorizontalAlignment="Left"  x:Name="BackBTN"
-                        Command="{Binding Source={StaticResource MainDataContext}, Path=GoBackCommand}"
-                        CommandParameter="{Binding ElementName=ExitBTN}"
-                        Visibility="{Binding ElementName=MainFrame, Path=CanGoBack, Converter={StaticResource IsVisible}}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Back_BTN.png"></ImageBrush>
+                    </Button.Background>
 
-                <Button.Background>
-                    <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Back_BTN.png"></ImageBrush>
-                </Button.Background>
+                    <Button.Effect>
+                        <DropShadowEffect Color="#D46F6A"
+                                          BlurRadius="5"
+                                          Opacity="0.2"
+                                          ShadowDepth="4"
+                                          Direction="135" />
+                    </Button.Effect>
 
-                <Button.Effect>
-                    <DropShadowEffect Color="#D46F6A" BlurRadius="15" Opacity="0.4" 
-                                      ShadowDepth="4" Direction="-45"/>
-                </Button.Effect>
+                </Button>
+                <!--GoForward button-->
+                <Button  Grid.Row="0"
+                         Margin="852,0,0,35"
+                         Style="{StaticResource ResourceKey=BTN}"
+                         Width="68"
+                         HorizontalAlignment="Left"
+                         x:Name="GoForwardBTN"
+                         Command="{Binding GoForwardCommand}"
+                         CommandParameter="{Binding ElementName=GoForwardBTN}"
+                         Visibility="{Binding IsGoForward, Converter={StaticResource IsVisible}}">
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="-1" />
+                            <SkewTransform />
+                            <RotateTransform />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </Button.RenderTransform>
 
-            </Button>
+                    <Button.Background>
+                        <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Back_BTN.png"></ImageBrush>
+                    </Button.Background>
 
-        </Grid>
+                    <Button.Effect>
+                        <DropShadowEffect Color="#D46F6A"
+                                          BlurRadius="5"
+                                          Opacity="0.2"
+                                          ShadowDepth="4"
+                                          Direction="135" />
+                    </Button.Effect>
+
+                </Button>
+
+            </Grid>
+        </Border>
     </Grid>
 </Window>
