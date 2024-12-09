@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PuzzleGame.Stores;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,11 +8,10 @@ using System.Windows.Input;
 
 namespace PuzzleGame.Core.Helper
 {
-   public class RelayCommand<T>: ICommand
-   {
+    public class RelayCommand<T> : ICommand
+    {
         protected Action<T> _execute;
-        protected Func<T,bool> _canExecute;
-
+        protected Func<T, bool> _canExecute;
 
         public event EventHandler? CanExecuteChanged
         {
@@ -24,7 +24,7 @@ namespace PuzzleGame.Core.Helper
         {
             if (Excecute == null)
                 throw new ArgumentException("execute");
-             _execute = Excecute;
+            _execute += Excecute;
             _canExecute = CanExecute;   
         }
 
@@ -43,6 +43,7 @@ namespace PuzzleGame.Core.Helper
 
         public virtual void Execute(object? parameter)
         {
+            MusicSystemService.Instance.PlayBTN_ClickSound();
             _execute((T)parameter);
         }
     }

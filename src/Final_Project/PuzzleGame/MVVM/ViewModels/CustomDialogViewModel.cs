@@ -1,9 +1,12 @@
 ﻿using PuzzleGame.Core;
+using PuzzleGame.Core.Helper;
+using PuzzleGame.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Interop;
 
 namespace PuzzleGame.MVVM.ViewModels
@@ -12,10 +15,13 @@ namespace PuzzleGame.MVVM.ViewModels
     {
         Yes,
         No,
-        OK
+        OK,
+        None
     }
     public class CustomDialogViewModel : ObservableObject
     {
+        TaskCompletionSource<CustomDialogResult> _rlt;
+        CusDialogService _dialogService;
         string _message;        //Message showed on Dialog
         public string Message 
         { 
@@ -45,13 +51,48 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-        public CustomDialogViewModel(string msg,bool btn_type)
+        CustomDialogResult dialogResult;           
+        public CustomDialogResult DialogResult
+        {
+            get => dialogResult;
+            set => dialogResult = value;
+        }
+
+        //Command
+        public RelayCommand<string> CustomDialogResultCommand{ get; set; }
+        public RelayCommand<object> MoveWndCommand { get; set; }
+
+        public CustomDialogViewModel(string msg,bool btn_type, TaskCompletionSource<CustomDialogResult> rlt ,CusDialogService service)
         {
             Message = msg;
             IsYsNoIcon = btn_type;
             IsOKIcon = !btn_type;
+            this._rlt = rlt;
+            _dialogService = service;
+            CustomDialogResultCommand = new RelayCommand<string>(o => SwitchResult(o));
+            MoveWndCommand = new RelayCommand<object>((o) => { _dialogService.MoveDialog(); });
         }
 
+        private void SwitchResult(string o)
+        {
+            switch (o)
+            {
+                case "Yes":
+                    DialogResult=CustomDialogResult.Yes; break;
+                case "No":
+                    DialogResult=CustomDialogResult.No; break;
+                case "OK":
+                    DialogResult=CustomDialogResult.OK;break;
+                default:
+                    DialogResult = CustomDialogResult.None; break;
+            }
+            MusicSystemService.Instance.PlayBTN_ClickSound();
+
+            _rlt.TrySetResult(DialogResult);
+            _dialogService.CloseDialog();
+        }
+
+        
 
     }
 }

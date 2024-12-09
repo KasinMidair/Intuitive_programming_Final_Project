@@ -34,20 +34,6 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
 
-
-                <!--<Grid>
-                    -->
-                <!--Base Grid-->
-                <!--
-                    <Canvas x:Name="pnlcontainer" Margin="241,38,276,38" Grid.Column="1">
-                        <Canvas x:Name="pnlGamePlaySpace" Width="360" Height="360" Canvas.Left="10" Canvas.Top="10" 
-                                HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="0.495,0.495">
-                        </Canvas>
-                    </Canvas>
-            
-                </Grid>-->
-
-
                 <!--Loading pages in frame-->
                 <Frame x:Name="MainFrame" Width="920" Height="600"
                        FocusVisualStyle="{x:Null}" Grid.RowSpan="2"
@@ -244,6 +230,8 @@
                 </Button>
 
             </Grid>
+            
         </Border>
+        <MediaElement Width="105"></MediaElement>
     </Grid>
 </Window>

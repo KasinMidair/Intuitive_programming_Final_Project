@@ -19,8 +19,8 @@ namespace PuzzleGame.MVVM.ViewModels
     {
         public readonly LoadPictureListService _loadPicListService = new LoadPictureListService();
 
-        private ObservableObject _currentPage;
-        public ObservableObject CurrentPage
+        private ObservableObject? _currentPage;
+        public ObservableObject? CurrentPage
         {
             get => _currentPage;
             set
@@ -37,12 +37,12 @@ namespace PuzzleGame.MVVM.ViewModels
         public RelayCommand<object> SelectPictureCommand { get; set; }
 
 
-        Connection connection = new Connection();
+        //Connection connection = new Connection();
         public List<Picture> PictureList { get; set; }
         public int hour, minute, second;
 
-        Picture _selectedPicture;
-        public Picture SelectedPicture
+        Picture? _selectedPicture;
+        public Picture? SelectedPicture
         {
             get { return _selectedPicture; }
             set
@@ -56,7 +56,7 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             _wndBgr = defaultColornum1;
             PictureList = new List<Picture>();
-            _loadPicListService.LoadPictureList(PictureList);
+           // _loadPicListService.LoadPictureList(PictureList);
 
             OpenGalleryCommand = new RelayCommand<object>((o) =>
             {

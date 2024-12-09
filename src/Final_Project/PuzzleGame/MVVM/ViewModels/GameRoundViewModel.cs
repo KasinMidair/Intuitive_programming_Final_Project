@@ -3,6 +3,7 @@ using PuzzleGame.Core.Helper;
 using PuzzleGame.MVVM.Models;
 using PuzzleGame.Stores;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -148,6 +149,7 @@ namespace PuzzleGame.MVVM.ViewModels
         }
 
 
+
         /// <summary>
         /// Add Piece into Controls of pnlGamePlaySpace and Playing
         /// </summary>
@@ -157,13 +159,16 @@ namespace PuzzleGame.MVVM.ViewModels
             if (GameModel.Instance.Status == GameStatus.StartGame)
             {
                 _imageProcessingService.SplitIntoPieces(ImgPieces);
-                int inversion;          
+                int inversion;
                 do
                 {
                     inversion = _imageProcessingService.ShufflePieces(ImgPieces);    // inversion before one time shuffle
                 }
-                while (!IsSolvable(inversion));             //check whether it is solvable or not
-                                                           //If not ,shuffle it again.
+                while (inversion == 0); 
+                if (!IsSolvable(inversion))                   //check whether it is solvable or not
+                {                                             //If not ,make it sovable.
+                    MakeItSovable(inversion);
+                }
             }
 
             if (imgPieces == null)                          
@@ -171,6 +176,19 @@ namespace PuzzleGame.MVVM.ViewModels
            
             MovingFocus();
             _clock.Start();                        //start timer
+        }
+
+        void MakeItSovable(int inversion)
+        {
+            for(int i = 0; i < imgPieces.Count-1; ++i)
+            {
+                if (i==GameModel.Instance.BlackBox_Indx) continue;
+                else if (imgPieces[i].CusPiece.ImgIdx > imgPieces[i + 1].CusPiece.ImgIdx)
+                {
+                    imgPieces[i].SwapCusVM(imgPieces[i+1]);
+                    if (IsSolvable(--inversion)) return;              //check whether it is solvable or not
+                }
+            }
         }
 
         /// <summary>
@@ -190,6 +208,7 @@ namespace PuzzleGame.MVVM.ViewModels
             
             return inversion % 2 == 0;
         }
+
 
 
         /// <summary>
@@ -264,8 +283,8 @@ namespace PuzzleGame.MVVM.ViewModels
         }
         public void MovingFocus()
         {
-            FocusPieceX = GameModel.Instance.BlackBox_Indx % GameModel.Instance.col * (int)GameModel.Instance.UnitX;
-            FocusPieceY = GameModel.Instance.BlackBox_Indx / GameModel.Instance.row * (int)GameModel.Instance.UnitY;
+            FocusPieceX = GameModel.Instance.BlackBox_Indx % GameModel.Instance.col * (int)(GameModel.Instance.gamePlayBoxX / GameModel.Instance.col);
+            FocusPieceY = GameModel.Instance.BlackBox_Indx / GameModel.Instance.row * (int)(GameModel.Instance.gamePlayBoxY/GameModel.Instance.row);
         }
 
         //private Key ConvertCharToKeyCode(string key)

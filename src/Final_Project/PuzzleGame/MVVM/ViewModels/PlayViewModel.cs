@@ -1,4 +1,5 @@
-﻿using MaterialDesignColors.ColorManipulation;
+﻿using Caliburn.Micro;
+using MaterialDesignColors.ColorManipulation;
 using PuzzleGame.Core;
 using PuzzleGame.Core.Helper;
 using PuzzleGame.MVVM.Models;
@@ -21,18 +22,13 @@ namespace PuzzleGame.MVVM.ViewModels
     {
         //Service and EventAggreator
         public NavigationService _navigationService;
-        public readonly CusDialogService _dialogService;
-
-
 
         //Command
         public RelayCommand<FrameworkElement> SettingCommand { get; set; }
         public RelayCommand<object> GoBackCommand { get; set; }
         public RelayCommand<object> GoForwardCommand { get; set; }
         public RelayCommand<object> ShutdownCommand { get; set; }
-        public RelayCommand<Window> CloseDialogCommand { get; set; }
-        public RelayCommand<Window> MoveWndCommand { get; set; }
-        public RelayCommand<string> ShowMSGBoxCommand { get; set; }
+
 
 
         GameRoundViewModel player;
@@ -105,10 +101,8 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             //Message subcriber
             EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Subscribe((o) => OnCurrentPageChanged(o));
-            EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => ShowCustomDialog(o));
 
-
-            _dialogService = new CusDialogService();
+            MusicSystemService.Instance.ChangeBackgroundMusic();
 
             toolBarColor = defaultColornum2;
             _wndBgr = defaultColornum1;
@@ -117,17 +111,21 @@ namespace PuzzleGame.MVVM.ViewModels
             IsGoForward = false;
 
             //init command 
-            SettingCommand = new RelayCommand<FrameworkElement>((SettingMenu)=>{ SettingMenuStatus(); });
-            ShutdownCommand = new RelayCommand<object>((o) => {  QuitApp(); });
-            GoBackCommand = new RelayCommand<object>((o) =>{ GoBackPage(); });
-            GoForwardCommand = new RelayCommand<object>((o) =>{ GoForwardPage(); }); 
-            CloseDialogCommand = new RelayCommand<Window>((o) =>{  CloseDialog(o); });
-            MoveWndCommand = new RelayCommand<Window>((o) =>{   MoveWnd(o); });
-            ShowMSGBoxCommand = new RelayCommand<string>((o) => { ShowCustomDialog(o); });
+            SettingCommand = new RelayCommand<FrameworkElement>((SettingMenu)=> { SettingMenuStatus(); });
+            ShutdownCommand = new RelayCommand<object>((o) => {
+                Task.Run(() =>
+                {
+                    var tcs = new TaskCompletionSource<bool>();
+                    MusicSystemService.Instance.PlayBTN_ClickSound();
+                    tcs.Task.Wait();
+                });
+                    QuitApp();
+            });
+            GoBackCommand = new RelayCommand<object>((o) => { GoBackPage(); });
+            GoForwardCommand = new RelayCommand<object>((o) => { GoForwardPage(); }); 
+
 
         }
-
-
 
         // Execute RelayCommand
         private void SettingMenuStatus() 
@@ -135,11 +133,12 @@ namespace PuzzleGame.MVVM.ViewModels
             IsSettingVisible = !IsSettingVisible;
             EventAggregator.GetEvent<PubSubEvent<bool>>().Publish(IsSettingVisible);
         }
-        private void QuitApp() => Application.Current.Shutdown();
-        public void CloseDialog(Window w) => w.Close();
-        public void MoveWnd(Window wnd) => wnd.DragMove();
-        private void ShowCustomDialog(string o) => _dialogService.ShowDialog(o);
-
+        private void QuitApp()
+        {
+            MusicSystemService.Instance.Dispose();
+            Application.Current.Shutdown();
+        
+        }
 
         public void  GoBackPage()
         {

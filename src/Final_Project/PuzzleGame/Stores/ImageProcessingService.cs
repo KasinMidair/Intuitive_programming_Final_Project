@@ -16,7 +16,20 @@ namespace PuzzleGame.Stores
 {
     public class ImageProcessingService
     {
-        
+
+        private static ImageProcessingService? _instance;
+        public static ImageProcessingService Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new ImageProcessingService();
+                }
+
+                return _instance;
+            }
+        }
         /// <summary>
         /// split original image into row x col piece
         /// </summary>
@@ -35,7 +48,7 @@ namespace PuzzleGame.Stores
 
                     if (index==GameModel.Instance.row*GameModel.Instance.col-1)
                     {
-                        pieceImg = new CroppedBitmap(GameModel.Instance.blckBoxImg, new Int32Rect(0, 0, (int)GameModel.Instance.UnitX, (int)GameModel.Instance.UnitY));
+                        pieceImg = new CroppedBitmap(GameModel.Instance.blckBoxImg, new Int32Rect(0, 0, (int)(GameModel.Instance.gamePlayBoxX / GameModel.Instance.col), (GameModel.Instance.gamePlayBoxY / GameModel.Instance.row)));
                         GameModel.Instance.BlackBox_Indx = index ;
                     }
                     else
@@ -66,22 +79,19 @@ namespace PuzzleGame.Stores
             List<int> ImgIndex = Enumerable.Range(0, GameModel.Instance.row * GameModel.Instance.col).ToList<int>();
             int pieceIndex = 0;
             Random random = new Random();
-            for (int i = 0; i < imgPieces.Count; ++i)
+            for (int i = 0; i < imgPieces.Count-1; ++i)
             {
-                int randIndex = random.Next(pieceIndex++, imgPieces.Count);
+                int randIndex = random.Next(pieceIndex++, imgPieces.Count-1);
                 imgPieces[i].SwapCusVM(imgPieces[randIndex]);
-
-                if (randIndex == GameModel.Instance.BlackBox_Indx)
-                    GameModel.Instance.BlackBox_Indx = i;
-               else if(i == GameModel.Instance.BlackBox_Indx)
-                    GameModel.Instance.BlackBox_Indx = randIndex;
-
                 Swap(ImgIndex, i, randIndex);
             };
 
-            ImgIndex.Remove(GameModel.Instance.row*GameModel.Instance.col-1);
+            ImgIndex.Remove(GameModel.Instance.row * GameModel.Instance.col - 1);
+
+
             return InversionCountingService.CountInversions(ImgIndex);
         }
+
 
         public void Swap(List<int>arr, int a,int b)
         {

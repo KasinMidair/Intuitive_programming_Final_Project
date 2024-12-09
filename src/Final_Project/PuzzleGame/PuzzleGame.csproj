@@ -20,18 +20,42 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Imgs\AddPicBackGround.jpg" />
+    <Resource Include="Assets\Audio\btn_click.mp3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\picture\pic1.jpg" />
-    <Resource Include="Assets\picture\pic2.jpg" />
-    <Resource Include="Assets\picture\pic3.jpg" />
-    <Resource Include="Assets\picture\pic4.jpg" />
-    <Resource Include="Assets\picture\pic5.jpg" />
-    <Resource Include="Assets\picture\pic6.jpg" />
-    <Resource Include="Assets\picture\pic7.jpg" />
-    <Resource Include="Assets\picture\pic8.jpg" />
+    <Resource Include="Assets\picture\pic1.png" />
+    <Resource Include="Assets\picture\pic2.png" />
+    <Resource Include="Assets\picture\pic3.png" />
+    <Resource Include="Assets\picture\pic4.png" />
+    <Resource Include="Assets\picture\pic5.png" />
+    <Resource Include="Assets\picture\pic6.png" />
+    <Resource Include="Assets\picture\pic7.png" />
+    <Resource Include="Assets\picture\pic8.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\picture\pic9.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Audio\BGMusicNum3.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Audio\BGMusicNum2.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Audio\DefaultBGMusic.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Imgs\Sprite-0002.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Imgs\AddPicBackGround.jpg" />
   </ItemGroup>
 
   <ItemGroup>
