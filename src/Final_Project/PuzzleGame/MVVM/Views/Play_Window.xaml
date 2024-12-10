@@ -498,12 +498,12 @@
                     </Style>
                 </materialDesign:DrawerHost.Style>
                 <materialDesign:DrawerHost.BottomDrawerContent>
-                    <Canvas Height="455">
+                    <Canvas Height="455" Margin="0,80,0,0">
                         <ScrollViewer
                             Canvas.Left="74"
-                            Canvas.Top="5"
+                            Canvas.Top="-80"
                             Width="790"
-                            Height="200"
+                            Height="300"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FocusVisualStyle="{x:Null}"
@@ -524,7 +524,7 @@
                                                         IsDirectionReversed="False"
                                                         Orientation="Vertical">
                                                         <Track.Thumb>
-                                                            <Thumb Width="10" Background="#E4FF54" />
+                                                            <Thumb Width="8" Background="#E4FF54" />
                                                         </Track.Thumb>
                                                     </Track>
                                                 </Grid>
@@ -555,8 +555,14 @@
                                     FontSize="16"
                                     Foreground="Snow"
                                     TextWrapping="Wrap">
-                                    - The goal is to rearrange jumbled pieces to form a complete image or solve a given puzzle.
+                                    The goal is to rearrange jumbled pieces to form a complete image or solve a given puzzle. Moving pieces into their correct spots, usually by using the mouse,Arrow keys or WASD .
                                 </TextBlock>
+
+                                <!-- demo pic -->
+                                <StackPanel Orientation="Horizontal" Height="280"  HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <Image Source="pack://application:,,,/Assets/Imgs/info_demopic.png" Height="214" Width="283"/>
+                                    <Image Source="pack://application:,,,/Assets/Imgs/info_demopic2.png" Height="214" Width="280"/>
+                                </StackPanel>
 
                                 <TextBlock
                                     Width="730"
@@ -564,9 +570,22 @@
                                     FontSize="16"
                                     Foreground="Snow"
                                     TextWrapping="Wrap">
-                                    -Drag and drop the pieces into their correct spots, usually by using the mouse or touch screen.
-                                    -Many puzzle games offer different difficulty levels, from easy to hard, based on the number of pieces or complexity of the puzzle.Puzzle games are a great way to relax, improve cognitive skills, and enjoy a sense of accomplishment once the puzzle is completed.
-                                    -To increase the game's difficulty, use the mouse to play, but you cannot immediately move a block back after moving it. To do so, another way is required.
+                                    </TextBlock>
+
+                                <TextBlock
+                                    Width="730"
+                                    HorizontalAlignment="Left"
+                                    FontSize="16"
+                                    Foreground="Snow"
+                                    TextWrapping="Wrap">
+                                    Many puzzle games offer different difficulty levels, from easy to hard, based on the number of pieces or complexity of the puzzle.Puzzle games are a great way to relax,
+                                    improve cognitive skills, and enjoy a sense of accomplishment once the puzzle is completed.</TextBlock>
+                                <TextBlock
+     Width="730"
+     HorizontalAlignment="Left"
+     FontSize="16"
+     Foreground="Snow"
+     TextWrapping="Wrap"> To increase the game's difficulty, use the mouse to play, but you cannot immediately move a block back after moving it. To do so, another way is required.
                                 </TextBlock>
                             </StackPanel>
                         </ScrollViewer>
@@ -577,7 +596,7 @@
                             Height="260"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Background="#E4FF54"
+                            Background="#E5FF5B"
                             CornerRadius="20">
                             <StackPanel
                                 Width="922"
@@ -604,7 +623,7 @@
                                     Our project team aims to create an engaging and interactive game with a user-friendly interface. We aim to leverage WPF features to create rich experiences. This project helps us to enhance our game development and UI design skills, applying visual programming techniques in a practical way.
                                 </TextBlock>
                                 <Button
-                                    Margin="4"
+                                    Margin="0,-10,0,0"
                                     VerticalAlignment="Center"
                                     Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                                     CommandParameter="{x:Static Dock.Bottom}"

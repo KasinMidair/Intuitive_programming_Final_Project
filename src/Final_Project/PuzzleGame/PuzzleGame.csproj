@@ -20,6 +20,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Imgs\info_demopic2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Imgs\info_demopic.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\picture\pic10.png" />
   </ItemGroup>
 

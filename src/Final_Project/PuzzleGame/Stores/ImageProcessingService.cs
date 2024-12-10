@@ -79,9 +79,9 @@ namespace PuzzleGame.Stores
             List<int> ImgIndex = Enumerable.Range(0, GameModel.Instance.row * GameModel.Instance.col).ToList<int>();
             //int pieceIndex = 0;
             //Random random = new Random();
-            //for (int i = 0; i < imgPieces.Count-1; ++i)
+            //for (int i = 0; i < imgPieces.Count - 1; ++i)
             //{
-            //    int randIndex = random.Next(pieceIndex++, imgPieces.Count-1);
+            //    int randIndex = random.Next(pieceIndex++, imgPieces.Count - 1);
             //    imgPieces[i].SwapCusVM(imgPieces[randIndex]);
             //    Swap(ImgIndex, i, randIndex);
             //};
