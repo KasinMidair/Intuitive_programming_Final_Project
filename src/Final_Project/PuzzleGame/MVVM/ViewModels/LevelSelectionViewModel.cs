@@ -35,6 +35,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public RelayCommand<object> OpenGalleryCommand { get; set; } //command for Gallery button
         public RelayCommand<object> SelectPictureCommand { get; set; }
+        public RelayCommand<object> PlayCommand { get; set; }
 
 
         //Connection connection = new Connection();
@@ -52,20 +53,26 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
+        string _numberOfPieces;
+        public string NumberOfPieces
+        {
+            get => _numberOfPieces;
+            set
+            {
+                _numberOfPieces = value;
+                OnPropertyChanged();
+            }
+        }
+
         public LevelSelectionViewModel()
         {
             _wndBgr = defaultColornum1;
             PictureList = new List<Picture>();
            // _loadPicListService.LoadPictureList(PictureList);
 
-            OpenGalleryCommand = new RelayCommand<object>((o) =>
-            {
-                CurrentPage = new GalleryViewModel();
-            });
+            OpenGalleryCommand = new RelayCommand<object>((o) => {CurrentPage = new GalleryViewModel();});
 
-            SelectPictureCommand = new RelayCommand<object>((o) =>
-            {
-            });
+            PlayCommand = new RelayCommand<object>((o) => {CurrentPage = new GameRoundViewModel();});
         }
     }
 }

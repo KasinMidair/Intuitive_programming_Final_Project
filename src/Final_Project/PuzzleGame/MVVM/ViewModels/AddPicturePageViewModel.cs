@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using DryIoc.FastExpressionCompiler.LightExpression;
 using Microsoft.Win32;
@@ -19,6 +20,7 @@ namespace PuzzleGame.MVVM.ViewModels
 {
     class AddPicturePageViewModel: ObservableObject
     {
+        public readonly CusDialogService _cusDialogService = new CusDialogService();
         public readonly GalleryViewModel _galleryViewModel = new GalleryViewModel();
 
         private ObservableObject _currentPage;
@@ -84,8 +86,15 @@ namespace PuzzleGame.MVVM.ViewModels
         public RelayCommand<object> ChoosePictureCommand { get; set; }
         public RelayCommand<object> AddPictureCommand { get; set; }
 
+
+        public string path { get; set; }
+
+
         public AddPicturePageViewModel()
         {
+
+
+
             _wndBgr = defaultColornum1;
             NewPicUrl = @"/Assets/Imgs/AddPicBackGround.jpg";
 
@@ -107,7 +116,13 @@ namespace PuzzleGame.MVVM.ViewModels
                 
                 if (NewPicName == null || NewPicName == "")
                 {
-                    MessageBox.Show("Chua nhap ten tranh");
+                    _cusDialogService.ShowDialog("Chua nhap ten tranh", true);
+                    check = true;
+                }
+                else if(
+                NewPicUrl == null)
+                {
+                    _cusDialogService.ShowDialog("Chua chon tranh");
                     check = true;
                 }
                 else
@@ -116,7 +131,7 @@ namespace PuzzleGame.MVVM.ViewModels
                     {
                         if (NewPicName == pic.Name)
                         {
-                            MessageBox.Show("Ten tranh da ton tai");
+                            _cusDialogService.ShowDialog("Ten tranh da ton tai");
                             check = true;
                             break;
                         }
@@ -128,13 +143,15 @@ namespace PuzzleGame.MVVM.ViewModels
                     NewPic = new Picture
                     {
                         Name = NewPicName,
-                        Url = "F:\\School\\IT008\\Intuitive_programming_Final_Project\\src\\Final_Project\\PuzzleGame\\Assets\\picture\\" + NewPicName + ".jpg"
+                        Url = Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + @"Assets\picture\" + NewPicName + ".jpg"
                     };
                     FileInfo info = new FileInfo(NewPicUrl);
                     info.CopyTo(NewPic.Url);
-                    MessageBox.Show("Da luu tranh");
+                    _cusDialogService.ShowDialog("Ten tranh da ton tai");
                 }
             });
         }
+
+
     }
 }

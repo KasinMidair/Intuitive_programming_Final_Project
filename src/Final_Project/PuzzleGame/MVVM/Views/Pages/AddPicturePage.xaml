@@ -36,7 +36,7 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
-<!-- Picture holder -->
+        <!-- Picture holder -->
         <Image x:Name="PictreHolder"
                Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1"
                Source="{Binding NewPicUrl, Mode=OneWay}">
@@ -45,21 +45,21 @@
             </Image.InputBindings>
         </Image>
 
-<!-- Choose Picture Button -->
+        <!-- Choose Picture Button -->
         <Button x:Name="ChoosePicture_BTN" Content="Choose Picture"
                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                 FontSize="20" Foreground="Snow" FontWeight="SemiBold"
                 Grid.Column="1" Grid.Row="5"
                 Command="{Binding ChoosePictureCommand}"/>
-        
-<!-- Add Button -->
+
+        <!-- Add Button -->
         <Button x:Name="Add_BTN" Content="Add"
                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                 FontSize="20" Foreground="Snow" FontWeight="SemiBold"
                 Grid.Column="3" Grid.Row="5"
                 Command="{Binding AddPictureCommand}"/>
 
-<!-- Image name textbox -->
+        <!-- Image name textbox -->
         <TextBox x:Name="ImageName_TB"
                  Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"
                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
@@ -68,10 +68,10 @@
                  Background="snow">
         </TextBox>
 
-        <TextBlock Grid.ColumnSpan="3" Margin="10,0,10,0" Grid.Column="1"
+        <TextBlock Grid.ColumnSpan="5" Margin="0,0,-684,0"
                    Background="snow"
                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-                   FontSize="20" Foreground="Black" FontWeight="SemiBold"
-                   Text="{Binding NewPicName, Mode=OneWay}"></TextBlock>
+                   FontSize="10" Foreground="Black" FontWeight="SemiBold"
+                   Text="{Binding NewPic.Url, Mode=OneWay}"/>
     </Grid>
 </Page>

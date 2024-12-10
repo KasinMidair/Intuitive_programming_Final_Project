@@ -47,14 +47,15 @@
                   Background="Snow"
                   SelectedIndex="0"
                   FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-                  FontSize="20" Foreground="#15161C" FontWeight="SemiBold">
-            <ComboBoxItem Content="3 x 3"/>
-            <ComboBoxItem Content="4 x 4"/>
-            <ComboBoxItem Content="5 x 5"/>
-            <ComboBoxItem Content="6 x 6"/>
-            <ComboBoxItem Content="7 x 7"/>
-            <ComboBoxItem Content="8 x 8"/>
-            <ComboBoxItem Content="9 x 9"/>
+                  FontSize="20" Foreground="#15161C" FontWeight="SemiBold"
+                  SelectedItem="{Binding NumberOfPieces}">
+            <ComboBoxItem Content="3"/>
+            <ComboBoxItem Content="4"/>
+            <ComboBoxItem Content="5"/>
+            <ComboBoxItem Content="6"/>
+            <ComboBoxItem Content="7"/>
+            <ComboBoxItem Content="8"/>
+            <ComboBoxItem Content="9"/>
         </ComboBox>
 
         <!-- Picture selection combobox-->
@@ -82,7 +83,8 @@
         <!-- Play button -->
         <Button x:Name="Play_BTN" Grid.Column="1" Grid.Row="2" Margin="0,99,0,0"
                 Background="#9DB899" Width="280" Height="50"
-                Foreground="snow" FontSize="30" FontWeight="Black" Content="Play"/>
+                Foreground="snow" FontSize="30" FontWeight="Black" Content="Play"
+                Command="{Binding PlayCommand}"/>
 
         <!-- Gallery button -->
         <Button x:Name="Gallery_BTN" Grid.Column="1" Grid.Row="2" Margin="0,18,0,81"
@@ -119,8 +121,6 @@
             Background="Snow"
             FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
             Foreground="#15161C" FontSize="25" FontWeight="SemiBold"/>
-
-
     </Grid>
 
 </Page>
