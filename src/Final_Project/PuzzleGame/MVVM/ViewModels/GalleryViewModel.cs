@@ -27,7 +27,7 @@ namespace PuzzleGame.MVVM.ViewModels
                 if (_currentPage != value)
                 {
                     _currentPage = value;
-                    EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Publish(CurrentPage);
+
                 }
             }
         }
@@ -48,6 +48,7 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
+
         Picture _selectedPicture;
         public Picture SelectedPicture
         {
@@ -55,9 +56,10 @@ namespace PuzzleGame.MVVM.ViewModels
             set
             {
                 _selectedPicture = value;
-                OnPropertyChanged("SelectedPicture");
+                OnPropertyChanged();
             }
         }
+
 
         //Command...
         public RelayCommand<object> AddPicturePageOpenCommand { get; set; }
@@ -70,7 +72,11 @@ namespace PuzzleGame.MVVM.ViewModels
 
             _loadPicListService.LoadPictureList(PictureList);
 
-            AddPicturePageOpenCommand = new RelayCommand<object>((o) => { CurrentPage = new AddPicturePageViewModel(); });
+            AddPicturePageOpenCommand = new RelayCommand<object>((o) => 
+            {
+                CurrentPage = new AddPicturePageViewModel(); 
+            });
+
             DeletePictureCommand = new RelayCommand<object>((o) => { DeleteSelectedPicture(); });
         }
 
