@@ -42,7 +42,7 @@ namespace PuzzleGame.Stores
             {
                 "Assets/Audio/DefaultBGMusic.mp3",
                 "Assets/Audio/BGMusicNum2.mp3",
-                "Assets/Audio/BGMusicNum3.mp3" 
+                "Assets/Audio/BGMusicNum3.mp3"
             };
             sfxAdioSource = ExtractEmbeddedResource("Assets/Audio/btn_click.mp3");
             _backgroundMusic = new MediaPlayer();

@@ -29,9 +29,6 @@ namespace PuzzleGame.MVVM.ViewModels
         public RelayCommand<object> GoForwardCommand { get; set; }
         public RelayCommand<object> ShutdownCommand { get; set; }
 
-
-
-        GameRoundViewModel player;
         bool isGoBack;
         public bool IsGoBack 
         {

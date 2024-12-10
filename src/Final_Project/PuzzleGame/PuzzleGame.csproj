@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Imgs\LeaderBoard_ico.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\Imgs\info_demopic2.png" />
   </ItemGroup>
 
@@ -72,10 +76,6 @@
     <Resource Include="Assets\Audio\DefaultBGMusic.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Assets\Imgs\Sprite-0002.jpg" />
   </ItemGroup>
 
   <ItemGroup>
