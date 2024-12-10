@@ -42,20 +42,14 @@
 
 
             <!--  Setting panel  -->
-            <Border
+            <Canvas Canvas.ZIndex="6" Background="#00000001"
                 x:Name="SettingMenu"
-                Canvas.Left="125"
-                Canvas.Top="75"
-                Width="675"
-                Height="447"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Background="#f4c6a3"
-                CornerRadius="25">
+                Width="920"
+                Height="600">
 
                 <!--  Pannel animation  -->
-                <Border.Style>
-                    <Style TargetType="Border">
+                <Canvas.Style>
+                    <Style TargetType="Canvas">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsSettingVisible}" Value="False">
                                 <DataTrigger.EnterActions>
@@ -67,330 +61,339 @@
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </Border.Style>
+                </Canvas.Style>
 
-                <Border.RenderTransform>
+                <Canvas.RenderTransform>
                     <TranslateTransform Y="-1000" />
-                </Border.RenderTransform>
+                </Canvas.RenderTransform>
+                <Border  
+                    Width="676"
+                    Height="447"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Background="{Binding ToolBarColor}"
+                    CornerRadius="25" Canvas.Left="122" Canvas.Top="78">
+                    <Canvas>
 
-                <Canvas>
-
-                    <!--  User info block  -->
-                    <Border
-                        Canvas.Left="74"
-                        Canvas.Top="39"
-                        Width="376"
-                        Height="106"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Background="Snow"
-                        CornerRadius="20">
-                        <Grid Margin="7,0,-7,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="105" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50" />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-
-                            <!--  User name block  -->
-                            <TextBlock
-                                x:Name="UserName"
-                                Grid.Column="1"
-                                Height="20"
-                                Margin="6,28,12,2"
-                                FontSize="20"
-                                Text="KassinMidair" />
-                            <Border
-                                Grid.RowSpan="2"
-                                Margin="6,9,7,8"
-                                BorderBrush="#413237"
-                                BorderThickness="1"
-                                CornerRadius="10">
-                                <Border.Background>
-                                    <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/avatar.jpg" />
-                                </Border.Background>
-                            </Border>
-
-                            <!--  User id block  -->
-                            <Border
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Width="226"
-                                Height="33"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Background="#313237"
-                                CornerRadius="14"
-                                RenderTransformOrigin="0.5,0.595">
-
-
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="40" />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <!--  id label  -->
-                                    <TextBlock
-                                        Margin="14,0,10,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="Snow"
-                                        Text="Id :" />
-
-                                    <!--  id string  -->
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="2"
-                                        Margin="1,0,75,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="Snow"
-                                        Text="123456" />
-
-
-                                    <!--  Copy button  -->
-                                    <Button
-                                        x:Name="EnterBTN"
-                                        Grid.Column="2"
-                                        Height="23"
-                                        Margin="15,5,5,5"
-                                        Padding="0"
-                                        materialDesign:ButtonAssist.CornerRadius="10"
-                                        Background="#ccc9ff"
-                                        BorderThickness="0"
-                                        FocusVisualStyle="{x:Null}">
-                                        <TextBlock
-                                            Height="16"
-                                            FontSize="12"
-                                            FontWeight="Black"
-                                            Foreground="#37383C"
-                                            RenderTransformOrigin="0.666,-0.333"
-                                            Text="Copy" />
-                                    </Button>
-                                </Grid>
-                            </Border>
-                        </Grid>
-
-                    </Border>
-
-                    <!--  to Leaderboard button  -->
-                    <Button
-                        x:Name="LeaderboardBTN"
-                        Grid.Column="1"
-                        Canvas.Left="398"
-                        Canvas.Top="12"
-                        Width="85"
-                        Height="71"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top"
-                        materialDesign:ButtonAssist.CornerRadius="15"
-                        FocusVisualStyle="{x:Null}"
-                        Style="{StaticResource ResourceKey=BTN}">
-                        <Button.Background>
-                            <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/LeaderBoard_ico.png" />
-                        </Button.Background>
-                        <TextBlock
-                            Width="67"
-                            Height="16"
-                            Margin="15,17,0,0"
-                            FontSize="10"
-                            Foreground="#301B56"
-                            Text="Leaderboard"
-                            TextWrapping="Wrap" />
-
-                    </Button>
-
-                    <TextBlock
-                        Canvas.Left="452"
-                        Canvas.Top="157"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        FontSize="16"
-                        FontWeight="ExtraBlack"
-                        Foreground="#668663">
-                        BGMUSIC
-                    </TextBlock>
-                    <TextBlock
-                        Canvas.Left="86"
-                        Canvas.Top="157"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top"
-                        FontSize="16"
-                        FontWeight="ExtraBlack"
-                        Foreground="#668663">
-                        VOLUME
-                    </TextBlock>
-                    <!--  setting func  -->
-                    <StackPanel
-                        Canvas.Left="75"
-                        Canvas.Top="181"
-                        Width="524"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top"
-                        Orientation="Horizontal">
-                        <!--  Game volume config  -->
+                        <!--  User info block  -->
                         <Border
-                            Width="351"
-                            Height="160"
-                            Margin="0,0,20,0"
+                            Canvas.Left="74"
+                            Canvas.Top="39"
+                            Width="376"
+                            Height="106"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Background="Snow"
                             CornerRadius="20">
-                            <Grid>
+                            <Grid Margin="7,0,-7,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="105" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition />
+                                    <RowDefinition Height="50" />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
-                                <!--  Background music volume slider  -->
-                                <Grid
-                                    x:Name="BG_Music"
-                                    Canvas.Left="72"
-                                    Canvas.Top="162"
-                                    Width="310"
-                                    Height="40"
-                                    Margin="22,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="80" />
-                                        <ColumnDefinition Width="27*" />
-                                        <ColumnDefinition Width="13*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        FontSize="20"
-                                        Foreground="#101610"
-                                        Text="Music" />
-                                    <Slider
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="2"
-                                        Margin="0,6,5,10"
-                                        Maximum="50"
-                                        Minimum="0"
-                                        RenderTransformOrigin="0.5,0.503"
-                                        Value="35" />
-                                </Grid>
+                                <!--  User name block  -->
+                                <TextBlock
+                                    x:Name="UserName"
+                                    Grid.Column="1"
+                                    Height="20"
+                                    Margin="6,28,12,2"
+                                    FontSize="20"
+                                    Text="KassinMidair" />
+                                <Border
+                                    Grid.RowSpan="2"
+                                    Margin="6,9,7,8"
+                                    BorderBrush="#413237"
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/avatar.jpg" />
+                                    </Border.Background>
+                                </Border>
 
-                                <!--  SFX audio volume slider  -->
-                                <Grid
-                                    x:Name="SFX_Music"
+                                <!--  User id block  -->
+                                <Border
                                     Grid.Row="1"
-                                    Width="310"
-                                    Height="40"
-                                    Margin="22,0,0,0"
+                                    Grid.Column="1"
+                                    Width="226"
+                                    Height="33"
                                     HorizontalAlignment="Left"
-                                    VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="80" />
-                                        <ColumnDefinition Width="27*" />
-                                        <ColumnDefinition Width="13*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        FontSize="20"
-                                        Foreground="#101610"
-                                        Text="SFX" />
-                                    <Slider
-                                        Grid.Column="1"
-                                        Grid.ColumnSpan="2"
-                                        Margin="0,6,5,10"
-                                        Maximum="50"
-                                        Minimum="0"
-                                        RenderTransformOrigin="0.5,0.503"
-                                        Value="35" />
-                                </Grid>
+                                    VerticalAlignment="Center"
+                                    Background="#313237"
+                                    CornerRadius="14"
+                                    RenderTransformOrigin="0.5,0.595">
+
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40" />
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <!--  id label  -->
+                                        <TextBlock
+                                            Margin="14,0,10,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="Snow"
+                                            Text="Id :" />
+
+                                        <!--  id string  -->
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Grid.ColumnSpan="2"
+                                            Margin="1,0,75,0"
+                                            VerticalAlignment="Center"
+                                            Foreground="Snow"
+                                            Text="123456" />
+
+
+                                        <!--  Copy button  -->
+                                        <Button
+                                            x:Name="EnterBTN"
+                                            Grid.Column="2"
+                                            Height="23"
+                                            Margin="15,5,5,5"
+                                            Padding="0"
+                                            materialDesign:ButtonAssist.CornerRadius="10"
+                                            Background="#ccc9ff"
+                                            BorderThickness="0"
+                                            FocusVisualStyle="{x:Null}">
+                                            <TextBlock
+                                                Height="16"
+                                                FontSize="12"
+                                                FontWeight="Black"
+                                                Foreground="#37383C"
+                                                RenderTransformOrigin="0.666,-0.333"
+                                                Text="Copy" />
+                                        </Button>
+                                    </Grid>
+                                </Border>
                             </Grid>
+
                         </Border>
 
-
-                        <!--  -background music picker  -->
-                        <Border
-                            Width="149"
-                            Height="160"
-                            VerticalAlignment="Top"
-                            Background="Snow"
-                            CornerRadius="20">
-                            <Grid Margin="14,0,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <RadioButton
-                                    Grid.Row="0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Content="Joyful Jingles"
-                                    FocusVisualStyle="{x:Null}"
-                                    Foreground="#101610"
-                                    IsChecked="True" />
-                                <RadioButton
-                                    Grid.Row="2"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Content="Cloud Garden"
-                                    FocusVisualStyle="{x:Null}"
-                                    Foreground="#101610" />
-                                <RadioButton
-                                    Grid.Row="1"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Content="Silly Symphony"
-                                    FocusVisualStyle="{x:Null}"
-                                    Foreground="#101610" />
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-
-                    <Grid
-                        Canvas.Left="115"
-                        Canvas.Top="341"
-                        Width="440"
-                        Height="99"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <!--  Back to mainmenu button  -->
+                        <!--  to Leaderboard button  -->
                         <Button
-                            x:Name="MainMenuBTN"
-                            Grid.Column="0"
-                            Width="130"
-                            Height="40"
-                            materialDesign:ButtonAssist.CornerRadius="17"
-                            Background="#97C693"
-                            BorderBrush="#97C693"
-                            FocusVisualStyle="{x:Null}">
-                            <TextBlock
-                                FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                                FontSize="20"
-                                Text="Main menu" />
-                        </Button>
-                        <!--  Enter continue game button  -->
-                        <Button
-                            x:Name="ContinueBTN"
+                            x:Name="LeaderboardBTN"
                             Grid.Column="1"
-                            Width="130"
-                            Height="40"
-                            materialDesign:ButtonAssist.CornerRadius="17"
-                            Background="#97C693"
-                            BorderBrush="#97C693"
-                            FocusVisualStyle="{x:Null}">
+                            Canvas.Left="398"
+                            Canvas.Top="12"
+                            Width="85"
+                            Height="71"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            materialDesign:ButtonAssist.CornerRadius="15"
+                            FocusVisualStyle="{x:Null}"
+                            Style="{StaticResource ResourceKey=BTN}">
+                            <Button.Background>
+                                <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/LeaderBoard_ico.png" />
+                            </Button.Background>
                             <TextBlock
-                                FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                                FontSize="20"
-                                Text="Continue" />
+                                Width="67"
+                                Height="16"
+                                Margin="15,17,0,0"
+                                FontSize="10"
+                                Foreground="#301B56"
+                                Text="Leaderboard"
+                                TextWrapping="Wrap" />
+
                         </Button>
 
-                    </Grid>
-                </Canvas>
-            </Border>
+                        <TextBlock
+                            Canvas.Left="452"
+                            Canvas.Top="157"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            FontWeight="ExtraBlack"
+                            Foreground="#668663">
+                            BGMUSIC
+                        </TextBlock>
+                        <TextBlock
+                            Canvas.Left="86"
+                            Canvas.Top="157"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            FontSize="16"
+                            FontWeight="ExtraBlack"
+                            Foreground="#668663">
+                            VOLUME
+                        </TextBlock>
+                        <!--  setting func  -->
+                        <StackPanel
+                            Canvas.Left="75"
+                            Canvas.Top="181"
+                            Width="524"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Orientation="Horizontal">
+                            <!--  Game volume config  -->
+                            <Border
+                                Width="351"
+                                Height="160"
+                                Margin="0,0,20,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Background="Snow"
+                                CornerRadius="20">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <!--  Background music volume slider  -->
+                                    <Grid
+                                        x:Name="BG_Music"
+                                        Canvas.Left="72"
+                                        Canvas.Top="162"
+                                        Width="310"
+                                        Height="40"
+                                        Margin="22,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="27*" />
+                                            <ColumnDefinition Width="13*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            FontSize="20"
+                                            Foreground="#101610"
+                                            Text="Music" />
+                                        <Slider
+                                            Grid.Column="1"
+                                            Grid.ColumnSpan="2"
+                                            Margin="0,6,5,10"
+                                            Maximum="50"
+                                            Minimum="0"
+                                            RenderTransformOrigin="0.5,0.503"
+                                            Value="35" />
+                                    </Grid>
+
+                                    <!--  SFX audio volume slider  -->
+                                    <Grid
+                                        x:Name="SFX_Music"
+                                        Grid.Row="1"
+                                        Width="310"
+                                        Height="40"
+                                        Margin="22,0,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="27*" />
+                                            <ColumnDefinition Width="13*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            FontSize="20"
+                                            Foreground="#101610"
+                                            Text="SFX" />
+                                        <Slider
+                                            Grid.Column="1"
+                                            Grid.ColumnSpan="2"
+                                            Margin="0,6,5,10"
+                                            Maximum="50"
+                                            Minimum="0"
+                                            RenderTransformOrigin="0.5,0.503"
+                                            Value="35" />
+                                    </Grid>
+                                </Grid>
+                            </Border>
+
+
+                            <!--  -background music picker  -->
+                            <Border
+                                Width="149"
+                                Height="160"
+                                VerticalAlignment="Top"
+                                Background="Snow"
+                                CornerRadius="20">
+                                <Grid Margin="14,0,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <RadioButton
+                                        Grid.Row="0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Content="Joyful Jingles"
+                                        FocusVisualStyle="{x:Null}"
+                                        Foreground="#101610"
+                                        IsChecked="True" />
+                                    <RadioButton
+                                        Grid.Row="2"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Content="Cloud Garden"
+                                        FocusVisualStyle="{x:Null}"
+                                        Foreground="#101610" />
+                                    <RadioButton
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Content="Silly Symphony"
+                                        FocusVisualStyle="{x:Null}"
+                                        Foreground="#101610" />
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+
+                        <Grid
+                            Canvas.Left="115"
+                            Canvas.Top="341"
+                            Width="440"
+                            Height="99"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <!--  Back to mainmenu button  -->
+                            <Button
+                                x:Name="MainMenuBTN"
+                                Grid.Column="0"
+                                Width="130"
+                                Height="40"
+                                materialDesign:ButtonAssist.CornerRadius="17"
+                                Background="#97C693"
+                                BorderBrush="#97C693"
+                                FocusVisualStyle="{x:Null}">
+                                <TextBlock
+                                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                                    FontSize="20"
+                                    Text="Main menu" />
+                            </Button>
+                            <!--  Enter continue game button  -->
+                            <Button
+                                x:Name="SettingBackBTN"
+                                Grid.Column="1"
+                                Width="130"
+                                Height="40"
+                                materialDesign:ButtonAssist.CornerRadius="17"
+                                Background="#97C693"
+                                BorderBrush="#97C693"
+                                Command="{Binding SettingCommand}"
+                                CommandParameter="{Binding ElementName=SettingMenu}"
+                                FocusVisualStyle="{x:Null}">
+                                <TextBlock
+                                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                                    FontSize="20"
+                                    Text="Back" />
+                            </Button>
+
+                        </Grid>
+                    </Canvas>
+                </Border>
+            </Canvas>
 
 
 

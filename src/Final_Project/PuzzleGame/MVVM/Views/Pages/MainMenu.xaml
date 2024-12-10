@@ -63,7 +63,6 @@
             HorizontalAlignment="Center"
             Command="{Binding Source={StaticResource MainDataContext}, Path=ShutdownCommand}"
             CommandParameter="{Binding ElementName=ExitBTN}"
-            IsEnabled="{Binding Source={StaticResource MainDataContext}, Path=IsSettingVisible}"
             Style="{StaticResource ResourceKey=BTN}">
             <Button.Background>
                 <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Exit_BTN.png" />
