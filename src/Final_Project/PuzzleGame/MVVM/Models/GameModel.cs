@@ -77,9 +77,9 @@ namespace PuzzleGame.MVVM.Models
         private GameModel()
         {
             
-            gamePlayBoxX = 450;
-            gamePlayBoxY = 450;
-            string srcPath = "pack://application:,,,/Assets/picture/pic9.png";
+            gamePlayBoxX = 488;
+            gamePlayBoxY = 488;
+            string srcPath = "pack://application:,,,/Assets/picture/pic10.png";
             BitmapImage originalImage = new BitmapImage(new Uri(srcPath, UriKind.RelativeOrAbsolute));
             double scaleX = (double)gamePlayBoxX*originalImage.DpiX/ (originalImage.PixelWidth*96);
             double scaleY = (double)gamePlayBoxY*originalImage.DpiY / (originalImage.PixelHeight*96);

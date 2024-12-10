@@ -10,7 +10,6 @@
     xmlns:store="clr-namespace:PuzzleGame.Store"
     xmlns:viewmodels="clr-namespace:PuzzleGame.MVVM.ViewModels"
     Title="GameRound"
-    d:DataContext="{d:DesignInstance Type=core:ObservableObject}"
     d:DesignHeight="600"
     d:DesignWidth="920"
     store:FocusHelper.IsFocused="{Binding IsFocused}"
@@ -52,9 +51,13 @@
 
         <!--  Game Play Frame  -->
         <Canvas
-            Width="450"
-            Height="450"
-            Margin="78,100,392,50">
+            Canvas.Left="61"
+            Canvas.Top="52"
+            Width="488"
+            Height="488"
+            Canvas.ZIndex="5"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
 
             <!--  Using ItemsControl to display Pieces  -->
             <ItemsControl ItemsSource="{Binding ImgPieces}">
@@ -65,14 +68,21 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Image
+                        <Button FocusVisualStyle="{x:Null}"
                             Width="{Binding Path=Img.Width}"
                             Height="{Binding Path=Img.Height}"
-                            Source="{Binding Img}" />
+                            BorderThickness="0" 
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=Page}, Path=DataContext.MouseControlCommand}" 
+                            CommandParameter="{Binding CusPiece}">
+                            <Button.Background>
+                                <ImageBrush ImageSource="{Binding Img}" />
+                            </Button.Background>
+                        </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
+            <!--  focus frame  -->
             <Image
                 Canvas.Left="{Binding FocusPieceX}"
                 Canvas.Top="{Binding FocusPieceY}"
@@ -80,31 +90,17 @@
                 Source="pack://application:,,,/Assets/Imgs/Focus_Frame.png"
                 Stretch="Uniform" />
         </Canvas>
-        <TextBlock
-            Canvas.Left="170"
-            Canvas.Top="50"
-            Width="411"
-            Height="50"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Canvas.ZIndex="5"
-            FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-            FontSize="24"
-            FontWeight="SemiBold"
-            Foreground="#15161C">
-            LET'S HAVE SOME FUN!
-        </TextBlock>
 
 
         <!--  Original Picture  -->
         <Image
             x:Name="oringinPicPanel"
-            Canvas.Left="582"
-            Canvas.Top="84"
+            Canvas.Left="591"
+            Canvas.Top="83"
             Width="244"
             Height="244"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             Source="{Binding OriginPic}"
             Stretch="Uniform" />
         <TextBlock
@@ -124,46 +120,58 @@
 
 
         <!--  Timer  -->
-        <TextBlock
-            Canvas.Left="667"
-            Canvas.Top="356"
-            Width="78"
-            Height="50"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Canvas.ZIndex="5"
-            FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-            FontSize="24"
-            FontWeight="SemiBold"
-            Foreground="#15161C">
-            TIMER
-        </TextBlock>
+        <Grid
+            Canvas.Left="590"
+            Canvas.Top="360"
+            Width="245"
+            Height="111"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Canvas.ZIndex="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Canvas.Left="667"
+                Canvas.Top="356"
+                Width="66"
+                Height="30"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                FontSize="22"
+                FontWeight="SemiBold"
+                Foreground="#15161C">
+                TIMER
+            </TextBlock>
 
 
-        <TextBlock
-            Canvas.Left="585"
-            Canvas.Top="420"
-            Width="235"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Canvas.ZIndex="5"
-            FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-            FontSize="20"
-            FontWeight="SemiBold"
-            Foreground="#15161C"
-            RenderTransformOrigin="0.5,0.5"
-            Text="{Binding LastGameTimeStr, FallbackValue='00:00:00'}"
-            TextAlignment="Center">
-            <TextBlock.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="1" />
-                    <SkewTransform />
-                    <RotateTransform />
-                    <TranslateTransform />
-                </TransformGroup>
-            </TextBlock.RenderTransform>
+            <TextBlock
+                Grid.Row="1"
+                Canvas.Left="585"
+                Canvas.Top="420"
+                Width="235"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                FontSize="20"
+                FontWeight="SemiBold"
+                Foreground="#15161C"
+                RenderTransformOrigin="0.5,0.5"
+                Text="{Binding LastGameTimeStr, FallbackValue='00:00:00'}"
+                TextAlignment="Center">
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="1" />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
 
-        </TextBlock>
+            </TextBlock>
+        </Grid>
 
 
         <!--  Background Image  -->
@@ -172,7 +180,5 @@
             VerticalAlignment="Top"
             Canvas.ZIndex="4"
             Source="pack://application:,,,/Assets/Imgs/GamePlay_Frame.png" />
-
-
     </Canvas>
 </Page>

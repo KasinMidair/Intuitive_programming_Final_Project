@@ -4,6 +4,7 @@ using PuzzleGame.MVVM.Models;
 using PuzzleGame.Stores;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -53,6 +54,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
         //Command handling input key
         public RelayCommand<object> HandleKeyCommand { get; set; }
+        public RelayCommand<object> MouseControlCommand { get; set; }
 
         private bool _isFocused;            //set focus 
         public bool IsFocused
@@ -127,10 +129,13 @@ namespace PuzzleGame.MVVM.ViewModels
             _lastGameTime = new TimeSpan(0,0,0);
             LastGameTimeStr = _lastGameTime.ToString(@"hh\:mm\:ss");
             GameModel.Instance.Status=GameStatus.StartGame;
-            HandleKeyCommand = new RelayCommand<object>(o => { Game_Control((string)o) ;}); 
+            HandleKeyCommand = new RelayCommand<object>(o => { Game_Control((string)o) ;});
+            MouseControlCommand = new RelayCommand<object> (o => { Mouse_Control((CusPiece)o); });
             StartGame();
 
         }
+
+
 
         private void IsTimerCounting(bool isCounting)
         {
@@ -281,6 +286,40 @@ namespace PuzzleGame.MVVM.ViewModels
                 IsWin();
             return;
         }
+
+        /// <summary>
+        /// using mouse to play game
+        /// </summary>
+        /// <param name="o"></param>
+        private void Mouse_Control(CusPiece o)
+        {
+            int blackBoxPos = GameModel.Instance.BlackBox_Indx;
+            int[] validPos = { blackBoxPos - 1, blackBoxPos + 1, blackBoxPos - GameModel.Instance.col, blackBoxPos + GameModel.Instance.col };
+
+            int currentIndex = o.CurrentImgIndex();
+
+            if (currentIndex == validPos[3])
+            {
+                Game_Control("Up");
+            }
+            else if (currentIndex == validPos[2])
+            {
+                Game_Control("Down");
+            }
+            else if (currentIndex == validPos[1])
+            {
+                Game_Control("Left");
+            }
+            else if (currentIndex == validPos[0])
+            {
+                Game_Control("Right");
+            }
+        }
+
+
+        /// <summary>
+        /// moving focus frame follow piece
+        /// </summary>
         public void MovingFocus()
         {
             FocusPieceX = GameModel.Instance.BlackBox_Indx % GameModel.Instance.col * (int)(GameModel.Instance.gamePlayBoxX / GameModel.Instance.col);

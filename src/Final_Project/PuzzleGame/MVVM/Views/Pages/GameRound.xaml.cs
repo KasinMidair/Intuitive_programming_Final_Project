@@ -24,5 +24,6 @@ namespace PuzzleGame.MVVM.Views.Pages
         {
             InitializeComponent();
         }
+
     }
 }

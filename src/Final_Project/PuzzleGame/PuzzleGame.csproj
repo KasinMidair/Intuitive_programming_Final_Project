@@ -20,6 +20,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\picture\pic10.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Imgs\Mute_BTN.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Imgs\info_BTN.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Imgs\avatar.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\Audio\btn_click.mp3" />
   </ItemGroup>
 
@@ -84,10 +100,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Imgs\Setting_ico.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\Imgs\Start_BTN.png" />
   </ItemGroup>
 
@@ -103,7 +115,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Imgs\Sprite-0002.png" />
     <Resource Include="Assets\Imgs\Sprite-0003.png" />
   </ItemGroup>
 
