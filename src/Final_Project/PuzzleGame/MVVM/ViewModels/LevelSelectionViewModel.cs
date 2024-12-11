@@ -68,7 +68,7 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             _wndBgr = defaultColornum1;
             PictureList = new List<Picture>();
-            _loadPicListService.LoadPictureList(PictureList);
+            _loadPicListService.LoadPictureList(PictureList, "HOAI");
 
             OpenGalleryCommand = new RelayCommand<object>((o) => {CurrentPage = new GalleryViewModel();});
 

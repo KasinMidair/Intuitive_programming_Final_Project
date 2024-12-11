@@ -13,9 +13,9 @@ namespace PuzzleGame.Stores
     {
         Connection connection = new Connection();
 
-        public void LoadPictureList(List<Picture> PicList)
+        public void LoadPictureList(List<Picture> PicList, string name)
         {
-            connection.dataAdapter = new SqlDataAdapter("Select * from PICTURE", connection.connStr);
+            connection.dataAdapter = new SqlDataAdapter($"Select * from PICTURE where PLAYERNAME is NULL or PLAYERNAME = '{name}'", connection.connStr);
 
             connection.dataAdapter.Fill(connection.ds, "PICTURE");
             connection.dt = connection.ds.Tables["PICTURE"];

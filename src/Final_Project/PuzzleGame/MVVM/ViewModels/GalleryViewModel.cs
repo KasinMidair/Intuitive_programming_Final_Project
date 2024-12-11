@@ -70,7 +70,7 @@ namespace PuzzleGame.MVVM.ViewModels
             _wndBgr = defaultColornum1;
             PictureList = new List<Picture>();
 
-            _loadPicListService.LoadPictureList(PictureList);
+            _loadPicListService.LoadPictureList(PictureList, "HOAI");
 
             AddPicturePageOpenCommand = new RelayCommand<object>((o) => 
             {
@@ -84,7 +84,7 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             PictureList.Remove(SelectedPicture);
             connection.dataAdapter = new SqlDataAdapter($"DELETE FROM PICTURE WHERE PICNAME = {SelectedPicture.Name}", connection.connStr);
-            _loadPicListService.LoadPictureList(PictureList);
+            _loadPicListService.LoadPictureList(PictureList, "HOAI");
         }
     }
 }
