@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace PuzzleGame.Stores
 {
@@ -24,6 +25,11 @@ namespace PuzzleGame.Stores
             {
                 PicList.Add(new Picture { Name = Convert.ToString(dr["PICNAME"]), Url = Convert.ToString(dr["PICPATH"]) });
             }
+        }
+
+        public void DeletePicture(string picName)
+        {
+            connection.dataAdapter = new SqlDataAdapter($"Delete from PICTURE where PICNAME = '{picName}'", connection.connStr);
         }
     }
 }

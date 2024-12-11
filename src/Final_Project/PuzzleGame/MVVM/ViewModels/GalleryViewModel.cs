@@ -27,7 +27,7 @@ namespace PuzzleGame.MVVM.ViewModels
                 if (_currentPage != value)
                 {
                     _currentPage = value;
-
+                    EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Publish(CurrentPage);
                 }
             }
         }
