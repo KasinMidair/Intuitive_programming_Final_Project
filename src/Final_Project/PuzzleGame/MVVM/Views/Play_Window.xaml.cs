@@ -29,13 +29,12 @@ namespace PuzzleGame.MVVM.Views
             InitializeComponent();
 
             //Setup NavigationServices
-            var viewModel = (PlayViewModel)Application.Current.Resources["MainDataContext"];
-            viewModel._navigationService = MainFrame.NavigationService;
-            viewModel._navigationService.Navigate(new MainMenuViewModel());
-            DataContext = viewModel;
-
+            ((PlayViewModel)this.DataContext)._navigationService = MainFrame.NavigationService;
+            ((PlayViewModel)this.DataContext)._navigationService.Navigate(new MainMenuViewModel());
             MainFrame.Focusable = false;
 
         }
+
+
     }
 }

@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using PuzzleGame.Core;
 using PuzzleGame.Core.Helper;
 using Prism.Events;
+using PuzzleGame.Stores;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
@@ -29,21 +30,28 @@ namespace PuzzleGame.MVVM.ViewModels
         }
 
         public RelayCommand<object> StartCommand { get; set; } //command for start button
-        public RelayCommand<object> OpenGalleryCommand { get; set; } //command for Gallery button
+        public RelayCommand<string> ShowMSGBoxCommand { get; set; }
+
 
         public MainMenuViewModel()
         {
             _wndBgr = defaultColornum1;
             StartCommand = new RelayCommand<object>((o) =>
             {
+                MusicSystemService.Instance.PlayBTN_ClickSound();
                 CurrentPage = new UserEnterNameViewModel();
 
             });
-
-            OpenGalleryCommand = new RelayCommand<object>((o) =>
+            ShowMSGBoxCommand = new RelayCommand<string>((o) => { ShowCustomDialog(o); });
+        }
+        private void ShowCustomDialog(string o)
+        {
+            CustomDialogResult a = CusDialogService.Instance.ShowDialog(o).Result;
+            if (a == CustomDialogResult.OK)
             {
-                CurrentPage = new LevelSelectionViewModel();
-            });
+                MessageBox.Show("OKKKKK");
+
+            }
         }
     }
 }

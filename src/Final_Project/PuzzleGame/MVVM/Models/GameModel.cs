@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using DryIoc.ImTools;
 
 
 namespace PuzzleGame.MVVM.Models
@@ -21,14 +22,16 @@ namespace PuzzleGame.MVVM.Models
     }
     public class GameModel
     {
-        public double UnitX { get;set;}
+        public double UnitX { get; set; }
         public double UnitY { get; private set; }
-        public BitmapSource SrcImg; 
+        public BitmapSource SrcImg;
         public BitmapSource blckBoxImg;
         public int BlackBox_Indx;
+        public int gamePlayBoxX;
+        public int gamePlayBoxY;
 
         int playTime;
-        public bool isSetCountDown {  get; set; }
+        public bool isSetCountDown { get; set; }
         public int row, col;
         private static volatile GameModel _instance;
         private GameStatus status;
@@ -37,7 +40,7 @@ namespace PuzzleGame.MVVM.Models
         {
             get
             {
-                if (_instance == null || _instance.Status==GameStatus.EndGame)
+                if (_instance == null || _instance.Status == GameStatus.EndGame)
                 {
                     lock (key)
                     {
@@ -73,20 +76,51 @@ namespace PuzzleGame.MVVM.Models
         }
         private GameModel()
         {
-
-            SrcImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0002.png", UriKind.Absolute));
+            
+            gamePlayBoxX = 488;
+            gamePlayBoxY = 488;
+            string srcPath = "pack://application:,,,/Assets/picture/pic10.png";
+            BitmapImage originalImage = new BitmapImage(new Uri(srcPath, UriKind.RelativeOrAbsolute));
+            double scaleX = (double)gamePlayBoxX*originalImage.DpiX/ (originalImage.PixelWidth*96);
+            double scaleY = (double)gamePlayBoxY*originalImage.DpiY / (originalImage.PixelHeight*96);
+            SrcImg = new TransformedBitmap(originalImage, new ScaleTransform(scaleX,scaleY));
             blckBoxImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0003.png", UriKind.Absolute));
-            row = 5; col = 5;
-            BlackBox_Indx = 0;
+            row = 6; col = 6;
             status = GameStatus.PreStart;
             playTime = 2 * 60;
-            UnitX = SrcImg.Width / col;
-            UnitY = SrcImg.Height / row;
+            UnitX = SrcImg.PixelWidth / col;
+            UnitY = SrcImg.PixelHeight/ row;
             isSetCountDown = false;
 
         }
-        
 
-       
+        public BitmapSource ChangeDPI(BitmapSource source, double newDpiX, double newDpiY)
+        {
+            int width = source.PixelWidth;
+            int height = source.PixelHeight;
+
+            // caculate stride:  Bytes in one line ( Height x width(pixel num,direaction:horizontal ))
+            int bytesPerPixel = (source.Format.BitsPerPixel + 7) / 8;
+            int stride = width * bytesPerPixel;
+
+            // pixel data from source
+            byte[] pixelData = new byte[height * stride];
+            source.CopyPixels(pixelData, stride, 0);
+
+            // Create new bitmap with new DPI
+            BitmapSource newBitmap = BitmapSource.Create(
+                width,          
+                height,         
+                newDpiX,        // DPI X
+                newDpiY,        // DPI Y
+                source.Format,  // Pixel format
+                source.Palette, // Palette (can be null)
+                pixelData,      // pixel data
+                stride          // Stride
+            );
+
+            return newBitmap;
+        }
+        
     }
 }

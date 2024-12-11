@@ -3,6 +3,8 @@ using PuzzleGame.Core.Helper;
 using PuzzleGame.MVVM.Models;
 using PuzzleGame.Stores;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -52,6 +54,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
         //Command handling input key
         public RelayCommand<object> HandleKeyCommand { get; set; }
+        public RelayCommand<object> MouseControlCommand { get; set; }
 
         private bool _isFocused;            //set focus 
         public bool IsFocused
@@ -67,17 +70,26 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
         private TimeSpan _lastGameTime;
-        private string _lastGameTimestr;
-        public string LastGameTimestr
+        private string _lastGameTimeStr;
+        public string LastGameTimeStr
         {
-            get => _lastGameTimestr;
+            get => _lastGameTimeStr;
             set
             {
-                _lastGameTimestr = value;
+                _lastGameTimeStr = value;
                 OnPropertyChanged();
             }
         }
-
+        bool isEndGameVissible;
+        public bool IsEndGameVissible
+        {
+            get => isEndGameVissible;
+            set
+            {
+                isEndGameVissible = value;
+                OnPropertyChanged();
+            }
+        }
 
         private int _focusPieceX;
         public int FocusPieceX
@@ -104,8 +116,8 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public GameRoundViewModel()
         {
+            EventAggregator.GetEvent<PubSubEvent<bool>>().Subscribe((o) => IsTimerCounting(o));
             _imageProcessingService = new ImageProcessingService();
-
             _wndBgr = defaultColornum1;
             IsFocused = true;
             imgPieces = new ObservableCollection<CusPieceViewModel>();
@@ -114,11 +126,21 @@ namespace PuzzleGame.MVVM.ViewModels
             _clock = new DispatcherTimer();
             _clock.Tick += _countDownClock_Tick;
             _clock.Interval = TimeSpan.FromSeconds(1);
-            _lastGameTime = new TimeSpan(0,0,0); 
+            _lastGameTime = new TimeSpan(0,0,0);
+            LastGameTimeStr = _lastGameTime.ToString(@"hh\:mm\:ss");
             GameModel.Instance.Status=GameStatus.StartGame;
-            HandleKeyCommand = new RelayCommand<object>(o => { Game_Control((string)o) ;}); 
+            HandleKeyCommand = new RelayCommand<object>(o => { Game_Control((string)o) ;});
+            MouseControlCommand = new RelayCommand<object> (o => { Mouse_Control((CusPiece)o); });
             StartGame();
 
+        }
+
+
+
+        private void IsTimerCounting(bool isCounting)
+        {
+            if(isCounting==false) _clock.Stop();
+            else _clock.Start();
         }
 
         private void _countDownClock_Tick(object? sender, EventArgs e)
@@ -128,8 +150,9 @@ namespace PuzzleGame.MVVM.ViewModels
                 if (--GameModel.Instance.PlayTime == 0)    IsLose();
             }
             _lastGameTime= _lastGameTime.Add(TimeSpan.FromSeconds(1));
-            LastGameTimestr = _lastGameTime.ToString(@"hh\:mm\:ss");
+            LastGameTimeStr = _lastGameTime.ToString(@"hh\:mm\:ss");
         }
+
 
 
         /// <summary>
@@ -141,13 +164,16 @@ namespace PuzzleGame.MVVM.ViewModels
             if (GameModel.Instance.Status == GameStatus.StartGame)
             {
                 _imageProcessingService.SplitIntoPieces(ImgPieces);
-                int inversion;          
+                int inversion;
                 do
                 {
                     inversion = _imageProcessingService.ShufflePieces(ImgPieces);    // inversion before one time shuffle
                 }
-                while (!IsSolvable(inversion));             //check whether it is solvable or not
-                                                           //If not ,shuffle it again.
+                while (inversion == 0); 
+                if (!IsSolvable(inversion))                   //check whether it is solvable or not
+                {                                             //If not ,make it sovable.
+                    MakeItSovable(inversion);
+                }
             }
 
             if (imgPieces == null)                          
@@ -155,6 +181,19 @@ namespace PuzzleGame.MVVM.ViewModels
            
             MovingFocus();
             _clock.Start();                        //start timer
+        }
+
+        void MakeItSovable(int inversion)
+        {
+            for(int i = 0; i < imgPieces.Count-1; ++i)
+            {
+                if (i==GameModel.Instance.BlackBox_Indx) continue;
+                else if (imgPieces[i].CusPiece.ImgIdx > imgPieces[i + 1].CusPiece.ImgIdx)
+                {
+                    imgPieces[i].SwapCusVM(imgPieces[i+1]);
+                    if (IsSolvable(--inversion)) return;              //check whether it is solvable or not
+                }
+            }
         }
 
         /// <summary>
@@ -174,6 +213,7 @@ namespace PuzzleGame.MVVM.ViewModels
             
             return inversion % 2 == 0;
         }
+
 
 
         /// <summary>
@@ -246,10 +286,44 @@ namespace PuzzleGame.MVVM.ViewModels
                 IsWin();
             return;
         }
+
+        /// <summary>
+        /// using mouse to play game
+        /// </summary>
+        /// <param name="o"></param>
+        private void Mouse_Control(CusPiece o)
+        {
+            int blackBoxPos = GameModel.Instance.BlackBox_Indx;
+            int[] validPos = { blackBoxPos - 1, blackBoxPos + 1, blackBoxPos - GameModel.Instance.col, blackBoxPos + GameModel.Instance.col };
+
+            int currentIndex = o.CurrentImgIndex();
+
+            if (currentIndex == validPos[3])
+            {
+                Game_Control("Up");
+            }
+            else if (currentIndex == validPos[2])
+            {
+                Game_Control("Down");
+            }
+            else if (currentIndex == validPos[1])
+            {
+                Game_Control("Left");
+            }
+            else if (currentIndex == validPos[0])
+            {
+                Game_Control("Right");
+            }
+        }
+
+
+        /// <summary>
+        /// moving focus frame follow piece
+        /// </summary>
         public void MovingFocus()
         {
-            FocusPieceX = GameModel.Instance.BlackBox_Indx % GameModel.Instance.col * (int)GameModel.Instance.UnitX;
-            FocusPieceY = GameModel.Instance.BlackBox_Indx / GameModel.Instance.row * (int)GameModel.Instance.UnitY;
+            FocusPieceX = GameModel.Instance.BlackBox_Indx % GameModel.Instance.col * (int)(GameModel.Instance.gamePlayBoxX / GameModel.Instance.col);
+            FocusPieceY = GameModel.Instance.BlackBox_Indx / GameModel.Instance.row * (int)(GameModel.Instance.gamePlayBoxY/GameModel.Instance.row);
         }
 
         //private Key ConvertCharToKeyCode(string key)
@@ -261,6 +335,7 @@ namespace PuzzleGame.MVVM.ViewModels
         public void IsLose()
         {
             GameModel.Instance.Status = GameStatus.EndGame;
+            ReleaseClock();
             EventAggregator.GetEvent<PubSubEvent<string>>().Publish("Lose!");
         }
 
@@ -268,9 +343,13 @@ namespace PuzzleGame.MVVM.ViewModels
         public void IsWin()
         {
             GameModel.Instance.Status = GameStatus.EndGame;
-            EventAggregator.GetEvent<PubSubEvent<string>>().Publish("win");
+            ReleaseClock();
         }
-
+        private void ReleaseClock()
+        {
+            _clock.Tick -= _countDownClock_Tick;
+            _clock = null;
+        }
 
 
     }

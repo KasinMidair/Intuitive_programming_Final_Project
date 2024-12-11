@@ -1,22 +1,43 @@
-﻿using DryIoc;
-using PuzzleGame.Core;
+﻿using PuzzleGame.Core;
 using PuzzleGame.MVVM.ViewModels;
 using PuzzleGame.MVVM.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace PuzzleGame.Stores
 {
     public class CusDialogService : ICusDialogService
     {
-        public void ShowDialog(string msg, bool btn_type=false)
+        private static volatile CusDialogService _instance;
+        public static CusDialogService Instance
         {
-            var cusWnd = new CustomDialog();
-            cusWnd.DataContext = new CustomDialogViewModel(msg,btn_type);
-            cusWnd.ShowDialog();
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new CusDialogService();
+                }
+
+                return _instance;
+            }
         }
+
+        CustomDialog currDialog;
+        public void CloseDialog()
+        {
+            currDialog.Close();
+        }
+
+        public void MoveDialog() => currDialog.DragMove();
+
+        public  async Task<CustomDialogResult> ShowDialog(string msg, bool btn_type=false)
+        {
+            var rlt= new TaskCompletionSource<CustomDialogResult>();
+            currDialog = new CustomDialog();
+            currDialog.DataContext = new CustomDialogViewModel(msg,btn_type,rlt,this);
+            currDialog.ShowDialog();
+
+            return  await rlt.Task;
+        }
+
     }
 }

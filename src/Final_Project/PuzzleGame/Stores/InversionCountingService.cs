@@ -9,7 +9,19 @@ namespace PuzzleGame.Stores
     public class InversionCountingService
     {
 
+        private static InversionCountingService? _instance;
+        public static InversionCountingService Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new InversionCountingService();
+                }
 
+                return _instance;
+            }
+        }
         public static int CountInversions(List<int> ls)
         {
             List<int> temp = new List<int>(ls.Count);
@@ -29,7 +41,6 @@ namespace PuzzleGame.Stores
             int mid, inversionCount = 0;
             if (left < right)
             {
-
                 mid = (left + right) / 2;
 
                 inversionCount += MergeSortAndCount(ls, temp, left, mid);         
