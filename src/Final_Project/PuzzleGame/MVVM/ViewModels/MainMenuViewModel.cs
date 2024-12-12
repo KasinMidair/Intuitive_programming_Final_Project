@@ -38,7 +38,6 @@ namespace PuzzleGame.MVVM.ViewModels
             _wndBgr = defaultColornum1;
             StartCommand = new RelayCommand<object>((o) =>
             {
-                MusicSystemService.Instance.PlayBTN_ClickSound();
                 CurrentPage = new UserEnterNameViewModel();
 
             });

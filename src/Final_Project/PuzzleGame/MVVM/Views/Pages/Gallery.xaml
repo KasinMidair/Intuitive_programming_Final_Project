@@ -9,10 +9,6 @@
       d:DesignHeight="600" d:DesignWidth="920"
       Title="Gallery">
 
-    <Page.DataContext>
-        <ViewModels:GalleryViewModel/>
-    </Page.DataContext>
-
 
     <Grid Background="#F5C7A4">
         <Grid.ColumnDefinitions>

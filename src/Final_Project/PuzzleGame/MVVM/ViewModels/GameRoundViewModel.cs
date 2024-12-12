@@ -207,7 +207,7 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             if (GameModel.Instance.col * GameModel.Instance.row % 2 == 0)
             {
-                return (GameModel.Instance.col - 1 +inversion )%2!= 0;
+                return (GameModel.Instance.row - 1 +inversion ) % 2!= 0;
                 
             }
             return inversion % 2 == 0;

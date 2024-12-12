@@ -25,7 +25,9 @@ namespace PuzzleGame.MVVM.ViewModels
         public UserEnterNameViewModel()
         {
             _wndBgr = defaultColornum2;
-            EnterNameCommand = new RelayCommand<object>(o => { CurrentPage = new LevelSelectionViewModel(); });
+            EnterNameCommand = new RelayCommand<object>(o => { 
+                CurrentPage = new LevelSelectionViewModel();
+            });
         }
     }
 }

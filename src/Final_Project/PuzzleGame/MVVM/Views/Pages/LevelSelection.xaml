@@ -8,15 +8,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="920"
       Title="LevelSelection">
-
-    <Page.DataContext>
-        <ViewModels:LevelSelectionViewModel/>
-    </Page.DataContext>
-
-    <Page.Resources>
-        <ViewModels:LevelSelectionViewModel x:Key="vm"></ViewModels:LevelSelectionViewModel>
-    </Page.Resources>
-
+    
     <Grid Background="#FFCFAB">
 
 

@@ -30,6 +30,7 @@ namespace PuzzleGame.Stores
         public void DeletePicture(string picName)
         {
             connection.dataAdapter = new SqlDataAdapter($"Delete from PICTURE where PICNAME = '{picName}'", connection.connStr);
+            Console.WriteLine("hello");
         }
     }
 }

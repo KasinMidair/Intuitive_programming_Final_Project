@@ -93,8 +93,6 @@ namespace PuzzleGame.MVVM.ViewModels
         public AddPicturePageViewModel()
         {
 
-
-
             _wndBgr = defaultColornum1;
             NewPicUrl = @"/Assets/Imgs/AddPicBackGround.jpg";
 
