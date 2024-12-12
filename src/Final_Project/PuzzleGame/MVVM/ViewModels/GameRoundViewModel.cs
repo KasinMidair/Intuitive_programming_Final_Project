@@ -4,6 +4,7 @@ using PuzzleGame.MVVM.Models;
 using PuzzleGame.Stores;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -167,13 +168,15 @@ namespace PuzzleGame.MVVM.ViewModels
                 int inversion;
                 do
                 {
-                    inversion = _imageProcessingService.ShufflePieces(ImgPieces);    // inversion before one time shuffle
+                    inversion = _imageProcessingService.ShufflePieces(ImgPieces);
+
+                    if (!IsSolvable(inversion))                   //check whether it is solvable or not
+                    {                                             //If not ,make it sovable.
+                        MakeItSovable(ref inversion);
+                    }
                 }
                 while (inversion == 0); 
-                if (!IsSolvable(inversion))                   //check whether it is solvable or not
-                {                                             //If not ,make it sovable.
-                    MakeItSovable(inversion);
-                }
+
             }
 
             if (imgPieces == null)                          
@@ -183,12 +186,11 @@ namespace PuzzleGame.MVVM.ViewModels
             _clock.Start();                        //start timer
         }
 
-        void MakeItSovable(int inversion)
+        void MakeItSovable( ref int inversion)
         {
             for(int i = 0; i < imgPieces.Count-1; ++i)
             {
-                if (i==GameModel.Instance.BlackBox_Indx) continue;
-                else if (imgPieces[i].CusPiece.ImgIdx > imgPieces[i + 1].CusPiece.ImgIdx)
+                if (imgPieces[i].CusPiece.ImgIdx > imgPieces[i + 1].CusPiece.ImgIdx)
                 {
                     imgPieces[i].SwapCusVM(imgPieces[i+1]);
                     if (IsSolvable(--inversion)) return;              //check whether it is solvable or not
@@ -203,14 +205,11 @@ namespace PuzzleGame.MVVM.ViewModels
         /// <returns></returns>
         private bool IsSolvable(int inversion)
         {
-            if ((GameModel.Instance.col * GameModel.Instance.row) % 2 == 0)
+            if (GameModel.Instance.col * GameModel.Instance.row % 2 == 0)
             {
-               if ((GameModel.Instance.row - imgPieces[GameModel.Instance.BlackBox_Indx].CusPiece.YIndex) % 2 == 0)
-               {
-                    return inversion % 2 != 0;
-               }
+                return (GameModel.Instance.col - 1 +inversion )%2!= 0;
+                
             }
-            
             return inversion % 2 == 0;
         }
 
@@ -336,7 +335,12 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             GameModel.Instance.Status = GameStatus.EndGame;
             ReleaseClock();
-            EventAggregator.GetEvent<PubSubEvent<string>>().Publish("Lose!");
+            CustomDialogResult a = CusDialogService.Instance.ShowDialog("Lose").Result;
+            if (a == CustomDialogResult.OK)
+            {
+                MessageBox.Show("OKKKKK");
+
+            }
         }
 
 

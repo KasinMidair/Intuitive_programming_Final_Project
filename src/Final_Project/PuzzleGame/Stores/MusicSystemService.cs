@@ -37,7 +37,7 @@ namespace PuzzleGame.Stores
         public MusicSystemService()
         {
             bgAudioSources = new List<string>();
-            curbgAudio = 0;
+            curbgAudio = 2;
             List<string> bgAudioPaths = new List<string>()
             {
                 "Assets/Audio/DefaultBGMusic.mp3",

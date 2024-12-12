@@ -85,7 +85,7 @@ namespace PuzzleGame.MVVM.Models
             double scaleY = (double)gamePlayBoxY*originalImage.DpiY / (originalImage.PixelHeight*96);
             SrcImg = new TransformedBitmap(originalImage, new ScaleTransform(scaleX,scaleY));
             blckBoxImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0003.png", UriKind.Absolute));
-            row = 6; col = 6;
+            row =6; col =6;
             status = GameStatus.PreStart;
             playTime = 2 * 60;
             UnitX = SrcImg.PixelWidth / col;

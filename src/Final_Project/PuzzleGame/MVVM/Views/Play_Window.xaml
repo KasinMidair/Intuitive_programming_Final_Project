@@ -524,12 +524,12 @@
                 x:Name="BackBTN"
                 Width="70"
                 Height="55"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
                 Command="{Binding GoBackCommand}"
                 CommandParameter="{Binding ElementName=BackBTN}"
                 Style="{StaticResource ResourceKey=BTN}"
-                Visibility="{Binding IsGoBack, Converter={StaticResource IsVisible}}">
+                Visibility="{Binding IsGoBack, Converter={StaticResource IsVisible}}" Canvas.Top="8" Canvas.Left="13">
 
                 <Button.Background>
                     <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Back_BTN.png" />
@@ -548,15 +548,15 @@
             <!--  GoForward button  -->
             <Button
                 x:Name="GoForwardBTN"
-                Canvas.Left="835"
-                Width="70"
+                Canvas.Left="841"
+                Width="60"
                 Height="55"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Command="{Binding GoForwardCommand}"
                 CommandParameter="{Binding ElementName=GoForwardBTN}"
                 Style="{StaticResource ResourceKey=BTN}"
-                Visibility="{Binding IsGoForward, Converter={StaticResource IsVisible}}">
+                Visibility="{Binding IsGoForward, Converter={StaticResource IsVisible}}" Canvas.Top="6">
                 <Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="-1" />
