@@ -48,6 +48,7 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
+
         Picture _selectedPicture;
         public Picture SelectedPicture
         {
@@ -55,9 +56,10 @@ namespace PuzzleGame.MVVM.ViewModels
             set
             {
                 _selectedPicture = value;
-                OnPropertyChanged("SelectedPicture");
+                OnPropertyChanged();
             }
         }
+
 
         //Command...
         public RelayCommand<object> AddPicturePageOpenCommand { get; set; }
@@ -68,9 +70,13 @@ namespace PuzzleGame.MVVM.ViewModels
             _wndBgr = defaultColornum1;
             PictureList = new List<Picture>();
 
-            _loadPicListService.LoadPictureList(PictureList);
+            _loadPicListService.LoadPictureList(PictureList, "HOAI");
 
-            AddPicturePageOpenCommand = new RelayCommand<object>((o) => { CurrentPage = new AddPicturePageViewModel(); });
+            AddPicturePageOpenCommand = new RelayCommand<object>((o) => 
+            {
+                CurrentPage = new AddPicturePageViewModel(); 
+            });
+
             DeletePictureCommand = new RelayCommand<object>((o) => { DeleteSelectedPicture(); });
         }
 
@@ -78,7 +84,7 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             PictureList.Remove(SelectedPicture);
             connection.dataAdapter = new SqlDataAdapter($"DELETE FROM PICTURE WHERE PICNAME = {SelectedPicture.Name}", connection.connStr);
-            _loadPicListService.LoadPictureList(PictureList);
+            _loadPicListService.LoadPictureList(PictureList, "HOAI");
         }
     }
 }
