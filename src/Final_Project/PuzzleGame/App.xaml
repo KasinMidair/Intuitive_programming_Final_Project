@@ -8,7 +8,6 @@
     <Application.Resources>
 
         <ResourceDictionary>
-            <viewmodel:PlayViewModel x:Key="MainDataContext"/>
             <BooleanToVisibilityConverter x:Key="IsVisible" />
             <prism:EventAggregator x:Key="AppEventAggregator"/>
 

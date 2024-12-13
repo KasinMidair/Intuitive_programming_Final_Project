@@ -11,8 +11,15 @@ using System.Windows.Media.Animation;
 
 namespace PuzzleGame.Stores
 {
+    public enum AudioType
+    {
+        BACKGROUND_MSC,                             
+        SFX_MSC,
+        ALL
+    }
     public class MusicSystemService
     {
+
         private static volatile MusicSystemService _instance;
         public static MusicSystemService Instance
         {
@@ -55,11 +62,12 @@ namespace PuzzleGame.Stores
             MediaTimeline mediaTimelineSFX = new MediaTimeline(new Uri(sfxAdioSource, UriKind.RelativeOrAbsolute));
             _sfxClock = mediaTimelineSFX.CreateClock();
             _sfx.Clock = _sfxClock;
+
+
         }
         public void PlayBTN_ClickSound()
         {
-            _sfxClock.Controller.Stop();
-            _sfxClock.Controller.Seek(TimeSpan.Zero, TimeSeekOrigin.BeginTime);
+            _sfxClock.Controller.Stop();    
             _sfxClock.Controller.Begin();
         }
         public void ChangeBackgroundMusic()
@@ -106,5 +114,22 @@ namespace PuzzleGame.Stores
 
             return tempFilePath;
         }
+        public void SetVolume(AudioType audioType,double bgVolume,double sfxVolume)
+        {
+            switch(audioType)
+            {
+                case AudioType.BACKGROUND_MSC:
+                    _backgroundMusic.Volume = bgVolume;
+                     break;  
+                case AudioType.SFX_MSC:
+                    _sfx.Volume = sfxVolume;
+                    break;
+                default:
+                    _backgroundMusic.Volume = bgVolume;
+                    _sfx.Volume = sfxVolume;
+                    break;  
+            } 
+        }
+
     }
 }

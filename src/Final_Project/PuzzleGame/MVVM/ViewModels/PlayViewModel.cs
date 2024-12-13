@@ -24,10 +24,11 @@ namespace PuzzleGame.MVVM.ViewModels
         public NavigationService _navigationService;
 
         //Command
-        public RelayCommand<FrameworkElement> SettingCommand { get; set; }
+        public RelayCommand<object> SettingCommand { get; set; }
         public RelayCommand<object> GoBackCommand { get; set; }
         public RelayCommand<object> GoForwardCommand { get; set; }
         public RelayCommand<object> ShutdownCommand { get; set; }
+        public RelayCommand<object> Mute_UnMuteCommand { get; set; }
 
         bool isGoBack;
         public bool IsGoBack 
@@ -39,6 +40,7 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();   
             }
         }
+
         bool isGoForward;
         public bool IsGoForward
         {
@@ -49,6 +51,29 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        string isMusicMute;  
+        public string IsMusicMute
+        {
+            get => isMusicMute;
+            set
+            {
+                isMusicMute = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool isSettingVisible;
+        public bool IsSettingVisible
+        {
+            get => isSettingVisible; 
+            set
+            {
+                isSettingVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
         public SolidColorBrush WndBgr
         {
             get => _wndBgr;
@@ -58,7 +83,6 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-
         ObservableObject _currentPage;
         public ObservableObject CurrentPage
         {
@@ -71,16 +95,6 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         } //  the page show in Frame in realtime
 
-        private bool isSettingVisible;
-        public bool IsSettingVisible
-        {
-            get => isSettingVisible; 
-            set
-            {
-                isSettingVisible = value;
-                OnPropertyChanged();
-            }
-        }
 
         SolidColorBrush toolBarColor;
         public SolidColorBrush ToolBarColor
@@ -98,6 +112,7 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             //Message subcriber
             EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Subscribe((o) => OnCurrentPageChanged(o));
+            EventAggregator.GetEvent<PubSubEvent<GameStatus>>().Subscribe((o) => Appstatus(o));
 
             MusicSystemService.Instance.ChangeBackgroundMusic();
 
@@ -106,22 +121,31 @@ namespace PuzzleGame.MVVM.ViewModels
             IsSettingVisible = true;
             IsGoBack = false;
             IsGoForward = false;
+            IsMusicMute = "Mute";
 
             //init command 
-            SettingCommand = new RelayCommand<FrameworkElement>((SettingMenu)=> { SettingMenuStatus(); });
-            ShutdownCommand = new RelayCommand<object>((o) => {
-                Task.Run(() =>
-                {
-                    var tcs = new TaskCompletionSource<bool>();
-                    MusicSystemService.Instance.PlayBTN_ClickSound();
-                    tcs.Task.Wait();
-                });
-                    QuitApp();
-            });
+            SettingCommand = new RelayCommand<object>((o)=> { SettingMenuStatus(); });
+            ShutdownCommand = new RelayCommand<object>((o) => {  QuitApp(); });
             GoBackCommand = new RelayCommand<object>((o) => { GoBackPage(); });
-            GoForwardCommand = new RelayCommand<object>((o) => { GoForwardPage(); }); 
+            GoForwardCommand = new RelayCommand<object>((o) => { GoForwardPage(); });
+            Mute_UnMuteCommand = new RelayCommand<object>((o) => { Mute_UnMute(); });
 
 
+        }
+
+        private void Mute_UnMute()
+        {
+            if (IsMusicMute=="UnMute")
+            {
+                MusicSystemService.Instance.SetVolume(AudioType.ALL, 1, 1);
+                IsMusicMute = "Mute";
+            }
+            else 
+            {
+                MusicSystemService.Instance.SetVolume(AudioType.ALL, 0, 0);
+                IsMusicMute = "UnMute";
+            } 
+            
         }
 
         // Execute RelayCommand
@@ -179,6 +203,17 @@ namespace PuzzleGame.MVVM.ViewModels
             FrameNavigation(page);
 
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="status"></param>
+        private void Appstatus(GameStatus status)
+        {
+            if (status == GameStatus.QuitApp) ;
+            QuitApp();
+        }
+
 
         //change toolbar color 
         private void ToolBarUpdateColor()=> ToolBarColor = (WndBgr.Color.IsDarkColor()) ? defaultColornum2 : defaultColornum1;

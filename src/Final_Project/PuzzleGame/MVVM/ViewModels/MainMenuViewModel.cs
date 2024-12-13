@@ -9,6 +9,7 @@ using PuzzleGame.Core;
 using PuzzleGame.Core.Helper;
 using Prism.Events;
 using PuzzleGame.Stores;
+using PuzzleGame.MVVM.Models;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
@@ -30,6 +31,7 @@ namespace PuzzleGame.MVVM.ViewModels
         }
 
         public RelayCommand<object> StartCommand { get; set; } //command for start button
+        public RelayCommand<object> ShutdownCommand { get; set; } //command for Exit button
         public RelayCommand<string> ShowMSGBoxCommand { get; set; }
 
 
@@ -42,6 +44,9 @@ namespace PuzzleGame.MVVM.ViewModels
 
             });
             ShowMSGBoxCommand = new RelayCommand<string>((o) => { ShowCustomDialog(o); });
+            ShutdownCommand = new RelayCommand<object>((o) => {
+                EventAggregator.GetEvent<PubSubEvent<GameStatus>>().Publish(GameStatus.QuitApp);
+            });
         }
         private void ShowCustomDialog(string o)
         {

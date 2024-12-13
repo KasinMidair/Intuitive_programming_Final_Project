@@ -15,7 +15,6 @@
     Height="600"
     AllowsTransparency="True"
     Background="Transparent"
-    DataContext="{StaticResource MainDataContext}"
     FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
     TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
@@ -26,9 +25,14 @@
     WindowStyle="None"
     mc:Ignorable="d">
 
+    <Window.DataContext>
+        <viewmodel:PlayViewModel />
+    </Window.DataContext>
+
     <!--  Window border  -->
     <Border Background="{Binding WndBgr}" CornerRadius="15">
         <Canvas>
+
 
             <!--  Loading pages in frame  -->
             <Frame
@@ -42,10 +46,12 @@
 
 
             <!--  Setting panel  -->
-            <Canvas Canvas.ZIndex="6" Background="#00000001"
+            <Canvas
                 x:Name="SettingMenu"
                 Width="920"
-                Height="600">
+                Height="600"
+                Background="#00000001"
+                Canvas.ZIndex="6">
 
                 <!--  Pannel animation  -->
                 <Canvas.Style>
@@ -66,13 +72,15 @@
                 <Canvas.RenderTransform>
                     <TranslateTransform Y="-1000" />
                 </Canvas.RenderTransform>
-                <Border  
+                <Border
+                    Canvas.Left="122"
+                    Canvas.Top="78"
                     Width="676"
                     Height="447"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     Background="{Binding ToolBarColor}"
-                    CornerRadius="25" Canvas.Left="122" Canvas.Top="78">
+                    CornerRadius="25">
                     <Canvas>
 
                         <!--  User info block  -->
@@ -452,7 +460,8 @@
                             BorderThickness="0"
                             Command="{Binding ShutdownCommand}"
                             CommandParameter="{Binding ElementName=ShutdownBTN}"
-                            Style="{StaticResource ResourceKey=BTN}">
+                            Style="{StaticResource ResourceKey=BTN}"
+                            ToolTip="Exit">
 
                             <Button.Background>
                                 <ImageBrush ImageSource="/Assets/Imgs/Shutdown_BTN.png" />
@@ -471,7 +480,8 @@
                             BorderThickness="0"
                             Command="{Binding SettingCommand}"
                             CommandParameter="{Binding ElementName=SettingMenu}"
-                            Style="{StaticResource ResourceKey=BTN}">
+                            Style="{StaticResource ResourceKey=BTN}"
+                            ToolTip="Setting">
 
                             <Button.Background>
                                 <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Setting_BTN.png" />
@@ -488,9 +498,9 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top"
                             BorderThickness="0"
-                            Command="{Binding SettingCommand}"
-                            CommandParameter="{Binding ElementName=SettingMenu}"
-                            Style="{StaticResource ResourceKey=BTN}">
+                            Command="{Binding Mute_UnMuteCommand}"
+                            Style="{StaticResource ResourceKey=BTN}"
+                            ToolTip="{Binding IsMusicMute}">
 
                             <Button.Background>
                                 <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Mute_BTN.png" />
@@ -509,7 +519,8 @@
                             Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
                             CommandParameter="{x:Static Dock.Bottom}"
                             CommandTarget="{Binding ElementName=DrawerHost}"
-                            Style="{StaticResource ResourceKey=BTN}">
+                            Style="{StaticResource ResourceKey=BTN}"
+                            ToolTip="About US and mechanism">
                             <Button.Background>
                                 <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/info_BTN.png" />
                             </Button.Background>
@@ -522,6 +533,8 @@
             <!--  Back button  -->
             <Button
                 x:Name="BackBTN"
+                Canvas.Left="13"
+                Canvas.Top="8"
                 Width="70"
                 Height="55"
                 HorizontalAlignment="Left"
@@ -529,7 +542,7 @@
                 Command="{Binding GoBackCommand}"
                 CommandParameter="{Binding ElementName=BackBTN}"
                 Style="{StaticResource ResourceKey=BTN}"
-                Visibility="{Binding IsGoBack, Converter={StaticResource IsVisible}}" Canvas.Top="8" Canvas.Left="13">
+                Visibility="{Binding IsGoBack, Converter={StaticResource IsVisible}}">
 
                 <Button.Background>
                     <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Back_BTN.png" />
@@ -549,6 +562,7 @@
             <Button
                 x:Name="GoForwardBTN"
                 Canvas.Left="841"
+                Canvas.Top="6"
                 Width="60"
                 Height="55"
                 HorizontalAlignment="Left"
@@ -556,7 +570,7 @@
                 Command="{Binding GoForwardCommand}"
                 CommandParameter="{Binding ElementName=GoForwardBTN}"
                 Style="{StaticResource ResourceKey=BTN}"
-                Visibility="{Binding IsGoForward, Converter={StaticResource IsVisible}}" Canvas.Top="6">
+                Visibility="{Binding IsGoForward, Converter={StaticResource IsVisible}}">
                 <Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="-1" />

@@ -18,7 +18,8 @@ namespace PuzzleGame.MVVM.Models
         PreStart,
         StartGame,
         Playing,
-        EndGame
+        EndGame,
+        QuitApp
     }
     public class GameModel
     {

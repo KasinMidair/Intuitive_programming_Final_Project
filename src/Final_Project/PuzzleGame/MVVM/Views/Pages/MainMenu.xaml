@@ -61,7 +61,7 @@
             Height="90"
             Margin="10,10,10,5"
             HorizontalAlignment="Center"
-            Command="{Binding Source={StaticResource MainDataContext}, Path=ShutdownCommand}"
+            Command="{Binding ShutdownCommand}"
             CommandParameter="{Binding ElementName=ExitBTN}"
             Style="{StaticResource ResourceKey=BTN}">
             <Button.Background>

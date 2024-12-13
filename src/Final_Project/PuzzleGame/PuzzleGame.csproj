@@ -7,7 +7,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Assets\favicon.ico</ApplicationIcon>
+    <BaseOutputPath>\bin</BaseOutputPath>
   </PropertyGroup>
+
 
   <ItemGroup>
     <Compile Remove="Assets\**" />
@@ -120,6 +122,7 @@
     <PackageReference Include="Caliburn.Micro" Version="4.0.212" />
     <PackageReference Include="MaterialDesignColors" Version="3.1.0" />
     <PackageReference Include="MaterialDesignThemes" Version="5.1.0" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Include="Prism.Core" Version="9.0.537" />
     <PackageReference Include="Prism.DryIoc" Version="9.0.537" />
     <PackageReference Include="Prism.Unity" Version="9.0.537" />
