@@ -141,11 +141,33 @@ namespace PuzzleGame.MVVM.ViewModels
                     NewPic = new Picture
                     {
                         Name = NewPicName,
-                        Url = Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + @"Assets\picture\" + NewPicName + ".jpg"
+                        Url = $@"pack://application:,,,/Assets/picture/{NewPicName}.png"
                     };
-                    FileInfo info = new FileInfo(NewPicUrl);
-                    info.CopyTo(NewPic.Url);
-                    _cusDialogService.ShowDialog("Ten tranh da ton tai");
+
+                    //FileInfo info = new FileInfo(NewPicUrl);
+                    //info.CopyTo(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + NewPic.Url);
+
+                    //File.Copy(NewPicUrl, Path.Combine(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + NewPic.Url), true);
+                    //File.Copy(NewPicUrl, Path.Combine($"pack://application:,,,/Assets/picture/{NewPicName}.png"), true);
+
+
+                    string sourcePath = NewPicUrl; // Đường dẫn ảnh trong project
+                    string destinationFolder = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets\\picture\\"); // Folder đích trong project
+                    string destinationPath = System.IO.Path.Combine(destinationFolder, "YourImage.jpg"); 
+                    if (!Directory.Exists(destinationFolder)) 
+                    { 
+                        Directory.CreateDirectory(destinationFolder); 
+                    } 
+                    
+                    using (Stream resourceStream = Application.GetResourceStream(new Uri(sourcePath)).Stream) 
+                    { 
+                        using (FileStream fileStream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write)) 
+                        { 
+                            resourceStream.CopyTo(fileStream); 
+                        } 
+                    }
+
+                    _cusDialogService.ShowDialog("Da luu tranh");
                 }
             });
         }

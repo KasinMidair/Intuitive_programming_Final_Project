@@ -97,22 +97,31 @@
         <ScrollBar Name="Second_SB" Grid.Column="1" HorizontalAlignment="Left" Margin="207,316,0,0" Grid.Row="1" VerticalAlignment="Top"/>
         <TextBox Name="hour_TB" 
                  Grid.Column="1" HorizontalAlignment="Left" Margin="10,311,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" Height="44"
-                 Text="00"
                  Background="Snow"
                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-                 Foreground="#15161C" FontSize="25" FontWeight="SemiBold"/>
-        <TextBox x:Name="hour_TB_Copy" 
+                 Foreground="#15161C" FontSize="25" FontWeight="SemiBold" TextAlignment="Center">
+            <TextBox.Text>
+                <Binding Path="Hour" UpdateSourceTrigger="PropertyChanged">
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="minute_TB" 
             Grid.Column="1" HorizontalAlignment="Left" Margin="83,311,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" Height="44"
-            Text="00"
             Background="Snow"
             FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-            Foreground="#15161C" FontSize="25" FontWeight="SemiBold"/>
-        <TextBox x:Name="hour_TB_Copy1" 
+            Foreground="#15161C" FontSize="25" FontWeight="SemiBold" TextAlignment="Center"/>
+        <TextBox x:Name="second_TB1" 
             Grid.Column="1" HorizontalAlignment="Left" Margin="156,311,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" Height="44"
-            Text="00"
             Background="Snow"
             FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-            Foreground="#15161C" FontSize="25" FontWeight="SemiBold"/>
+            Foreground="#15161C" FontSize="25" FontWeight="SemiBold" TextAlignment="Center"/>
+
+
+        <Label Background="snow"
+               Content="{Binding SelectedPicture.Url}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Width="580" Grid.Column="1"/>
+        <Label Grid.Column="1" Background="Snow" Content="{Binding Hour}" HorizontalAlignment="Left" Margin="10,29,0,0" Grid.Row="1" VerticalAlignment="Top" Height="27" Width="46"/>
+        <Label Grid.Column="1" Background="Snow" Content="{Binding Minute}" HorizontalAlignment="Left" Margin="94,29,0,0" Grid.Row="1" VerticalAlignment="Top" Height="27" Width="46"/>
+        <Label Grid.Column="1" Background="Snow" Content="{Binding Second}" HorizontalAlignment="Left" Margin="179,28,0,0" Grid.Row="1" VerticalAlignment="Top" Height="28" Width="46"/>
     </Grid>
 
 </Page>
