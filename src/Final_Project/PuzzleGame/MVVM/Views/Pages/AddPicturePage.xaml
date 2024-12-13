@@ -72,6 +72,6 @@
                    Background="snow"
                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                    FontSize="10" Foreground="Black" FontWeight="SemiBold"
-                   Text="{Binding NewPic.Url, Mode=OneWay}"/>
+                   Text="{Binding NewPicName, Mode=OneWay}"/>
     </Grid>
 </Page>
