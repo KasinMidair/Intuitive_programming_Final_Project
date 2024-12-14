@@ -230,13 +230,13 @@
                   SelectedIndex="0"
                   FontSize="20" Foreground="#15161C" FontWeight="SemiBold"
                   SelectedItem="{Binding NumberOfPieces}" SelectionChanged="NumberSelection_Combobox_SelectionChanged">
-            <ComboBoxItem Content="3"/>
-            <ComboBoxItem Content="4"/>
-            <ComboBoxItem Content="5"/>
-            <ComboBoxItem Content="6"/>
-            <ComboBoxItem Content="7"/>
-            <ComboBoxItem Content="8"/>
-            <ComboBoxItem Content="9"/>
+            <ComboBoxItem Content="3 x 3"/>
+            <ComboBoxItem Content="4 x 4"/>
+            <ComboBoxItem Content="5 x 5"/>
+            <ComboBoxItem Content="6 x 6"/>
+            <ComboBoxItem Content="7 x 7"/>
+            <ComboBoxItem Content="8 x 8"/>
+            <ComboBoxItem Content="9 x 9"/>
 
         </ComboBox>
 
@@ -263,8 +263,10 @@
 
         <!-- Play button -->
         <Button x:Name="Play_BTN" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom"
-                Background="#9DB899" Height="50"
+                Background="#F14666" Height="50"
                 Foreground="snow" FontSize="30" FontWeight="Black"
+                BorderBrush="#1F2326"
+                BorderThickness="0,0,2,2"
                 Content="Play"
                 Command="{Binding PlayCommand}"
                 materialDesign:ButtonAssist.CornerRadius="15">
@@ -274,6 +276,8 @@
         <Button x:Name="Gallery_BTN" Grid.Row="5" VerticalAlignment="Top"
             Background="#9DB899" Height="50"
             Foreground="snow" FontSize="30" FontWeight="Black" 
+            BorderBrush="#1F2326"
+            BorderThickness="0,0,2,2"
             Content="Gallery"
             Command="{Binding OpenGalleryCommand}" Grid.Column="1"
             materialDesign:ButtonAssist.CornerRadius="15"/>

@@ -6,8 +6,9 @@
       xmlns:local="clr-namespace:PuzzleGame.MVVM.Views.Pages"
       xmlns:ViewModels="clr-namespace:PuzzleGame.MVVM.ViewModels" x:Class="PuzzleGame.MVVM.Views.Pages.AddPicturePage"
       mc:Ignorable="d" 
-      d:DesignHeight="580" d:DesignWidth="400"
-      Title="AddPicturePage">
+      d:DesignHeight="600" d:DesignWidth="920"
+      Title="AddPicturePage"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
     <Page.DataContext>
         <ViewModels:AddPicturePageViewModel/>
@@ -19,34 +20,42 @@
 
     <Grid Background="#F5C7A4">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="140"/>
-            <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="140"/>
-            <ColumnDefinition Width="40"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="380"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="380"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="320"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <!-- Picture holder -->
-        <Image x:Name="PictreHolder"
-               Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1"
-               Source="{Binding NewPicUrl, Mode=OneWay}">
-            <Image.InputBindings>
-                <MouseBinding Gesture="LeftClick" Command="{Binding ChoosePictureCommand}"></MouseBinding>
-            </Image.InputBindings>
-        </Image>
+        <Border Grid.Column="1" Grid.Row="1"
+            BorderThickness="5" BorderBrush="#9DB899"
+            CornerRadius="20">
+            <Image x:Name="PictreHolder"
+                Source="{Binding NewPicUrl, Mode=OneWay}">
+                <Image.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding ChoosePictureCommand}"></MouseBinding>
+                </Image.InputBindings>
+            </Image>
+        </Border>
+       
 
         <!-- Choose Picture Button -->
         <Button x:Name="ChoosePicture_BTN" Content="Choose Picture"
+                Width="200" Height="50"
+                HorizontalAlignment="Left"
+                Background="#9DB899"
+                materialDesign:ButtonAssist.CornerRadius="20"
+                BorderBrush="#1F2326"
+                BorderThickness="0,0,2,2"
                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                 FontSize="20" Foreground="Snow" FontWeight="SemiBold"
                 Grid.Column="1" Grid.Row="5"
@@ -54,22 +63,37 @@
 
         <!-- Add Button -->
         <Button x:Name="Add_BTN" Content="Add"
+                Width="160" Height="50"
+                HorizontalAlignment="Right"
+                Background="#F14666"
+                materialDesign:ButtonAssist.CornerRadius="20"
+                BorderBrush="#1F2326"
+                BorderThickness="0,0,2,2"
                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                 FontSize="20" Foreground="Snow" FontWeight="SemiBold"
-                Grid.Column="3" Grid.Row="5"
+                Grid.Column="1" Grid.Row="5"
                 Command="{Binding AddPictureCommand}"/>
 
         <!-- Image name textbox -->
-        <TextBox x:Name="ImageName_TB"
-                 Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"
-                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-                 FontSize="20" Foreground="Black" FontWeight="SemiBold"
-                 Text="{Binding NewPicName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 Background="snow">
-        </TextBox>
+        <Border
+            Grid.Column="1" Grid.Row="3"
+            CornerRadius="10"
+            BorderBrush="#1F2326"
+            BorderThickness="1"
+            Background="snow">
+            <TextBox x:Name="ImageName_TB"
+                Width="350" Height="35"
+                materialDesign:HintAssist.Hint="New picture's name..."
+                VerticalAlignment="Center"
+                FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                FontSize="22" Foreground="Black" FontWeight="SemiBold"
+                Text="{Binding NewPicName, Mode=TwoWay}">
+            </TextBox>
+        </Border>
+        
 
         <TextBlock Grid.ColumnSpan="5" Margin="0,0,-684,0"
-                   Background="snow"
+                   Background="Transparent"
                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                    FontSize="10" Foreground="Black" FontWeight="SemiBold"
                    Text="{Binding NewPicName, Mode=OneWay}"/>

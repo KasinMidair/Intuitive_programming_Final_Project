@@ -98,7 +98,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public LevelSelectionViewModel()
         {
-            _wndBgr = defaultColornum1;
+            _wndBgr = defaultColornum2;
             PictureList = new List<Picture>();
             _loadPicListService.LoadPictureList(PictureList, "HOAI");
             // _loadPicListService.LoadPictureList(PictureList);
