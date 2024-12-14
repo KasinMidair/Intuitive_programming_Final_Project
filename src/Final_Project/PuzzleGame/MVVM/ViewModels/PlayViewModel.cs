@@ -3,6 +3,8 @@ using MaterialDesignColors.ColorManipulation;
 using PuzzleGame.Core;
 using PuzzleGame.Core.Helper;
 using PuzzleGame.MVVM.Models;
+using PuzzleGame.MVVM.Views;
+using PuzzleGame.MVVM.Views.Pages;
 using PuzzleGame.Stores;
 using System.ComponentModel;
 using System.Security.Cryptography.Xml;
@@ -18,6 +20,7 @@ using System.Windows.Threading;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
+
     public class PlayViewModel : ObservableObject
     {
         //Service and EventAggreator
@@ -29,6 +32,34 @@ namespace PuzzleGame.MVVM.ViewModels
         public RelayCommand<object> GoForwardCommand { get; set; }
         public RelayCommand<object> ShutdownCommand { get; set; }
         public RelayCommand<object> Mute_UnMuteCommand { get; set; }
+        public RelayCommand<object> GoToMainMenuCommand { get; set; }
+        public RelayCommand<object> BackgroundMusic0Command { get; set; }
+        public RelayCommand<object> BackgroundMusic1Command { get; set; }
+        public RelayCommand<object> BackgroundMusic2Command { get; set; }
+
+        private double sfxVolume;
+        public double SFXVolume
+        {
+            get => sfxVolume;
+            set
+            {
+                sfxVolume = value;
+                OnPropertyChanged();
+                MusicSystemService.Instance.SetVolume(AudioType.SFX_MSC, value / 50.0, value / 50.0);
+            }
+        } 
+        
+        private double backgroundVolume;
+        public double BackgroundVolume
+        {
+            get => backgroundVolume;
+            set
+            {
+                backgroundVolume = value;
+                OnPropertyChanged();
+                MusicSystemService.Instance.SetVolume(AudioType.BACKGROUND_MSC, value / 50.0, value / 50.0);
+            }
+        }
 
         bool isGoBack;
         public bool IsGoBack 
@@ -73,7 +104,7 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-
+        
         public SolidColorBrush WndBgr
         {
             get => _wndBgr;
@@ -114,7 +145,7 @@ namespace PuzzleGame.MVVM.ViewModels
             EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Subscribe((o) => OnCurrentPageChanged(o));
             EventAggregator.GetEvent<PubSubEvent<GameStatus>>().Subscribe((o) => Appstatus(o));
 
-            MusicSystemService.Instance.ChangeBackgroundMusic();
+            MusicSystemService.Instance.ChangeBackgroundMusic(2);
 
             toolBarColor = defaultColornum2;
             _wndBgr = defaultColornum1;
@@ -122,6 +153,8 @@ namespace PuzzleGame.MVVM.ViewModels
             IsGoBack = false;
             IsGoForward = false;
             IsMusicMute = "Mute";
+            BackgroundVolume = 25;
+            SFXVolume = 25;
 
             //init command 
             SettingCommand = new RelayCommand<object>((o)=> { SettingMenuStatus(); });
@@ -129,10 +162,23 @@ namespace PuzzleGame.MVVM.ViewModels
             GoBackCommand = new RelayCommand<object>((o) => { GoBackPage(); });
             GoForwardCommand = new RelayCommand<object>((o) => { GoForwardPage(); });
             Mute_UnMuteCommand = new RelayCommand<object>((o) => { Mute_UnMute(); });
-
-
+            GoToMainMenuCommand = new RelayCommand<object>((o) => { GoToMainMenu(); });
+            BackgroundMusic0Command = new RelayCommand<object>((o) => { MusicSystemService.Instance.ChangeBackgroundMusic(0); });
+            BackgroundMusic1Command = new RelayCommand<object>((o) => { MusicSystemService.Instance.ChangeBackgroundMusic(1); });
+            BackgroundMusic2Command = new RelayCommand<object>((o) => { MusicSystemService.Instance.ChangeBackgroundMusic(2); });
         }
-
+        private void GoToMainMenu()
+        {
+            IsSettingVisible = !IsSettingVisible;
+            EventAggregator.GetEvent<PubSubEvent<bool>>().Publish(IsSettingVisible);
+            while (_navigationService.CanGoBack) { _navigationService.GoBack(); }
+            IsGoBack = false;
+            IsGoForward = _navigationService.CanGoForward;
+            Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                CurrentPage = (ObservableObject)_navigationService.Content;
+            });
+        }
         private void Mute_UnMute()
         {
             if (IsMusicMute=="UnMute")
@@ -165,7 +211,7 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             _navigationService.GoBack();
             IsGoBack = _navigationService.CanGoBack;
-            IsGoForward= true;
+            IsGoForward = true;
            Application.Current.Dispatcher.InvokeAsync(() =>
            {
                 CurrentPage = (ObservableObject)_navigationService.Content;
@@ -210,7 +256,7 @@ namespace PuzzleGame.MVVM.ViewModels
         /// <param name="status"></param>
         private void Appstatus(GameStatus status)
         {
-            if (status == GameStatus.QuitApp) ;
+            if (status == GameStatus.QuitApp);
             QuitApp();
         }
 
