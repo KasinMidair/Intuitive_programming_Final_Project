@@ -94,13 +94,17 @@ namespace PuzzleGame.MVVM.Models
         {
             gamePlayBoxX = 488;
             gamePlayBoxY = 488;
-            string srcPath = GameRoundPicUrl;
+
+            string srcPath = "pack://application:,,,/Assets/picture/pic10.png";
+            if (GameRoundPicUrl != null)
+                srcPath = GameRoundPicUrl;
+           
             BitmapImage originalImage = new BitmapImage(new Uri(srcPath, UriKind.RelativeOrAbsolute));
             double scaleX = (double)gamePlayBoxX*originalImage.DpiX/ (originalImage.PixelWidth*96);
             double scaleY = (double)gamePlayBoxY*originalImage.DpiY / (originalImage.PixelHeight*96);
             SrcImg = new TransformedBitmap(originalImage, new ScaleTransform(scaleX,scaleY));
             blckBoxImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0003.png", UriKind.Absolute));
-            row = 6; col = 6;
+            row = 3; col = 3;
             status = GameStatus.PreStart;
             playTime = 2 * 60;
             UnitX = SrcImg.PixelWidth / col;

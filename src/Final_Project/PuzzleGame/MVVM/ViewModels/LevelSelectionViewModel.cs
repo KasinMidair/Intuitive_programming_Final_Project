@@ -66,14 +66,14 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
-        string _hour="00", _minute="00", _second="00";
+        string _hour, _minute, _second;
         public string Hour
         {
             get => _hour;
             set
             {
                 _hour = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(Hour));
             }
         }
         public string Minute
@@ -82,7 +82,7 @@ namespace PuzzleGame.MVVM.ViewModels
             set
             {
                 _minute = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(Minute));
             }
         }
         public string Second

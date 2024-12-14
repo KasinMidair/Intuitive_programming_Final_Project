@@ -29,5 +29,10 @@ namespace PuzzleGame.MVVM.Views.Pages
         {
 
         }
+
+        private void NumberSelection_Combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
