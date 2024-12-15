@@ -98,12 +98,12 @@ namespace PuzzleGame.Stores
         {
             //Create a temporary path
 
-            string tempFilePath = Path.Combine(Path.GetTempPath(), Path.GetFileName(resourcePath));
+            string tempFilePath = Path.Combine("pack://application:,,,/Assets/Imgs", Path.GetFileName(resourcePath));
 
             if (!File.Exists(tempFilePath))
             {
                 // open embedded audio resource
-                Uri resourceUri = new Uri($"pack://application:,,,/{resourcePath}");
+                Uri resourceUri = new Uri($"{resourcePath}",UriKind.Relative);
                 using (Stream resourceStream = Application.GetResourceStream(resourceUri).Stream)
                 using (FileStream fileStream = new FileStream(tempFilePath, FileMode.Create, FileAccess.Write))
                 {
