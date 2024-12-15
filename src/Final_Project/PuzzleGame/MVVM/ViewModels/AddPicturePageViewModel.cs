@@ -144,11 +144,16 @@ namespace PuzzleGame.MVVM.ViewModels
                         Url = $@"pack://application:,,,/Assets/picture/{NewPicName}.png"
                     };
 
-                    //FileInfo info = new FileInfo(NewPicUrl);
-                    //info.CopyTo(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + NewPic.Url);
+                    //File.Copy(NewPicUrl, Path.Combine(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + $"/Assets/picture/{NewPicName}.png"), true);
 
-                    File.Copy(NewPicUrl, Path.Combine(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + $"/Assets/picture/{NewPicName}.png"), true);
-                    //File.Copy(NewPicUrl, Path.Combine($"pack://application:,,,/Assets/picture/{NewPicName}.png"), true);
+                    string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                    string assetsDirectory = Path.Combine(projectDirectory, "/Assets/picture/");
+                    string destinationPath = Path.Combine(assetsDirectory, $"{NewPicName}.png"); 
+                    if (!Directory.Exists(assetsDirectory))
+                    { 
+                        Directory.CreateDirectory(assetsDirectory); 
+                    }
+                    File.Copy(NewPicUrl, destinationPath, true);
 
                     MessageBox.Show("Da luu tranh... chac vay");
                 }
