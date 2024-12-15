@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Content Include="Assets\favicon.ico" />
+    <Resource Include="Assets\Imgs\slideFun.png" />
   </ItemGroup>
 
   <ItemGroup>

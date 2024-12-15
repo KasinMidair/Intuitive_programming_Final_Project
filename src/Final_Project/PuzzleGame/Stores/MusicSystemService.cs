@@ -70,6 +70,7 @@ namespace PuzzleGame.Stores
             _sfxClock.Controller.Stop();    
             _sfxClock.Controller.Begin();
         }
+
         public void ChangeBackgroundMusic()
         {
             if (_backgroundClock != null)
@@ -114,6 +115,13 @@ namespace PuzzleGame.Stores
 
             return tempFilePath;
         }
+
+        /// <summary>
+        /// set the application audio volume
+        /// </summary>
+        /// <param name="audioType"></param>
+        /// <param name="bgVolume"></param>
+        /// <param name="sfxVolume"></param>
         public void SetVolume(AudioType audioType,double bgVolume,double sfxVolume)
         {
             switch(audioType)

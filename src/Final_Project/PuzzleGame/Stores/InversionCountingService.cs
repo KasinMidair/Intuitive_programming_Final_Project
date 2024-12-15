@@ -25,39 +25,39 @@ namespace PuzzleGame.Stores
         public static int CountInversions(List<int> ls)
         {
             List<int> temp = new List<int>(ls.Count);
-            return MergeSortAndCount(ls, temp, 0, ls.Count - 1);
+            return MergeSortAndCount(ls, 0, ls.Count - 1);
         }
 
         /// <summary>
         /// Using MergeSort to counting number of Inversions
         /// </summary>
         /// <param name="ls"></param>
-        /// <param name="temp"></param>
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        private static int MergeSortAndCount(List<int> ls, List<int> temp, int left, int right)
+        private static int MergeSortAndCount(List<int> ls,int left, int right)
         {
             int mid, inversionCount = 0;
             if (left < right)
             {
                 mid = (left + right) / 2;
 
-                inversionCount += MergeSortAndCount(ls, temp, left, mid);         
-                inversionCount += MergeSortAndCount(ls, temp, mid + 1, right);
+                inversionCount += MergeSortAndCount(ls,left, mid);         
+                inversionCount += MergeSortAndCount(ls,mid + 1, right);
 
-                inversionCount += MergeAndCount(ls, temp, left, mid, right);
+                inversionCount += MergeAndCount(ls, left, mid, right);
             }
             return inversionCount;
         }
 
-        private static int MergeAndCount(List<int> ls, List<int>temp, int left, int mid, int right)
+        private static int MergeAndCount(List<int> ls, int left, int mid, int right)
         {
+
             int i = left;
             int j = mid + 1;
             int k = left;
             int inversionCount = 0;      //start counting
-
+            List<int> temp = new List<int>();
 
             while (i <= mid && j <= right)
             {

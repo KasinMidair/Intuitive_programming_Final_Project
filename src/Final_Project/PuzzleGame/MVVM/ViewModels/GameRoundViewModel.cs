@@ -347,6 +347,11 @@ namespace PuzzleGame.MVVM.ViewModels
         public void IsWin()
         {
             GameModel.Instance.Status = GameStatus.EndGame;
+            CustomDialogResult a= CusDialogService.Instance.ShowDialog("do you want to play again ?", true).Result;
+            if ( a==CustomDialogResult.Yes)
+            {
+                EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Publish(new MainMenuViewModel());
+            }
             ReleaseClock();
         }
         private void ReleaseClock()

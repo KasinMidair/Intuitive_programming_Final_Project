@@ -655,6 +655,13 @@
                                 </Style>
                             </ScrollViewer.Resources>
                             <StackPanel Width="908">
+
+                                <Image
+                                    Width="332"
+                                    Height="250"
+                                    Margin="-200,0,0,0"
+                                    Source="pack://application:,,,/Assets/Imgs/slideFun.png" />
+
                                 <TextBlock
                                     Width="730"
                                     HorizontalAlignment="Left"
@@ -729,7 +736,7 @@
                             Height="260"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Background="#E5FF5B"
+                            Background="#DCFF66"
                             CornerRadius="20">
                             <StackPanel
                                 Width="922"
@@ -768,6 +775,9 @@
                     </Canvas>
                 </materialDesign:DrawerHost.BottomDrawerContent>
             </materialDesign:DrawerHost>
+
+
+
 
         </Canvas>
 
