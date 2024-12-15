@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Imgs\Back_BTN.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\Imgs\LeaderBoard_ico.png" />
   </ItemGroup>
 
@@ -100,7 +104,6 @@
   <ItemGroup>
     <Resource Include="Assets\Fonts\Itim.ttf" />
     <Resource Include="Assets\Imgs\Achievement_BTN.png" />
-    <Resource Include="Assets\Imgs\Back_BTN.png" />
     <Resource Include="Assets\Imgs\DialogFrame.png" />
     <Resource Include="Assets\Imgs\Exit_BTN.png" />
     <Resource Include="Assets\Imgs\Setting_BTN.png" />

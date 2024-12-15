@@ -35,6 +35,18 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
+        <Border
+            Grid.Column="0" Grid.Row="0" Grid.RowSpan="7"
+            HorizontalAlignment="Left"
+            Width="220"
+            Background="#1F2326"/>
+        <Border
+            Grid.Column="2" Grid.Row="0" Grid.RowSpan="7"
+            HorizontalAlignment="Right"
+            Width="220"
+            Background="#1F2326"/>
+
+
         <!-- Picture holder -->
         <Border Grid.Column="1" Grid.Row="1"
             BorderThickness="5" BorderBrush="#9DB899"
@@ -90,12 +102,5 @@
                 Text="{Binding NewPicName, Mode=TwoWay}">
             </TextBox>
         </Border>
-        
-
-        <TextBlock Grid.ColumnSpan="5" Margin="0,0,-684,0"
-                   Background="Transparent"
-                   FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-                   FontSize="10" Foreground="Black" FontWeight="SemiBold"
-                   Text="{Binding NewPicName, Mode=OneWay}"/>
     </Grid>
 </Page>

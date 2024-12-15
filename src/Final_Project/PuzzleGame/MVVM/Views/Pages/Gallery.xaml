@@ -46,7 +46,8 @@
                     CommandParameter="{Binding ElementName=DeleteBTN}" 
                     Width="120" Height="40"
                     HorizontalAlignment="Left"
-                    materialDesign:ButtonAssist.CornerRadius="20"/>
+                    materialDesign:ButtonAssist.CornerRadius="20">
+                </Button>
 
                 <Button x:Name="AddBTN" Content="Add"
                     FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
@@ -85,11 +86,6 @@
                 SelectedItem="{Binding SelectedPicture}"
                 DisplayMemberPath="Name"/>
         </Border>
-
-
-        <TextBlock Background="snow"
-                   Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3"
-                   Text="{Binding SelectedPicture.Name}"></TextBlock>
 
     </Grid>
 </Page>
