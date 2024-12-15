@@ -111,16 +111,16 @@ namespace PuzzleGame.MVVM.ViewModels
             AddPictureCommand = new RelayCommand<object>((o) =>
             {
                 bool check = false;
-                
-                if (NewPicName == null || NewPicName == "")
+
+
+                if (NewPicUrl == null || NewPicUrl == @"/Assets/Imgs/AddPicBackGround.jpg")
                 {
-                    _cusDialogService.ShowDialog("Chua nhap ten tranh", true);
+                    MessageBox.Show("Chua chon tranh...");
                     check = true;
                 }
-                else if(
-                NewPicUrl == null)
+                else if (NewPicName == null || NewPicName == "")
                 {
-                    _cusDialogService.ShowDialog("Chua chon tranh");
+                    MessageBox.Show("Chua nhap ten tranh...");
                     check = true;
                 }
                 else
@@ -129,7 +129,7 @@ namespace PuzzleGame.MVVM.ViewModels
                     {
                         if (NewPicName == pic.Name)
                         {
-                            _cusDialogService.ShowDialog("Ten tranh da ton tai");
+                            MessageBox.Show("ten tranh da ton tai...");
                             check = true;
                             break;
                         }
@@ -141,11 +141,16 @@ namespace PuzzleGame.MVVM.ViewModels
                     NewPic = new Picture
                     {
                         Name = NewPicName,
-                        Url = Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + @"Assets\picture\" + NewPicName + ".jpg"
+                        Url = $@"pack://application:,,,/Assets/picture/{NewPicName}.png"
                     };
-                    FileInfo info = new FileInfo(NewPicUrl);
-                    info.CopyTo(NewPic.Url);
-                    _cusDialogService.ShowDialog("Ten tranh da ton tai");
+
+                    //FileInfo info = new FileInfo(NewPicUrl);
+                    //info.CopyTo(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + NewPic.Url);
+
+                    File.Copy(NewPicUrl, Path.Combine(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + $"/Assets/picture/{NewPicName}.png"), true);
+                    //File.Copy(NewPicUrl, Path.Combine($"pack://application:,,,/Assets/picture/{NewPicName}.png"), true);
+
+                    MessageBox.Show("Da luu tranh... chac vay");
                 }
             });
         }

@@ -9,6 +9,8 @@ using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using DryIoc.ImTools;
+using PuzzleGame.MVVM.ViewModels;
+using System.ComponentModel;
 
 
 namespace PuzzleGame.MVVM.Models
@@ -31,12 +33,26 @@ namespace PuzzleGame.MVVM.Models
         public int gamePlayBoxX;
         public int gamePlayBoxY;
 
+        string _gameRoundPicUrl;
+        public string GameRoundPicUrl
+        {
+            get
+            {
+                return _gameRoundPicUrl;
+            }
+            set
+            {
+                _gameRoundPicUrl = value;
+            }
+        }
+
         int playTime;
         public bool isSetCountDown { get; set; }
         public int row, col;
         private static volatile GameModel _instance;
         private GameStatus status;
         private static object key = new object();
+
         public static GameModel Instance
         {
             get
@@ -77,16 +93,19 @@ namespace PuzzleGame.MVVM.Models
         }
         private GameModel()
         {
-            
             gamePlayBoxX = 488;
             gamePlayBoxY = 488;
+
             string srcPath = "pack://application:,,,/Assets/picture/pic10.png";
+            if (GameRoundPicUrl != null)
+                srcPath = GameRoundPicUrl;
+           
             BitmapImage originalImage = new BitmapImage(new Uri(srcPath, UriKind.RelativeOrAbsolute));
             double scaleX = (double)gamePlayBoxX*originalImage.DpiX/ (originalImage.PixelWidth*96);
             double scaleY = (double)gamePlayBoxY*originalImage.DpiY / (originalImage.PixelHeight*96);
             SrcImg = new TransformedBitmap(originalImage, new ScaleTransform(scaleX,scaleY));
             blckBoxImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0003.png", UriKind.Absolute));
-            row =6; col =6;
+            row = 3; col = 3;
             status = GameStatus.PreStart;
             playTime = 2 * 60;
             UnitX = SrcImg.PixelWidth / col;

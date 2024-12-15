@@ -12,6 +12,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Caliburn.Micro;
 using PuzzleGame.Stores;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Globalization;
+using System.Windows.Controls;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
@@ -33,14 +36,13 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
-        public RelayCommand<object> OpenGalleryCommand { get; set; } //command for Gallery button
+        public RelayCommand<object> OpenGalleryCommand { get; set; } //command for Gallery button to open Gallery
         public RelayCommand<object> SelectPictureCommand { get; set; }
-        public RelayCommand<object> PlayCommand { get; set; }
+        public RelayCommand<object> PlayCommand { get; set; } //command for Play button to start game round
 
 
         //Connection connection = new Connection();
         public List<Picture> PictureList { get; set; }
-        public int hour, minute, second;
 
         Picture? _selectedPicture;
         public Picture? SelectedPicture
@@ -64,6 +66,36 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
+        string _hour, _minute, _second;
+        public string Hour
+        {
+            get => _hour;
+            set
+            {
+                _hour = value;
+                OnPropertyChanged(nameof(Hour));
+            }
+        }
+        public string Minute
+        {
+            get => _minute;
+            set
+            {
+                _minute = value;
+                OnPropertyChanged(nameof(Minute));
+            }
+        }
+        public string Second
+        {
+            get => _second;
+            set
+            {
+                _second = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public LevelSelectionViewModel()
         {
             _wndBgr = defaultColornum2;
@@ -73,7 +105,11 @@ namespace PuzzleGame.MVVM.ViewModels
 
             OpenGalleryCommand = new RelayCommand<object>((o) => {CurrentPage = new GalleryViewModel();});
 
-            PlayCommand = new RelayCommand<object>((o) => {CurrentPage = new GameRoundViewModel();});
+            PlayCommand = new RelayCommand<object>((o) => 
+            {
+                GameModel.Instance.GameRoundPicUrl = SelectedPicture.Url;
+                CurrentPage = new GameRoundViewModel();
+            });
         }
     }
 }
