@@ -67,7 +67,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public GalleryViewModel()
         {
-            _wndBgr = defaultColornum1;
+            _wndBgr = defaultColornum2;
             PictureList = new List<Picture>();
 
             _loadPicListService.LoadPictureList(PictureList, "HOAI");

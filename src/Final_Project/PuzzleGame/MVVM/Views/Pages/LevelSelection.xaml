@@ -7,121 +7,402 @@
       xmlns:ViewModels="clr-namespace:PuzzleGame.MVVM.ViewModels" x:Class="PuzzleGame.MVVM.Views.Pages.LevelSelection"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="920"
-      Title="LevelSelection">
-    
+      Title="LevelSelection"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+
+    <Page.DataContext>
+        <ViewModels:LevelSelectionViewModel/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <ViewModels:LevelSelectionViewModel x:Key="vm"></ViewModels:LevelSelectionViewModel>
+
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Grid Margin="-110,0,-120,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="30" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Border
+                  x:Name="Border" 
+                  Grid.Column="2" Grid.Row="0"
+                  CornerRadius="10"
+                  Margin="1"
+                  Background="#9DB899"
+                  BorderBrush="#15161C"
+                  BorderThickness="1" />
+                <Border 
+                  Grid.Column="0" Grid.Row="0"
+                  CornerRadius="10" 
+                  Margin="1" 
+                  Background="Snow" 
+                  BorderBrush="#15161C"
+                  BorderThickness="1" />
+                <Path 
+                  x:Name="Arrow"
+                  Grid.Column="1"     
+                  Fill="Snow"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Data="M0,0 L0,4 L8,12 L16,4 L16,0 L8,8 z"
+                />
+            </Grid>
+            <!--<ControlTemplate.Triggers>
+            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#808080" />
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="#AAAAAA" />
+                <Setter Property="Foreground" Value="#888888"/>
+                <Setter TargetName="Arrow" Property="Fill" Value="#888888" />
+            </Trigger>
+        </ControlTemplate.Triggers>-->
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
+            <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}" />
+        </ControlTemplate>
+
+        <Style x:Key="{x:Type ComboBox}" TargetType="{x:Type ComboBox}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="Foreground" Value="Snow"/>
+            <Setter Property="FontFamily" Value="pack://application:,,,/Assets/Fonts/#Itim"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+                        <Grid Margin="10,0,20,0">
+                            <ToggleButton 
+                            Name="ToggleButton" 
+                            Template="{StaticResource ComboBoxToggleButton}" 
+                            Grid.Column="2" 
+                            Focusable="false"
+                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                            ClickMode="Press">
+                            </ToggleButton>
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                          Margin="10,3,23,3"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left" />
+                            <TextBox x:Name="PART_EditableTextBox"
+                            Style="{x:Null}" 
+                            Template="{StaticResource ComboBoxTextBox}" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Center"
+                            Margin="3,3,23,3"
+                            Focusable="True" 
+                            Background="#FF3F3F3F"
+                            Foreground="Snow"
+                            Visibility="Hidden"
+                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                            <Popup 
+                            Name="Popup"
+                            Placement="Bottom"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            AllowsTransparency="True" 
+                            Focusable="False"
+                            PopupAnimation="Slide">
+
+                                <Grid Name="DropDown"
+                              SnapsToDevicePixels="True"  
+                              Width="250"
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                      HorizontalAlignment="Left">
+
+                                    <Border 
+                                x:Name="DropDownBorder"
+                                Background="#FF3F3F3F"
+                                
+                                BorderThickness="1"
+                                BorderBrush="#15161C"/>
+                                    <ScrollViewer Margin="10,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0"/>
+                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsEditable"  Value="true">
+                                <Setter Property="IsTabStop" Value="false"/>
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+            </Style.Triggers>
+        </Style>
+
+        <!-- SimpleStyles: ComboBoxItem -->
+        <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                        <Border Name="Border"
+                              Padding="2"
+                              SnapsToDevicePixels="true">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#FF4F4F4F"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Page.Resources>
+
+
     <Grid Background="#FFCFAB">
 
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="7*"/>
-            <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="520"/>
-            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="270"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="370.667"/>
-            <RowDefinition Height="149.333"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
 
         <!-- Image holder -->
-        <Image x:Name="ImageHolder"
-               Grid.Column="3" Grid.Row="1" Grid.RowSpan="2"
-               Source="{Binding SelectedPicture.Url}"/>
+        <Border Grid.Column="3" Grid.RowSpan="5" Grid.Row="1"
+                BorderThickness="5" BorderBrush="#9DB899"
+                CornerRadius="20">
+            <Image x:Name="ImageHolder"
+                Grid.Column="3" Grid.Row="1" Grid.RowSpan="5"
+                Source="{Binding SelectedPicture.Url}"/>
+        </Border>
 
         <!-- Number seclection combobox-->
         <ComboBox x:Name="NumberSelection_Combobox" 
-                  Grid.Column="1" HorizontalAlignment="Center" Margin="0,126,0,0" Grid.Row="1" VerticalAlignment="Top" Width="260"
+                  Grid.Column="1" Grid.Row="2" Height="40"
                   Background="Snow"
                   SelectedIndex="0"
-                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                   FontSize="20" Foreground="#15161C" FontWeight="SemiBold"
-                  SelectedItem="{Binding NumberOfPieces}">
-            <ComboBoxItem Content="3"/>
-            <ComboBoxItem Content="4"/>
-            <ComboBoxItem Content="5"/>
-            <ComboBoxItem Content="6"/>
-            <ComboBoxItem Content="7"/>
-            <ComboBoxItem Content="8"/>
-            <ComboBoxItem Content="9"/>
+                  SelectedItem="{Binding NumberOfPieces}" SelectionChanged="NumberSelection_Combobox_SelectionChanged">
+            <ComboBoxItem Content="3 x 3"/>
+            <ComboBoxItem Content="4 x 4"/>
+            <ComboBoxItem Content="5 x 5"/>
+            <ComboBoxItem Content="6 x 6"/>
+            <ComboBoxItem Content="7 x 7"/>
+            <ComboBoxItem Content="8 x 8"/>
+            <ComboBoxItem Content="9 x 9"/>
+
         </ComboBox>
 
         <!-- Picture selection combobox-->
         <ComboBox x:Name="PictureSelection_Combobox" 
-                  Grid.Column="1" HorizontalAlignment="Right" Margin="0,219,10,0" Grid.Row="1" VerticalAlignment="Top" Width="260"
+                  Grid.Column="1" Grid.Row="3" Height="40"
                   Background="Snow"
                   ItemsSource="{Binding PictureList}"
                   SelectedItem="{Binding SelectedPicture}"
                   DisplayMemberPath="Name"
                   SelectedIndex="0"
-                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                   FontSize="20" Foreground="#15161C" FontWeight="SemiBold">
         </ComboBox>
         <!-- Text block -->
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="10,91,0,0" Grid.Row="1"
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Grid.Row="2"
                    TextWrapping="Wrap" VerticalAlignment="Top"
                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
                    Foreground="#15161C" FontSize="25" FontWeight="SemiBold"><Run Text="Number of pieces:"/></TextBlock>
 
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="10,184,0,0" Grid.Row="1"
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3"
            TextWrapping="Wrap" VerticalAlignment="Top"
            FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
            Foreground="#15161C" FontSize="25" FontWeight="SemiBold"><Run Text="Picture name:"/></TextBlock>
 
         <!-- Play button -->
-        <Button x:Name="Play_BTN" Grid.Column="1" Grid.Row="2" Margin="0,99,0,0"
-                Background="#9DB899" Width="280" Height="50"
-                Foreground="snow" FontSize="30" FontWeight="Black" Content="Play"
-                Command="{Binding PlayCommand}"/>
+        <Button x:Name="Play_BTN" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom"
+                Background="#F14666" Height="50"
+                Foreground="snow" FontSize="30" FontWeight="Black"
+                BorderBrush="#1F2326"
+                BorderThickness="0,0,2,2"
+                Content="Play"
+                Command="{Binding PlayCommand}"
+                materialDesign:ButtonAssist.CornerRadius="15">
+        </Button>
 
         <!-- Gallery button -->
-        <Button x:Name="Gallery_BTN" Grid.Column="1" Grid.Row="2" Margin="0,18,0,81"
-            Background="#9DB899" Width="280" Height="50"
-            Foreground="snow" FontSize="30" FontWeight="Black" Content="Gallery"
-            Command="{Binding OpenGalleryCommand}"/>
+        <Button x:Name="Gallery_BTN" Grid.Row="5" VerticalAlignment="Top"
+            Background="#9DB899" Height="50"
+            Foreground="snow" FontSize="30" FontWeight="Black" 
+            BorderBrush="#1F2326"
+            BorderThickness="0,0,2,2"
+            Content="Gallery"
+            Command="{Binding OpenGalleryCommand}" Grid.Column="1"
+            materialDesign:ButtonAssist.CornerRadius="15"/>
+
+        <Border
+            CornerRadius="10"
+            Grid.Column="1" Grid.Row="4"
+            Background="Transparent"
+            Width="260" Height="40"
+            Margin="0,34,0,0"
+            HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+
+                <Border
+                    CornerRadius="10"
+                    Grid.Column="0"
+                    Background="#9DB899">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border
+                        Background="Snow"
+                        CornerRadius="10"
+                        Width="50"
+                        HorizontalAlignment="Left">
+                            <TextBox x:Name="Hour_TB"
+                                     Grid.Column="0"
+                                FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                                Foreground="#15161C" FontSize="25" FontWeight="SemiBold" TextAlignment="Center"
+                                materialDesign:HintAssist.Hint="00"
+                                Text="{Binding Hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            </TextBox>
+                        </Border>
+                        <TextBlock
+                            Grid.Column="1"
+                            Text="h"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                            FontSize="25" Foreground="snow" FontWeight="SemiBold"></TextBlock>
+                    </Grid>
+                </Border>
+
+                <Border
+                    CornerRadius="10"
+                    Grid.Column="2"
+                    Background="#9DB899">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border
+                            Background="Snow"
+                            CornerRadius="10"
+                            Width="50"
+                            HorizontalAlignment="Left">
+                            <TextBox x:Name="Minute_TB"
+                                Grid.Column="0"
+                                FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                                Foreground="#15161C" FontSize="25" FontWeight="SemiBold" TextAlignment="Center"
+                                materialDesign:HintAssist.Hint="00"
+                                Text="{Binding Minute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            </TextBox>
+                        </Border>
+                        <TextBlock
+                            Grid.Column="1"
+                            Text="m"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                            FontSize="25" Foreground="snow" FontWeight="SemiBold"></TextBlock>
+                    </Grid>
+                </Border>
+
+                <Border
+                    CornerRadius="10"
+                    Grid.Column="4"
+                    Background="#9DB899">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border
+                            Background="Snow"
+                            CornerRadius="10"
+                            Width="50"
+                            HorizontalAlignment="Left">
+                            <TextBox x:Name="Second_TB"
+                                Grid.Column="0"
+                                FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                                Foreground="#15161C" FontSize="25" FontWeight="SemiBold" TextAlignment="Center"
+                                materialDesign:HintAssist.Hint="00"
+                                Text="{Binding Second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            </TextBox>
+                        </Border>
+                        <TextBlock
+                            Grid.Column="1"
+                            Text="s"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                            FontSize="25" Foreground="snow" FontWeight="SemiBold">
+                        </TextBlock>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
 
         <!-- Timer checkbox -->
-        <CheckBox Name="Timer_CB" Grid.Column="1" Content="Timer:" HorizontalAlignment="Left" Margin="10,271,0,0" Grid.Row="1" VerticalAlignment="Top"
+        <CheckBox Name="Timer_CB" Grid.Column="1" Content="Timer:" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top"
                   VerticalContentAlignment="Center"
                   FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-                  Foreground="#15161C" FontSize="25" FontWeight="SemiBold" Height="40" Width="133"/>
-
-
-
-        <ScrollBar Name="Hour_SB" Grid.Column="1" HorizontalAlignment="Left" Margin="61,316,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <ScrollBar Name="Minute_SB" Grid.Column="1" HorizontalAlignment="Left" Margin="134,316,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <ScrollBar Name="Second_SB" Grid.Column="1" HorizontalAlignment="Left" Margin="207,316,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <TextBox Name="hour_TB" 
-                 Grid.Column="1" HorizontalAlignment="Left" Margin="10,311,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" Height="44"
-                 Background="Snow"
-                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-                 Foreground="#15161C" FontSize="25" FontWeight="SemiBold" TextAlignment="Center">
-            <TextBox.Text>
-                <Binding Path="Hour" UpdateSourceTrigger="PropertyChanged">
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-        <TextBox x:Name="minute_TB" 
-            Grid.Column="1" HorizontalAlignment="Left" Margin="83,311,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" Height="44"
-            Background="Snow"
-            FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-            Foreground="#15161C" FontSize="25" FontWeight="SemiBold" TextAlignment="Center"/>
-        <TextBox x:Name="second_TB1" 
-            Grid.Column="1" HorizontalAlignment="Left" Margin="156,311,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" Height="44"
-            Background="Snow"
-            FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
-            Foreground="#15161C" FontSize="25" FontWeight="SemiBold" TextAlignment="Center"/>
-
-
-        <Label Background="snow"
-               Content="{Binding SelectedPicture.Url}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Width="580" Grid.Column="1"/>
-        <Label Grid.Column="1" Background="Snow" Content="{Binding Hour}" HorizontalAlignment="Left" Margin="10,29,0,0" Grid.Row="1" VerticalAlignment="Top" Height="27" Width="46"/>
-        <Label Grid.Column="1" Background="Snow" Content="{Binding Minute}" HorizontalAlignment="Left" Margin="94,29,0,0" Grid.Row="1" VerticalAlignment="Top" Height="27" Width="46"/>
-        <Label Grid.Column="1" Background="Snow" Content="{Binding Second}" HorizontalAlignment="Left" Margin="179,28,0,0" Grid.Row="1" VerticalAlignment="Top" Height="28" Width="46"/>
+                  Foreground="#15161C" FontSize="25" FontWeight="SemiBold" Height="34" Width="133">
+        </CheckBox>
     </Grid>
 
 </Page>

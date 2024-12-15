@@ -12,7 +12,7 @@ namespace PuzzleGame.MVVM.Models
     //connection
     public partial class Connection
     {
-        public string connStr = @"Data Source=KasinMidair-Dss\SQLEXPRESS_BEGIN;Initial Catalog=SLIDING_PUZZLE_DB;Integrated Security=True;";
+        public string connStr = @"data source=DESKTOP-Q75RUSO;initial catalog=SLIDING_PUZZLE_DB;trusted_connection=true";
         public SqlDataAdapter dataAdapter;
         public DataSet ds = new DataSet();
         public  DataTable dt = new DataTable();

@@ -35,6 +35,9 @@ namespace PuzzleGame.MVVM.Views
 
         }
 
-
+        private void CopyIDTextBlock(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(IDTextBlock.Text);
+        }
     }
 }

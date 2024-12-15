@@ -29,7 +29,7 @@ namespace PuzzleGame.Stores
                 {
                         _instance = new MusicSystemService();
                 }
-
+                
                 return _instance;
             }
         }
@@ -62,8 +62,6 @@ namespace PuzzleGame.Stores
             MediaTimeline mediaTimelineSFX = new MediaTimeline(new Uri(sfxAdioSource, UriKind.RelativeOrAbsolute));
             _sfxClock = mediaTimelineSFX.CreateClock();
             _sfx.Clock = _sfxClock;
-
-
         }
         public void PlayBTN_ClickSound()
         {
@@ -71,14 +69,14 @@ namespace PuzzleGame.Stores
             _sfxClock.Controller.Begin();
         }
 
-        public void ChangeBackgroundMusic()
+        public void ChangeBackgroundMusic(int bgIndex)
         {
             if (_backgroundClock != null)
             {
                 _backgroundClock.Controller.Stop();
                 _backgroundMusic.Clock = null;
             }
-
+            curbgAudio = bgIndex;
             MediaTimeline mediaTimeline = new MediaTimeline(new Uri(bgAudioSources[curbgAudio], UriKind.RelativeOrAbsolute));
             mediaTimeline.RepeatBehavior = RepeatBehavior.Forever;
             _backgroundClock = mediaTimeline.CreateClock();
