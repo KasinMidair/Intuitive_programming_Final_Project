@@ -22,6 +22,7 @@ namespace PuzzleGame.MVVM.ViewModels
     {
         public readonly CusDialogService _cusDialogService = new CusDialogService();
         public readonly GalleryViewModel _galleryViewModel = new GalleryViewModel();
+        public readonly LoadPictureListService _loadPictureListService = new LoadPictureListService();
 
         private ObservableObject _currentPage;
         public ObservableObject CurrentPage
@@ -36,6 +37,8 @@ namespace PuzzleGame.MVVM.ViewModels
                 }
             }
         }
+
+        Connection conn = new Connection();
 
         public string _newPicName { get; set; }
         public string NewPicName
@@ -96,68 +99,73 @@ namespace PuzzleGame.MVVM.ViewModels
             _wndBgr = defaultColornum1;
             NewPicUrl = @"/Assets/Imgs/AddPicBackGround.jpg";
 
-            ChoosePictureCommand = new RelayCommand<object>((o) =>
+            ChoosePictureCommand = new RelayCommand<object>((o) =>{ ChoosePic(); });
+
+            AddPictureCommand = new RelayCommand<object>((o) =>{ AddPic("HOAI"); });
+        }
+
+        void ChoosePic()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "All Image Files| *.jpg; *.png; *.jpeg; *.bmp; *.gif;";
+
+            if (dialog.ShowDialog() == true)
             {
-                OpenFileDialog dialog = new OpenFileDialog();
-                dialog.Filter = "All Image Files| *.jpg; *.png; *.jpeg; *.bmp; *.gif;";
+                NewPicUrl = dialog.FileName;
+                newBitmap = new BitmapImage(new Uri(NewPicUrl, UriKind.Absolute));
+            }
+        }
 
-                if (dialog.ShowDialog() == true)
-                {
-                    NewPicUrl = dialog.FileName;
-                    newBitmap = new BitmapImage(new Uri(NewPicUrl, UriKind.Absolute));
-                }
-            });
+        void AddPic (string PlayerName)
+        {
+            bool check = false;
 
-            AddPictureCommand = new RelayCommand<object>((o) =>
+            if (NewPicUrl == null || NewPicUrl == @"/Assets/Imgs/AddPicBackGround.jpg")
             {
-                bool check = false;
-
-
-                if (NewPicUrl == null || NewPicUrl == @"/Assets/Imgs/AddPicBackGround.jpg")
+                MessageBox.Show("Chua chon tranh...");
+                check = true;
+            }
+            else if (NewPicName == null || NewPicName == "")
+            {
+                MessageBox.Show("Chua nhap ten tranh...");
+                check = true;
+            }
+            else
+            {
+                foreach (Picture pic in _galleryViewModel.PictureList)
                 {
-                    MessageBox.Show("Chua chon tranh...");
-                    check = true;
-                }
-                else if (NewPicName == null || NewPicName == "")
-                {
-                    MessageBox.Show("Chua nhap ten tranh...");
-                    check = true;
-                }
-                else
-                {
-                     foreach (Picture pic in _galleryViewModel.PictureList)
+                    if (NewPicName == pic.Name)
                     {
-                        if (NewPicName == pic.Name)
-                        {
-                            MessageBox.Show("ten tranh da ton tai...");
-                            check = true;
-                            break;
-                        }
+                        MessageBox.Show("ten tranh da ton tai...");
+                        check = true;
+                        break;
                     }
                 }
+            }
 
-                if (check == false)
+            if (check == false)
+            {
+                NewPic = new Picture
                 {
-                    NewPic = new Picture
-                    {
-                        Name = NewPicName,
-                        Url = $@"pack://application:,,,/Assets/picture/{NewPicName}.png"
-                    };
+                    Name = NewPicName,
+                    Url = Path.Combine(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + $"\\Assets\\picture\\{PlayerName}{NewPicName}.png")
+                };
 
-                    //File.Copy(NewPicUrl, Path.Combine(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + $"/Assets/picture/{NewPicName}.png"), true);
+                File.Copy(NewPicUrl, NewPic.Url, true);
 
-                    string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                    string assetsDirectory = Path.Combine(projectDirectory, "/Assets/picture/");
-                    string destinationPath = Path.Combine(assetsDirectory, $"{NewPicName}.png"); 
-                    if (!Directory.Exists(assetsDirectory))
-                    { 
-                        Directory.CreateDirectory(assetsDirectory); 
-                    }
-                    File.Copy(NewPicUrl, destinationPath, true);
-
-                    MessageBox.Show("Da luu tranh... chac vay");
+                /*string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                string assetsDirectory = Path.Combine(projectDirectory, "/Assets/picture/");
+                string destinationPath = Path.Combine(assetsDirectory, $"{NewPicName}.png"); 
+                if (!Directory.Exists(assetsDirectory))
+                { 
+                    Directory.CreateDirectory(assetsDirectory); 
                 }
-            });
+                File.Copy(NewPicUrl, destinationPath, true);*/
+
+                _loadPictureListService.AddPicture(NewPic, "HOAI");
+                _galleryViewModel._loadPicListService.LoadPictureList(_galleryViewModel.PictureList, "HOAI");
+                MessageBox.Show("Da luu tranh... chac vay");
+            }
         }
 
 

@@ -82,7 +82,7 @@
                 FontSize="20" Foreground="#15161C" FontWeight="SemiBold"
                 SelectedIndex="0"
                 Width="240" Height="390"
-                ItemsSource="{Binding PictureList, Mode=TwoWay}"
+                ItemsSource="{Binding PictureList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 SelectedItem="{Binding SelectedPicture}"
                 DisplayMemberPath="Name"/>
         </Border>

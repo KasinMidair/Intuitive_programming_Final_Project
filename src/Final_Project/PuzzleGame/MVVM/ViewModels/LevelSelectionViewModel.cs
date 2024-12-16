@@ -42,7 +42,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
 
         //Connection connection = new Connection();
-        public List<Picture> PictureList { get; set; }
+        public ObservableCollection<Picture> PictureList { get; set; }
 
         Picture? _selectedPicture;
         public Picture? SelectedPicture
@@ -99,7 +99,7 @@ namespace PuzzleGame.MVVM.ViewModels
         public LevelSelectionViewModel()
         {
             _wndBgr = defaultColornum2;
-            PictureList = new List<Picture>();
+            PictureList = new ObservableCollection<Picture>();
             _loadPicListService.LoadPictureList(PictureList, "HOAI");
             // _loadPicListService.LoadPictureList(PictureList);
 
@@ -107,7 +107,6 @@ namespace PuzzleGame.MVVM.ViewModels
 
             PlayCommand = new RelayCommand<object>((o) => 
             {
-                GameModel.Instance.GameRoundPicUrl = SelectedPicture.Url;
                 CurrentPage = new GameRoundViewModel();
             });
         }

@@ -11,13 +11,17 @@ using MaterialDesignColors.ColorManipulation;
 using PuzzleGame.Core.Helper;
 using System.Windows;
 using PuzzleGame.Stores;
+using System.Security.Cryptography.Xml;
+using Prism.Common;
+using System.Collections.ObjectModel;
+using System.IO;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
     class GalleryViewModel : ObservableObject
     {
         public readonly LoadPictureListService _loadPicListService = new LoadPictureListService();
-
+    
         private ObservableObject _currentPage;
         public ObservableObject CurrentPage
         {
@@ -37,8 +41,8 @@ namespace PuzzleGame.MVVM.ViewModels
         public string SelectedPicUrl;
 
         //Pictures...
-        List<Picture> _pictureList {  get; set; }
-        public List<Picture> PictureList
+        ObservableCollection<Picture> _pictureList = new ObservableCollection<Picture>();
+        public ObservableCollection<Picture> PictureList
         {
             get => _pictureList;
             set
@@ -68,7 +72,7 @@ namespace PuzzleGame.MVVM.ViewModels
         public GalleryViewModel()
         {
             _wndBgr = defaultColornum2;
-            PictureList = new List<Picture>();
+            PictureList = new ObservableCollection<Picture>();
 
             _loadPicListService.LoadPictureList(PictureList, "HOAI");
 
@@ -82,9 +86,44 @@ namespace PuzzleGame.MVVM.ViewModels
 
         void DeleteSelectedPicture()
         {
-            PictureList.Remove(SelectedPicture);
-            connection.dataAdapter = new SqlDataAdapter($"DELETE FROM PICTURE WHERE PICNAME = {SelectedPicture.Name}", connection.connStr);
-            _loadPicListService.LoadPictureList(PictureList, "HOAI");
+            string n = SelectedPicture.Name;
+
+            if (_loadPicListService.DeletePicture(SelectedPicture) == true)
+            {
+                string url = SelectedPicture.Url;
+
+                // Đảm bảo SelectedPicture không còn được sử dụng
+                SelectedPicture = null;
+
+                for (int i = PictureList.Count - 1; i >= 0; i--)
+                {
+                    if (PictureList[i].Name == n)
+                    {
+                        PictureList.RemoveAt(i);
+                        if (i == PictureList.Count - 1 && PictureList.Count > 0)
+                            SelectedPicture = PictureList[i--];
+                        else if (PictureList.Count > 0)
+                            SelectedPicture = PictureList[i++];
+                        break;
+                    }
+                }
+
+                // Xóa tệp
+                if (File.Exists(url))
+                {
+                    try
+                    {
+                        using (FileStream fs = new FileStream(url, FileMode.Open, FileAccess.Read, FileShare.None)) { }
+                        File.Delete(url);
+                        Console.WriteLine("File đã được xóa thành công.");
+                    }
+                    catch (IOException ex)
+                    {
+                        Console.WriteLine($"Lỗi khi xóa tệp: {ex.Message}");
+                    }
+                }
+            }
         }
+
     }
 }
