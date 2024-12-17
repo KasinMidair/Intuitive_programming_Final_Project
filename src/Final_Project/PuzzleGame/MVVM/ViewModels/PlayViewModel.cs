@@ -169,15 +169,9 @@ namespace PuzzleGame.MVVM.ViewModels
         }
         private void GoToMainMenu()
         {
-            IsSettingVisible = !IsSettingVisible;
-            EventAggregator.GetEvent<PubSubEvent<bool>>().Publish(IsSettingVisible);
-            while (_navigationService.CanGoBack) { _navigationService.GoBack(); }
-            IsGoBack = false;
-            IsGoForward = _navigationService.CanGoForward;
-            Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                CurrentPage = (ObservableObject)_navigationService.Content;
-            });
+            SettingMenuStatus();
+            while (_navigationService.CanGoBack) { GoBackPage(); }
+             AvoidNavigate();
         }
         private void Mute_UnMute()
         {

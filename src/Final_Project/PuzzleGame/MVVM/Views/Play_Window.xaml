@@ -25,10 +25,6 @@
     WindowStyle="None"
     mc:Ignorable="d">
 
-    <Window.DataContext>
-        <viewmodel:PlayViewModel />
-    </Window.DataContext>
-
     <!--  Window border  -->
     <Border Background="{Binding WndBgr}" CornerRadius="15">
         <Canvas>
@@ -169,9 +165,9 @@
                                             materialDesign:ButtonAssist.CornerRadius="10"
                                             Background="#ccc9ff"
                                             BorderThickness="0"
-                                            FocusVisualStyle="{x:Null}"
-                                            Click="CopyIDTextBlock"
-                                            >
+                                            Command="{Binding CopyIdCommand}"
+                                            CommandParameter="{Binding Text, ElementName=IDTextBlock}"
+                                            FocusVisualStyle="{x:Null}">
                                             <TextBlock
                                                 Height="16"
                                                 FontSize="12"
@@ -276,15 +272,14 @@
                                             FontSize="20"
                                             Foreground="#101610"
                                             Text="Music" />
-                                        <Slider 
-                                            Value="{Binding BackgroundVolume}"
+                                        <Slider
                                             Grid.Column="1"
                                             Grid.ColumnSpan="2"
                                             Margin="0,6,5,10"
                                             Maximum="50"
                                             Minimum="0"
                                             RenderTransformOrigin="0.5,0.503"
-                                            />
+                                            Value="{Binding BackgroundVolume}" />
                                     </Grid>
 
                                     <!--  SFX audio volume slider  -->
@@ -306,14 +301,14 @@
                                             FontSize="20"
                                             Foreground="#101610"
                                             Text="SFX" />
-                                        <Slider 
-                                            Value="{Binding SFXVolume}"
+                                        <Slider
                                             Grid.Column="1"
                                             Grid.ColumnSpan="2"
                                             Margin="0,6,5,10"
                                             Maximum="50"
                                             Minimum="0"
-                                            RenderTransformOrigin="0.5,0.503"/>
+                                            RenderTransformOrigin="0.5,0.503"
+                                            Value="{Binding SFXVolume}" />
                                     </Grid>
                                 </Grid>
                             </Border>
@@ -332,34 +327,34 @@
                                         <RowDefinition />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <RadioButton 
-                                        Command="{Binding BackgroundMusic0Command}"
-                                        CommandParameter="{Binding ElementName=SettingMenu}"
+                                    <RadioButton
                                         Grid.Row="0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
+                                        Command="{Binding BackgroundMusic0Command}"
+                                        CommandParameter="{Binding ElementName=SettingMenu}"
                                         Content="Joyful Jingles"
                                         FocusVisualStyle="{x:Null}"
                                         Foreground="#101610" />
                                     <RadioButton
-                                        Command="{Binding BackgroundMusic2Command}"
-                                        CommandParameter="{Binding ElementName=SettingMenu}"   
                                         Grid.Row="2"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
+                                        Command="{Binding BackgroundMusic2Command}"
+                                        CommandParameter="{Binding ElementName=SettingMenu}"
                                         Content="Cloud Garden"
                                         FocusVisualStyle="{x:Null}"
                                         Foreground="#101610"
                                         IsChecked="True" />
-                                    <RadioButton 
-                                        Command="{Binding BackgroundMusic1Command}"
-                                        CommandParameter="{Binding ElementName=SettingMenu}"
+                                    <RadioButton
                                         Grid.Row="1"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
+                                        Command="{Binding BackgroundMusic1Command}"
+                                        CommandParameter="{Binding ElementName=SettingMenu}"
                                         Content="Silly Symphony"
                                         FocusVisualStyle="{x:Null}"
-                                        Foreground="#101610"/>
+                                        Foreground="#101610" />
                                 </Grid>
                             </Border>
                         </StackPanel>
@@ -552,13 +547,13 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Style="{StaticResource ResourceKey=BTN}"
-                Visibility="{Binding IsGoBack, Converter={StaticResource IsVisible}}"
-                >
+                Visibility="{Binding IsGoBack, Converter={StaticResource IsVisible}}">
 
                 <Button
-                    Height="40" Width="50"
-                    BorderBrush="Transparent"
+                    Width="50"
+                    Height="40"
                     materialDesign:ButtonAssist.CornerRadius="10"
+                    BorderBrush="Transparent"
                     Command="{Binding GoBackCommand}"
                     CommandParameter="{Binding ElementName=BackBTN}">
                     <Button.Background>
@@ -586,12 +581,13 @@
                 VerticalAlignment="Center"
                 Style="{StaticResource ResourceKey=BTN}"
                 Visibility="{Binding IsGoForward, Converter={StaticResource IsVisible}}">
-                <Button Height="40"
-                        Width="50"
-                        BorderBrush="Transparent"
-                        materialDesign:ButtonAssist.CornerRadius="10"
-                        Command="{Binding GoForwardCommand}"
-                        CommandParameter="{Binding ElementName=GoForwardBTN}">
+                <Button
+                    Width="50"
+                    Height="40"
+                    materialDesign:ButtonAssist.CornerRadius="10"
+                    BorderBrush="Transparent"
+                    Command="{Binding GoForwardCommand}"
+                    CommandParameter="{Binding ElementName=GoForwardBTN}">
                     <Button.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform ScaleX="-1" />
@@ -606,11 +602,12 @@
                     </Button.Background>
 
                     <Button.Effect>
-                        <DropShadowEffect BlurRadius="5"
-                                          Direction="135"
-                                          Opacity="0.2"
-                                          ShadowDepth="4"
-                                          Color="#D46F6A" />
+                        <DropShadowEffect
+                            BlurRadius="5"
+                            Direction="135"
+                            Opacity="0.2"
+                            ShadowDepth="4"
+                            Color="#D46F6A" />
                     </Button.Effect>
                 </Button>
             </Button>

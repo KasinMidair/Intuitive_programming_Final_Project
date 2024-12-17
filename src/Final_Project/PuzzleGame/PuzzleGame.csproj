@@ -7,7 +7,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Assets\favicon.ico</ApplicationIcon>
-    <BaseOutputPath>\bin</BaseOutputPath>
+    <BaseOutputPath>bin\</BaseOutputPath>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 
 
@@ -24,38 +25,14 @@
 
   <ItemGroup>
     <Content Include="Assets\favicon.ico" />
-    <Resource Include="Assets\Imgs\slideFun.png" />
-  </ItemGroup>
-
-  <ItemGroup>
+	 <Resource Include="Assets\Imgs\slideFun.png" />
     <Resource Include="Assets\Imgs\LeaderBoard_ico.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\Imgs\info_demopic2.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\Imgs\info_demopic.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\picture\pic10.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\Imgs\Mute_BTN.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\Imgs\info_BTN.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\Imgs\avatar.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\Audio\btn_click.mp3" />
   </ItemGroup>
 

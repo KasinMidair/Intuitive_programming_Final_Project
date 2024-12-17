@@ -26,8 +26,11 @@ namespace PuzzleGame.MVVM.Views
 
         public Play_Window()
         {
-            InitializeComponent();
+            var vm = new PlayViewModel();
+            this.DataContext = vm;
 
+            InitializeComponent();
+            
             //Setup NavigationServices
             ((PlayViewModel)this.DataContext)._navigationService = MainFrame.NavigationService;
             ((PlayViewModel)this.DataContext)._navigationService.Navigate(new MainMenuViewModel());
@@ -35,9 +38,6 @@ namespace PuzzleGame.MVVM.Views
 
         }
 
-        private void CopyIDTextBlock(object sender, RoutedEventArgs e)
-        {
-            Clipboard.SetText(IDTextBlock.Text);
-        }
+
     }
 }
