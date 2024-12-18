@@ -19,6 +19,7 @@
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
 
+
     <Canvas Width="920" Height="600">
 
         <TextBlock
@@ -131,6 +132,7 @@
                 </Button>
             </Grid>
         </Border>
+
 
 
         <!--  Decorate Image  -->

@@ -14,6 +14,19 @@ namespace PuzzleGame.MVVM.ViewModels
 
     public class GameRoundViewModel:ObservableObject
     {
+        private ObservableObject _currentPage;
+        public ObservableObject CurrentPage
+        {
+            get => _currentPage;
+            set
+            {
+                if (_currentPage != value)
+                {
+                    _currentPage = value;
+                    EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Publish(CurrentPage);
+                }
+            }
+        }
         private readonly ImageProcessingService _imageProcessingService;
 
         private ObservableCollection<CusPieceViewModel> imgPieces;      //container store Piece
@@ -135,8 +148,6 @@ namespace PuzzleGame.MVVM.ViewModels
             StartGame();
 
         }
-
-
 
         private void IsTimerCounting(bool isCounting)
         {
@@ -339,7 +350,6 @@ namespace PuzzleGame.MVVM.ViewModels
             if (a == CustomDialogResult.OK)
             {
                 MessageBox.Show("OKKKKK");
-
             }
         }
 
@@ -347,11 +357,9 @@ namespace PuzzleGame.MVVM.ViewModels
         public void IsWin()
         {
             GameModel.Instance.Status = GameStatus.EndGame;
-            CustomDialogResult a= CusDialogService.Instance.ShowDialog("do you want to play again ?", true).Result;
-            if ( a==CustomDialogResult.Yes)
-            {
-                EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Publish(new MainMenuViewModel());
-            }
+            GameCompleteViewModel gameCompleteViewModel = new GameCompleteViewModel();
+            gameCompleteViewModel.time = "Time: " + LastGameTimeStr;
+            CurrentPage = gameCompleteViewModel;
             ReleaseClock();
         }
         private void ReleaseClock()
@@ -359,7 +367,5 @@ namespace PuzzleGame.MVVM.ViewModels
             _clock.Tick -= _countDownClock_Tick;
             _clock = null;
         }
-
-
     }
 }

@@ -33,7 +33,7 @@ namespace PuzzleGame.MVVM.ViewModels
         public RelayCommand<object> ShutdownCommand { get; set; }
         public RelayCommand<object> Mute_UnMuteCommand { get; set; }
         public RelayCommand<object> GoToMainMenuCommand { get; set; }
-        public RelayCommand<object> BackgroundMusicChangeCommand { get; set; }
+        public RelayCommand<object> BackgroundMusicCommand { get; set; }
         public RelayCommand<object> CopyIdCommand { get; set; }
         #endregion
 
@@ -161,7 +161,7 @@ namespace PuzzleGame.MVVM.ViewModels
             //Message subcriber
             EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Subscribe((o) => OnCurrentPageChanged(o));
             EventAggregator.GetEvent<PubSubEvent<GameStatus>>().Subscribe((o) => Appstatus(o));
-
+            EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => MainMenuFromGameComplete(o));
             MusicSystemService.Instance.ChangeBackgroundMusic(2);
 
             toolBarColor = defaultColornum2;
@@ -183,13 +183,11 @@ namespace PuzzleGame.MVVM.ViewModels
             GoForwardCommand = new RelayCommand<object>((o) => { GoForwardPage(); });
             Mute_UnMuteCommand = new RelayCommand<object>((o) => { Mute_UnMute(); });
             GoToMainMenuCommand = new RelayCommand<object>((o) => { GoToMainMenu(); });
-            BackgroundMusicChangeCommand = new RelayCommand<object>((o) => { BackgroundMusicChanged((string)o); });
+            BackgroundMusicCommand = new RelayCommand<object>((o) => { BackgroundMusic((string)o); });
             CopyIdCommand = new RelayCommand<object>((o) => { CopyId((string)o); });
-
             #endregion
 
         }
-
 
         #region Execute Command
         private void SettingMenuStatus() 
@@ -203,7 +201,14 @@ namespace PuzzleGame.MVVM.ViewModels
             Application.Current.Shutdown();
         
         }
-
+        private void MainMenuFromGameComplete(string input)
+        {
+            if (input == "Main menu")
+            {
+                while (_navigationService.CanGoBack) { GoBackPage(); }
+                AvoidNavigate();
+            }
+        }
         public void  GoBackPage()
         {
             _navigationService.GoBack();
@@ -247,11 +252,11 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             SettingMenuStatus();
             while (_navigationService.CanGoBack) { GoBackPage(); }
-             AvoidNavigate();
+            AvoidNavigate();
         }
-        private void BackgroundMusicChanged(string o)
+        private void BackgroundMusic(string num)
         {
-            int.TryParse(o, out int mscNum);
+            int.TryParse(num, out int mscNum);
             Properties.Settings.Default.BGMusicSong=mscNum;
             Properties.Settings.Default.Save();
             MusicSystemService.Instance.ChangeBackgroundMusic(mscNum);

@@ -17,7 +17,7 @@
       d:DesignHeight="600"
       d:DesignWidth="920"
       Title="MainMenu"
-      Background="LightGoldenrodYellow">
+      Background="Transparent">
     <StackPanel HorizontalAlignment="Center"
                 VerticalAlignment="Center">
         <StackPanel.Resources>
@@ -71,22 +71,18 @@
             </StackPanel>
         </StackPanel>
         <TextBlock Style="{StaticResource textBlockStyle}"
-                   Text="Score:"
+                   Text="{Binding time}"
                    Margin="0,20,0,0" />
-        <TextBlock Style="{StaticResource textBlockStyle}"
-                   Margin="0,20,0,0"
-                   Text="Time:" />
-        <TextBlock Style="{StaticResource textBlockStyle}"
-                   Margin="0,20,0,0"
-                   Text="Current streak:" />
-        <Button x:Name="BTN_Continue"
-                Width="150"
+        <Button x:Name="BTN_MainMenu"
+                Command="{Binding GoToMainMenuCommand}"
+                Width="180"
                 Margin="0, 20, 0, 0"
                 Style="{StaticResource buttonStyle}"
-                Content="Continue"
+                Content="Main Menu"
                 Height="40" />
         <Button x:Name="BTN_PlayAgain"
-                Width="150"
+                Command="{Binding PlayAgainCommand}"
+                Width="180"
                 Margin="0, 20, 0, 0"
                 Style="{StaticResource buttonStyle}"
                 Content="Play Again"
