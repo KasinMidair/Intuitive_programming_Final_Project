@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PuzzleGame.MVVM.Views.Pages
+namespace PuzzleGame.MVVM.Views
 {
     /// <summary>
-    /// Interaction logic for AddPicturePage.xaml
+    /// Interaction logic for AddPicture.xaml
     /// </summary>
-    public partial class AddPicturePage : Page
+    public partial class AddPicture : Window
     {
-        public AddPicturePage()
+        public AddPicture()
         {
             InitializeComponent();
         }

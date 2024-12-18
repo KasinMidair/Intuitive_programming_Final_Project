@@ -13,7 +13,6 @@ using System.ComponentModel;
 using Caliburn.Micro;
 using PuzzleGame.Stores;
 using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Globalization;
 using System.Windows.Controls;
 
 namespace PuzzleGame.MVVM.ViewModels
@@ -42,7 +41,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
 
         //Connection connection = new Connection();
-        public List<Picture> PictureList { get; set; }
+        public ObservableCollection<Picture> PictureList { get; set; }
 
         Picture? _selectedPicture;
         public Picture? SelectedPicture
@@ -99,7 +98,7 @@ namespace PuzzleGame.MVVM.ViewModels
         public LevelSelectionViewModel()
         {
             _wndBgr = defaultColornum2;
-            PictureList = new List<Picture>();
+            PictureList = new ObservableCollection<Picture>();
             _loadPicListService.LoadPictureList(PictureList, "HOAI");
             // _loadPicListService.LoadPictureList(PictureList);
 
@@ -107,7 +106,6 @@ namespace PuzzleGame.MVVM.ViewModels
 
             PlayCommand = new RelayCommand<object>((o) => 
             {
-                GameModel.Instance.GameRoundPicUrl = SelectedPicture.Url;
                 CurrentPage = new GameRoundViewModel();
             });
         }

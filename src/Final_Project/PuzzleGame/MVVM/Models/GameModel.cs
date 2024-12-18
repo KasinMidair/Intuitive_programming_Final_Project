@@ -11,6 +11,7 @@ using System.Windows.Media;
 using DryIoc.ImTools;
 using PuzzleGame.MVVM.ViewModels;
 using System.ComponentModel;
+using System.IO;
 
 
 namespace PuzzleGame.MVVM.Models
@@ -96,16 +97,15 @@ namespace PuzzleGame.MVVM.Models
             gamePlayBoxX = 488;
             gamePlayBoxY = 488;
 
-            string srcPath = "pack://application:,,,/Assets/picture/pic10.png";
-            if (GameRoundPicUrl != null)
-                srcPath = GameRoundPicUrl;
+            string srcPath = System.IO.Path.Combine(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + $"/Assets/picture/newpic.png");
            
             BitmapImage originalImage = new BitmapImage(new Uri(srcPath, UriKind.RelativeOrAbsolute));
             double scaleX = (double)gamePlayBoxX*originalImage.DpiX/ (originalImage.PixelWidth*96);
             double scaleY = (double)gamePlayBoxY*originalImage.DpiY / (originalImage.PixelHeight*96);
             SrcImg = new TransformedBitmap(originalImage, new ScaleTransform(scaleX,scaleY));
             blckBoxImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0003.png", UriKind.Absolute));
-            row = 3; col = 3;
+            row =3; col =3;
+
             status = GameStatus.PreStart;
             playTime = 2 * 60;
             UnitX = SrcImg.PixelWidth / col;

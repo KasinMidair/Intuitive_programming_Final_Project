@@ -7,7 +7,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Assets\favicon.ico</ApplicationIcon>
-    <BaseOutputPath>\bin</BaseOutputPath>
+    <BaseOutputPath>bin\</BaseOutputPath>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
   </PropertyGroup>
 
 
@@ -23,38 +24,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Imgs\Back_BTN.png" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Content Include="Assets\favicon.ico" />
+	 <Resource Include="Assets\Imgs\slideFun.png" />
     <Resource Include="Assets\Imgs\LeaderBoard_ico.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\Imgs\info_demopic2.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\Imgs\info_demopic.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\picture\pic10.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\Imgs\Mute_BTN.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\Imgs\info_BTN.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\Imgs\avatar.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\Audio\btn_click.mp3" />
   </ItemGroup>
 
@@ -107,6 +85,7 @@
   <ItemGroup>
     <Resource Include="Assets\Fonts\Itim.ttf" />
     <Resource Include="Assets\Imgs\Achievement_BTN.png" />
+    <Resource Include="Assets\Imgs\Back_BTN.png" />
     <Resource Include="Assets\Imgs\DialogFrame.png" />
     <Resource Include="Assets\Imgs\Exit_BTN.png" />
     <Resource Include="Assets\Imgs\Setting_BTN.png" />
@@ -131,6 +110,21 @@
 
   <ItemGroup>
     <Resource Include="Assets\Imgs\Sprite-0003.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

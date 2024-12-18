@@ -21,7 +21,7 @@ namespace PuzzleGame.Stores
             }
         }
 
-        CustomDialog currDialog;
+        Window currDialog;
         public void CloseDialog()
         {
             currDialog.Close();
@@ -38,6 +38,12 @@ namespace PuzzleGame.Stores
 
             return  await rlt.Task;
         }
-
+        public void ShowAddPicture(ObservableObject vm)
+        {
+            var rlt = new TaskCompletionSource<CustomDialogResult>();
+            currDialog = new AddPicture();
+            currDialog.DataContext = vm;
+            currDialog.ShowDialog();
+        }
     }
 }

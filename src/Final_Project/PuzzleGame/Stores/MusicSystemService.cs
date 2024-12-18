@@ -1,6 +1,7 @@
 ﻿using PuzzleGame.MVVM.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,16 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.ComponentModel;
+using System.Windows;
+
+
 
 namespace PuzzleGame.Stores
 {
     public enum AudioType
     {
-        BACKGROUND_MSC,                             
+        BACKGROUND_MSC,
         SFX_MSC,
         ALL
     }
@@ -27,9 +32,9 @@ namespace PuzzleGame.Stores
             {
                 if (_instance == null)
                 {
-                        _instance = new MusicSystemService();
+                    _instance = new MusicSystemService();
                 }
-                
+
                 return _instance;
             }
         }
@@ -43,6 +48,8 @@ namespace PuzzleGame.Stores
 
         public MusicSystemService()
         {
+            if (DesignerProperties.GetIsInDesignMode(new DependencyObject())) return;
+
             bgAudioSources = new List<string>();
             curbgAudio = 2;
             List<string> bgAudioPaths = new List<string>()
@@ -56,7 +63,7 @@ namespace PuzzleGame.Stores
             _sfx = new MediaPlayer();
             foreach (var item in bgAudioPaths)
             {
-                bgAudioSources.Add(ExtractEmbeddedResource(item)); 
+                bgAudioSources.Add(ExtractEmbeddedResource(item));
             }
 
             MediaTimeline mediaTimelineSFX = new MediaTimeline(new Uri(sfxAdioSource, UriKind.RelativeOrAbsolute));
@@ -65,9 +72,10 @@ namespace PuzzleGame.Stores
         }
         public void PlayBTN_ClickSound()
         {
-            _sfxClock.Controller.Stop();    
+            _sfxClock.Controller.Stop();
             _sfxClock.Controller.Begin();
         }
+
         public void ChangeBackgroundMusic(int bgIndex)
         {
             if (_backgroundClock != null)
@@ -85,7 +93,11 @@ namespace PuzzleGame.Stores
 
         public void Dispose()
         {
-            _backgroundClock.Controller.Stop(); 
+            _backgroundClock.Controller.Stop();
+            _backgroundMusic.Clock = null;  
+            _backgroundMusic.Close();
+            _sfx.Clock= null;
+            _sfx.Close();
         }
 
         /// <summary>
@@ -112,21 +124,28 @@ namespace PuzzleGame.Stores
 
             return tempFilePath;
         }
-        public void SetVolume(AudioType audioType,double bgVolume,double sfxVolume)
+
+        /// <summary>
+        /// set the application audio volume
+        /// </summary>
+        /// <param name="audioType"></param>
+        /// <param name="bgVolume"></param>
+        /// <param name="sfxVolume"></param>
+        public void SetVolume(AudioType audioType, double bgVolume, double sfxVolume)
         {
-            switch(audioType)
+            switch (audioType)
             {
                 case AudioType.BACKGROUND_MSC:
                     _backgroundMusic.Volume = bgVolume;
-                     break;  
+                    break;
                 case AudioType.SFX_MSC:
                     _sfx.Volume = sfxVolume;
                     break;
                 default:
                     _backgroundMusic.Volume = bgVolume;
                     _sfx.Volume = sfxVolume;
-                    break;  
-            } 
+                    break;
+            }
         }
 
     }
