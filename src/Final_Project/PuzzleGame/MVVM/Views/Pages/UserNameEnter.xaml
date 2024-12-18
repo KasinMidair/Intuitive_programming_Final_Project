@@ -16,6 +16,12 @@
       d:DesignHeight="600" d:DesignWidth="920"
       Background="Transparent"
       Title="UserNameEnter">
+    
+    
+    <Page.DataContext>
+        <viewmodel:UserEnterNameViewModel/>
+    </Page.DataContext>
+
 
     <Canvas  Width="920" Height="600">
 
@@ -27,27 +33,49 @@
 
         <!--Enter Username Box-->
         <Border Background="Snow" CornerRadius="35" Width="555" Height="76" 
-                Canvas.Left="180" Canvas.Top="300" HorizontalAlignment="Center" 
+                Canvas.Left="180" Canvas.Top="200" HorizontalAlignment="Center" 
                 VerticalAlignment="Top" RenderTransformOrigin="0.5,0.595">
-            <Grid Margin="2,-15,-1,-15">
-                <TextBox  VerticalAlignment="Center" FontSize="24" materialDesign:HintAssist.Hint="UserName" Foreground="#15161C"
-                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="170"  Margin="28,0,161,0"
-                                  RenderTransformOrigin="0.512,0.706" Text=""
-                                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim"/>
-                
-                <Grid >
-                    <!--Enter button-->
-                    <Button materialDesign:ButtonAssist.CornerRadius="25" x:Name="EnterBTN"
-                                    Command="{Binding EnterNameCommand}" CommandParameter="{Binding ElementName=EnterBTN}"
-                                    FocusVisualStyle="{x:Null}"  Height="60" Margin="408,24,9,22" >
-                        <TextBlock Text="Enter" FontSize="24"
-                                   FontFamily="pack://application:,,,/Assets/Fonts/#Itim"  />
-                    </Button>
-                </Grid>
+            <TextBox  VerticalAlignment="Center" FontSize="24" materialDesign:HintAssist.Hint="UserName" Foreground="#15161C"
+                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="170"  Margin="28,0,20,0"
+                  RenderTransformOrigin="0.512,0.706"
+                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                  Text="{Binding PlayerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </Border>
 
+        <Border Background="Snow" CornerRadius="35" Width="555" Height="76" 
+                Canvas.Left="180" Canvas.Top="290" HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.595">
+            <TextBox  VerticalAlignment="Center" FontSize="24" materialDesign:HintAssist.Hint="Password" Foreground="#15161C"
+                  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Height="170"  Margin="28,0,20,0"
+                  RenderTransformOrigin="0.512,0.706"
+                  FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                  Text="{Binding PlayerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            
+        </Border>
+
+        <Border Background="Transparent" Width="555" Height="76" 
+                Canvas.Left="180" Canvas.Top="400" HorizontalAlignment="Center" 
+                VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.595">
+            <Grid>
+                <Button materialDesign:ButtonAssist.CornerRadius="25" x:Name="EnterBTN" 
+                Command="{Binding EnterNameCommand}" CommandParameter="{Binding ElementName=EnterBTN}"
+                FocusVisualStyle="{x:Null}"  Height="60" Width="240" Background="#F14666"
+                HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock Text="Enter" FontSize="24"
+                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"  />
+                </Button>
+
+                <Button materialDesign:ButtonAssist.CornerRadius="25" x:Name="AddBTN" 
+                Command="{Binding EnterNameCommand}" CommandParameter="{Binding ElementName=EnterBTN}"
+                FocusVisualStyle="{x:Null}"  Height="60" Width="240" Background="#9DB899"
+                BorderThickness="0,0,2,2" BorderBrush="#1F2326"
+                HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBlock Text="Add Player" FontSize="24"
+                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"  />
+                </Button>
             </Grid>
         </Border>
-        
+
         <!--Decorate Image-->
         <Image Source="pack://application:,,,/Assets/Imgs/Decorate_01.png" 
                Canvas.Left="788" Canvas.Top="410" HorizontalAlignment="Left" 
