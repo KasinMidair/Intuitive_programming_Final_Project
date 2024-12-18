@@ -27,44 +27,28 @@
                     <RowDefinition Height="40" />
                 </Grid.RowDefinitions>
                 <Border
-                    x:Name="Border"
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Margin="1,2,0,6"
-                    Background="#97C693"
-                    BorderBrush="#15161C"
-                    BorderThickness="1"
-                    CornerRadius="7"
-                    FocusVisualStyle="{x:Null}" />
-                <Border
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Margin="1,0,3,5"
-                    Background="Snow"
-                    BorderBrush="#15161C"
-                    BorderThickness="1"
-                    CornerRadius="15" />
-                <materialDesign:PackIcon
-                    Grid.Column="1"
-                    Width="30"
-                    Height="30"
-                    Margin="0,3,0,0"
-                    HorizontalAlignment="Center"
-                    FocusVisualStyle="{x:Null}"
-                    Focusable="False"
-                    Foreground="black"
-                    Kind="MenuDown"
-                    RenderTransformOrigin="0.5,0.5">
-                    <materialDesign:PackIcon.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform ScaleX="-1" />
-                            <SkewTransform />
-                            <RotateTransform />
-                            <TranslateTransform />
-                        </TransformGroup>
-                    </materialDesign:PackIcon.RenderTransform>
-                </materialDesign:PackIcon>
-
+                  x:Name="Border" 
+                  Grid.Column="2" Grid.Row="0"
+                  CornerRadius="10"
+                  Margin="1"
+                  Background="#9DB899"
+                  BorderBrush="#15161C"
+                  BorderThickness="0,0,2,2" />
+                <Border 
+                  Grid.Column="0" Grid.Row="0"
+                  CornerRadius="10" 
+                  Margin="1" 
+                  Background="Snow" 
+                  BorderBrush="#15161C"
+                  BorderThickness="0,0,2,2" />
+                <Path 
+                  x:Name="Arrow"
+                  Grid.Column="1"     
+                  Fill="Snow"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Data="M0,0 L0,4 L8,12 L16,4 L16,0 L8,8 z"
+                />
             </Grid>
             <!--<ControlTemplate.Triggers>
             <Trigger Property="ToggleButton.IsMouseOver" Value="true">
@@ -402,13 +386,15 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Border
-                            Width="50"
-                            HorizontalAlignment="Left"
-                            Background="Snow"
-                            CornerRadius="10">
-                            <TextBox
-                                x:Name="Hour_TB"
-                                Grid.Column="0"
+                        Background="Snow"
+                        BorderBrush="#15161C" BorderThickness="0,0,2,2"
+                        CornerRadius="10"
+                        Width="50"
+                        HorizontalAlignment="Left">
+                            <TextBox x:Name="Hour_TB"
+                                     Grid.Column="0"
+                                FontFamily="pack://application:,,,/Assets/Fonts/#Itim" 
+                                Foreground="#15161C" FontSize="25" FontWeight="SemiBold" TextAlignment="Center"
                                 materialDesign:HintAssist.Hint="00"
                                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
                                 FontSize="25"
@@ -432,7 +418,7 @@
                 <Border
                     Grid.Column="2"
                     Background="#9DB899"
-                    CornerRadius="10">
+                    BorderBrush="#15161C" BorderThickness="0,0,2,2">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50" />
@@ -469,7 +455,7 @@
                 <Border
                     Grid.Column="4"
                     Background="#9DB899"
-                    CornerRadius="10">
+                    BorderBrush="#15161C" BorderThickness="0,0,2,2">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50" />

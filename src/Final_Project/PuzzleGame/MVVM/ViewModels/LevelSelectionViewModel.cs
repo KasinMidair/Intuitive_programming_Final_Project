@@ -106,6 +106,8 @@ namespace PuzzleGame.MVVM.ViewModels
 
             PlayCommand = new RelayCommand<object>((o) => 
             {
+                GameModel.Instance.srcPath = SelectedPicture.Url;
+                GameModel.Instance.PicDeviding();
                 CurrentPage = new GameRoundViewModel();
             });
         }
