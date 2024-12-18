@@ -148,7 +148,7 @@ namespace PuzzleGame.MVVM.ViewModels
             //Message subcriber
             EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Subscribe((o) => OnCurrentPageChanged(o));
             EventAggregator.GetEvent<PubSubEvent<GameStatus>>().Subscribe((o) => Appstatus(o));
-
+            EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => MainMenuFromGameComplete(o));
             MusicSystemService.Instance.ChangeBackgroundMusic(2);
 
             toolBarColor = defaultColornum2;
@@ -170,12 +170,11 @@ namespace PuzzleGame.MVVM.ViewModels
             CopyIdCommand = new RelayCommand<object>((o) => { CopyId((string)o); });
             BackgroundMusicCommand = new RelayCommand<object>((o) => { BackgroundMusic((string)o); });
         }
+        #region Execute Command
         private void BackgroundMusic(string num)
         {
             MusicSystemService.Instance.ChangeBackgroundMusic(int.Parse(num));
         }
-
-        #region Execute Command
         private void SettingMenuStatus() 
         { 
             IsSettingVisible = !IsSettingVisible;
@@ -187,7 +186,14 @@ namespace PuzzleGame.MVVM.ViewModels
             Application.Current.Shutdown();
         
         }
-
+        private void MainMenuFromGameComplete(string input)
+        {
+            if (input == "Main menu")
+            {
+                while (_navigationService.CanGoBack) { GoBackPage(); }
+                AvoidNavigate();
+            }
+        }
         public void  GoBackPage()
         {
             _navigationService.GoBack();
@@ -231,7 +237,7 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             SettingMenuStatus();
             while (_navigationService.CanGoBack) { GoBackPage(); }
-             AvoidNavigate();
+            AvoidNavigate();
         }
 
         private void CopyId(string o) => Clipboard.SetText(o);
