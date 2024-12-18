@@ -10,15 +10,12 @@
     Title="LevelSelection"
     d:DesignHeight="600"
     d:DesignWidth="920"
+    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
     mc:Ignorable="d">
 
 
-    <Page.DataContext>
-        <ViewModels:LevelSelectionViewModel />
-    </Page.DataContext>
 
     <Page.Resources>
-        <ViewModels:LevelSelectionViewModel x:Key="vm" />
 
         <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
             <Grid Margin="-110,0,-120,0">
@@ -32,27 +29,42 @@
                 <Border
                     x:Name="Border"
                     Grid.Row="0"
-                    Grid.Column="2"
-                    Margin="1"
-                    Background="#9DB899"
+                    Grid.Column="1"
+                    Margin="1,2,0,6"
+                    Background="#97C693"
                     BorderBrush="#15161C"
                     BorderThickness="1"
-                    CornerRadius="10" />
+                    CornerRadius="7"
+                    FocusVisualStyle="{x:Null}" />
                 <Border
                     Grid.Row="0"
                     Grid.Column="0"
-                    Margin="1"
+                    Margin="1,0,3,5"
                     Background="Snow"
                     BorderBrush="#15161C"
                     BorderThickness="1"
-                    CornerRadius="10" />
-                <Path
-                    x:Name="Arrow"
+                    CornerRadius="15" />
+                <materialDesign:PackIcon
                     Grid.Column="1"
+                    Width="30"
+                    Height="30"
+                    Margin="0,3,0,0"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Data="M0,0 L0,4 L8,12 L16,4 L16,0 L8,8 z"
-                    Fill="Snow" />
+                    FocusVisualStyle="{x:Null}"
+                    Focusable="False"
+                    Foreground="black"
+                    Kind="MenuDown"
+                    RenderTransformOrigin="0.5,0.5">
+                    <materialDesign:PackIcon.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="-1" />
+                            <SkewTransform />
+                            <RotateTransform />
+                            <TranslateTransform />
+                        </TransformGroup>
+                    </materialDesign:PackIcon.RenderTransform>
+                </materialDesign:PackIcon>
+
             </Grid>
             <!--<ControlTemplate.Triggers>
             <Trigger Property="ToggleButton.IsMouseOver" Value="true">
@@ -93,14 +105,14 @@
                         <Grid Margin="10,0,20,0">
                             <ToggleButton
                                 Name="ToggleButton"
-                                Grid.Column="2"
+                                Grid.ColumnSpan="2"
                                 ClickMode="Press"
                                 Focusable="false"
                                 IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                 Template="{StaticResource ComboBoxToggleButton}" />
                             <ContentPresenter
                                 Name="ContentSite"
-                                Margin="10,3,23,3"
+                                Margin="15,-3,23,3"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Content="{TemplateBinding SelectionBoxItem}"
@@ -109,7 +121,7 @@
                                 IsHitTestVisible="False" />
                             <TextBox
                                 x:Name="PART_EditableTextBox"
-                                Margin="3,3,23,3"
+                                Margin="10,-3,23,3"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Background="#FF3F3F3F"
@@ -121,28 +133,35 @@
                                 Visibility="Hidden" />
                             <Popup
                                 Name="Popup"
+                                Margin="0,55,0,-80"
                                 AllowsTransparency="True"
                                 Focusable="False"
                                 IsOpen="{TemplateBinding IsDropDownOpen}"
                                 Placement="Bottom"
                                 PopupAnimation="Slide">
 
-                                <Grid
-                                    Name="DropDown"
-                                    Width="250"
-                                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                                    HorizontalAlignment="Left"
-                                    SnapsToDevicePixels="True">
+                                <Border
+                                    Width="220"
+                                    Background="White"
+                                    CornerRadius="10">
+                                    <Grid
+                                        Name="DropDown"
+                                        Width="250"
+                                        MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                        HorizontalAlignment="Left"
+                                        SnapsToDevicePixels="True">
 
-                                    <Border
-                                        x:Name="DropDownBorder"
-                                        Background="#FF3F3F3F"
-                                        BorderBrush="#15161C"
-                                        BorderThickness="1" />
-                                    <ScrollViewer Margin="10,6,4,6" SnapsToDevicePixels="True">
-                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
-                                    </ScrollViewer>
-                                </Grid>
+                                        <Border
+                                            x:Name="DropDownBorder"
+                                            Width="220"
+                                            HorizontalAlignment="Left">
+                                            <ScrollViewer Margin="10,6,4,6" SnapsToDevicePixels="True">
+                                                <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                            </ScrollViewer>
+                                        </Border>
+                                    </Grid>
+
+                                </Border>
                             </Popup>
                         </Grid>
                         <ControlTemplate.Triggers>
@@ -174,20 +193,23 @@
         <!--  SimpleStyles: ComboBoxItem  -->
         <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
             <Setter Property="SnapsToDevicePixels" Value="true" />
-            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Foreground" Value="#07131B" />
             <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                         <Border
-                            Name="Border"
-                            Padding="2"
+                            x:Name="Border"
+                            Padding="10,2,2,2"
+                            CornerRadius="7"
+                            FocusVisualStyle="{x:Null}"
                             SnapsToDevicePixels="true">
                             <ContentPresenter />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsHighlighted" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#FF4F4F4F" />
+                                <Setter TargetName="Border" Property="Background" Value="#629DE199" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
                                 <Setter Property="Foreground" Value="#888888" />
@@ -222,21 +244,25 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
-
         <!--  Image holder  -->
         <Border
             Grid.Row="1"
             Grid.RowSpan="5"
             Grid.Column="3"
-            BorderBrush="#9DB899"
-            BorderThickness="5"
-            CornerRadius="20">
-            <Image
-                x:Name="ImageHolder"
-                Grid.Row="1"
-                Grid.RowSpan="5"
-                Grid.Column="3"
-                Source="{Binding SelectedPicture.Url}" />
+            Background="Snow"
+            BorderBrush="#324231"
+            BorderThickness="3"
+            CornerRadius="15" />
+        <Border
+            Grid.Row="1"
+            Grid.RowSpan="5"
+            Grid.Column="3"
+            BorderBrush="#324231"
+            BorderThickness="3"
+            CornerRadius="15">
+            <Border.Background>
+                <ImageBrush x:Name="ImageHolder" ImageSource="{Binding SelectedPicture.Url}" />
+            </Border.Background>
         </Border>
 
         <!--  Number seclection combobox  -->
@@ -245,13 +271,14 @@
             Grid.Row="2"
             Grid.Column="1"
             Height="40"
+            VerticalAlignment="Bottom"
             Background="Snow"
+            FocusVisualStyle="{x:Null}"
             FontSize="20"
             FontWeight="SemiBold"
             Foreground="#15161C"
             SelectedIndex="0"
-            SelectedItem="{Binding NumberOfPieces}"
-            SelectionChanged="NumberSelection_Combobox_SelectionChanged">
+            SelectedItem="{Binding NumberOfPieces}">
             <ComboBoxItem Content="3 x 3" />
             <ComboBoxItem Content="4 x 4" />
             <ComboBoxItem Content="5 x 5" />
@@ -268,8 +295,10 @@
             Grid.Row="3"
             Grid.Column="1"
             Height="40"
+            VerticalAlignment="Bottom"
             Background="Snow"
             DisplayMemberPath="Name"
+            FocusVisualStyle="{x:Null}"
             FontSize="20"
             FontWeight="SemiBold"
             Foreground="#15161C"
@@ -280,8 +309,9 @@
         <TextBlock
             Grid.Row="2"
             Grid.Column="1"
+            Margin="0,0,0,20"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            VerticalAlignment="Center"
             FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
             FontSize="25"
             FontWeight="SemiBold"
@@ -291,8 +321,9 @@
         <TextBlock
             Grid.Row="3"
             Grid.Column="1"
+            Margin="0,0,0,20"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
+            VerticalAlignment="Center"
             FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
             FontSize="25"
             FontWeight="SemiBold"
@@ -303,36 +334,45 @@
         <Button
             x:Name="Play_BTN"
             Grid.Row="5"
+            Grid.RowSpan="2"
             Grid.Column="1"
             Height="50"
-            VerticalAlignment="Bottom"
+            Margin="20,81,20,49"
             materialDesign:ButtonAssist.CornerRadius="15"
-            Background="#FD8087"
+            Background="#F14666"
             BorderBrush="#1F2326"
             BorderThickness="0,0,2,2"
             Command="{Binding PlayCommand}"
-            Content="Play"
-            FontSize="30"
-            FontWeight="Black"
-            Foreground="snow" />
+            FocusVisualStyle="{x:Null}"
+            Foreground="Snow">
+            <TextBlock
+                Height="47"
+                FontSize="32"
+                FontWeight="ExtraBlack"
+                Text="Play" />
+        </Button>
 
         <!--  Gallery button  -->
+
         <Button
             x:Name="Gallery_BTN"
             Grid.Row="5"
             Grid.Column="1"
             Height="50"
-            VerticalAlignment="Top"
+            Margin="20,12,20,68"
             materialDesign:ButtonAssist.CornerRadius="15"
             Background="#9DB899"
             BorderBrush="#1F2326"
             BorderThickness="0,0,2,2"
             Command="{Binding OpenGalleryCommand}"
-            Content="Gallery"
-            FontSize="30"
-            FontWeight="Black"
-            Foreground="snow" />
-
+            FocusVisualStyle="{x:Null}"
+            Foreground="Snow">
+            <TextBlock
+                Height="47"
+                FontSize="32"
+                FontWeight="ExtraBlack"
+                Text="Gallery" />
+        </Button>
         <Border
             Grid.Row="4"
             Grid.Column="1"
@@ -483,5 +523,3 @@
     </Grid>
 
 </Page>
-
-

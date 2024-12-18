@@ -36,6 +36,7 @@ namespace PuzzleGame.MVVM.ViewModels
         public RelayCommand<object> BackgroundMusic0Command { get; set; }
         public RelayCommand<object> BackgroundMusic1Command { get; set; }
         public RelayCommand<object> BackgroundMusic2Command { get; set; }
+        public RelayCommand<object> CopyIdCommand { get; set; }
 
         private double sfxVolume;
         public double SFXVolume
@@ -44,8 +45,9 @@ namespace PuzzleGame.MVVM.ViewModels
             set
             {
                 sfxVolume = value;
+                VolumeChanged(value,false);
                 OnPropertyChanged();
-                MusicSystemService.Instance.SetVolume(AudioType.SFX_MSC, value / 50.0, value / 50.0);
+                
             }
         } 
         
@@ -56,10 +58,12 @@ namespace PuzzleGame.MVVM.ViewModels
             set
             {
                 backgroundVolume = value;
-                OnPropertyChanged();
-                MusicSystemService.Instance.SetVolume(AudioType.BACKGROUND_MSC, value / 50.0, value / 50.0);
+                VolumeChanged(value);
+  
+                
             }
         }
+        #region Button Binding Properties
 
         bool isGoBack;
         public bool IsGoBack 
@@ -104,7 +108,9 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
+        #endregion
+
         public SolidColorBrush WndBgr
         {
             get => _wndBgr;
@@ -153,8 +159,8 @@ namespace PuzzleGame.MVVM.ViewModels
             IsGoBack = false;
             IsGoForward = false;
             IsMusicMute = "Mute";
-            BackgroundVolume = 25;
-            SFXVolume = 25;
+            BackgroundVolume = Properties.Settings.Default.BGVolume ;  //using application settings to save basic data.
+            SFXVolume = Properties.Settings.Default.SFXVolume;
 
             //init command 
             SettingCommand = new RelayCommand<object>((o)=> { SettingMenuStatus(); });
@@ -166,29 +172,10 @@ namespace PuzzleGame.MVVM.ViewModels
             BackgroundMusic0Command = new RelayCommand<object>((o) => { MusicSystemService.Instance.ChangeBackgroundMusic(0); });
             BackgroundMusic1Command = new RelayCommand<object>((o) => { MusicSystemService.Instance.ChangeBackgroundMusic(1); });
             BackgroundMusic2Command = new RelayCommand<object>((o) => { MusicSystemService.Instance.ChangeBackgroundMusic(2); });
-        }
-        private void GoToMainMenu()
-        {
-            SettingMenuStatus();
-            while (_navigationService.CanGoBack) { GoBackPage(); }
-             AvoidNavigate();
-        }
-        private void Mute_UnMute()
-        {
-            if (IsMusicMute=="UnMute")
-            {
-                MusicSystemService.Instance.SetVolume(AudioType.ALL, 1, 1);
-                IsMusicMute = "Mute";
-            }
-            else 
-            {
-                MusicSystemService.Instance.SetVolume(AudioType.ALL, 0, 0);
-                IsMusicMute = "UnMute";
-            } 
-            
+            CopyIdCommand = new RelayCommand<object>((o) => { CopyId((string)o); });
         }
 
-        // Execute RelayCommand
+        #region Execute Command
         private void SettingMenuStatus() 
         { 
             IsSettingVisible = !IsSettingVisible;
@@ -223,6 +210,49 @@ namespace PuzzleGame.MVVM.ViewModels
                 CurrentPage = (ObservableObject)_navigationService.Content;
             });
 
+        }
+
+        private void Mute_UnMute()
+        {
+            if (IsMusicMute=="UnMute")
+            {
+                MusicSystemService.Instance.SetVolume(AudioType.ALL, 1, 1);
+                IsMusicMute = "Mute";
+            }
+            else 
+            {
+                MusicSystemService.Instance.SetVolume(AudioType.ALL, 0, 0);
+                IsMusicMute = "UnMute";
+            } 
+            
+        }
+
+        private void GoToMainMenu()
+        {
+            SettingMenuStatus();
+            while (_navigationService.CanGoBack) { GoBackPage(); }
+             AvoidNavigate();
+        }
+
+        private void CopyId(string o) => Clipboard.SetText(o);
+
+        #endregion
+
+
+        public void VolumeChanged(double value,bool isbgms=true)
+        {
+            if (isbgms)
+            {
+                Properties.Settings.Default.BGVolume = value;
+                Properties.Settings.Default.Save();
+                MusicSystemService.Instance.SetVolume(AudioType.BACKGROUND_MSC, value / 50.0, value / 50.0);
+            }
+            else 
+            {
+                Properties.Settings.Default.SFXVolume = value;
+                Properties.Settings.Default.Save();
+                MusicSystemService.Instance.SetVolume(AudioType.SFX_MSC, value / 50.0, value / 50.0);
+            }
         }
 
         public void AvoidNavigate()

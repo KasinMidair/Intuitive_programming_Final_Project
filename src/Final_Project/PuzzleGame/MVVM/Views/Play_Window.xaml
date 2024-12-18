@@ -382,10 +382,7 @@
                                 Command="{Binding GoToMainMenuCommand}"
                                 CommandParameter="{Binding ElementName=SettingMenu}"
                                 FocusVisualStyle="{x:Null}">
-                                <TextBlock
-                                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                                    FontSize="20"
-                                    Text="Main menu" />
+                                <TextBlock FontSize="20" Text="Main menu" />
                             </Button>
                             <!--  Enter continue game button  -->
                             <Button
@@ -539,63 +536,60 @@
 
             <!--  Back button  -->
             <Button
-                x:Name="BackBTN"
-                Canvas.Left="13"
-                Canvas.Top="8"
-                Width="70"
-                Height="55"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
+                Canvas.Left="40"
+                Canvas.Top="40"
+                Width="50"
+                Height="40"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                materialDesign:ButtonAssist.CornerRadius="10"
+                BorderBrush="Transparent"
+                Command="{Binding GoBackCommand}"
+                CommandParameter="{Binding ElementName=BackBTN}"
                 Style="{StaticResource ResourceKey=BTN}"
                 Visibility="{Binding IsGoBack, Converter={StaticResource IsVisible}}">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Back_BTN.png" />
+                </Button.Background>
 
-                <Button
-                    Width="50"
-                    Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="10"
-                    BorderBrush="Transparent"
-                    Command="{Binding GoBackCommand}"
-                    CommandParameter="{Binding ElementName=BackBTN}">
-                    <Button.Background>
-                        <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Back_BTN.png" />
-                    </Button.Background>
-
-                    <Button.Effect>
-                        <DropShadowEffect
-                            BlurRadius="5"
-                            Direction="135"
-                            Opacity="0.2"
-                            ShadowDepth="4"
-                            Color="#D46F6A" />
-                    </Button.Effect>
-                </Button>
+                <Button.Effect>
+                    <DropShadowEffect
+                        BlurRadius="5"
+                        Direction="135"
+                        Opacity="0.2"
+                        ShadowDepth="4"
+                        Color="#D46F6A" />
+                </Button.Effect>
             </Button>
+
             <!--  GoForward button  -->
-            <Button
-                x:Name="GoForwardBTN"
-                Canvas.Left="841"
-                Canvas.Top="6"
-                Width="60"
-                Height="55"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Style="{StaticResource ResourceKey=BTN}"
-                Visibility="{Binding IsGoForward, Converter={StaticResource IsVisible}}">
+
+            <Border
+                Canvas.Left="829"
+                Canvas.Top="39"
+                Width="50"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                CornerRadius="20"
+                RenderTransformOrigin="0.5,0.5">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1" />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Border.RenderTransform>
                 <Button
                     Width="50"
                     Height="40"
-                    materialDesign:ButtonAssist.CornerRadius="10"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
                     BorderBrush="Transparent"
                     Command="{Binding GoForwardCommand}"
-                    CommandParameter="{Binding ElementName=GoForwardBTN}">
-                    <Button.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform ScaleX="-1" />
-                            <SkewTransform />
-                            <RotateTransform />
-                            <TranslateTransform />
-                        </TransformGroup>
-                    </Button.RenderTransform>
+                    CommandParameter="{Binding ElementName=GoForwardBTN}"
+                    Style="{StaticResource ResourceKey=BTN}"
+                    Visibility="{Binding IsGoForward, Converter={StaticResource IsVisible}}">
 
                     <Button.Background>
                         <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Back_BTN.png" />
@@ -610,7 +604,8 @@
                             Color="#D46F6A" />
                     </Button.Effect>
                 </Button>
-            </Button>
+            </Border>
+
 
 
             <!--  info modal  -->
@@ -792,9 +787,6 @@
                     </Canvas>
                 </materialDesign:DrawerHost.BottomDrawerContent>
             </materialDesign:DrawerHost>
-
-
-
 
         </Canvas>
 
