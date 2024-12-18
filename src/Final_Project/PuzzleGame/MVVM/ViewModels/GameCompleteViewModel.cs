@@ -10,11 +10,11 @@ using PuzzleGame.Core.Helper;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
-    public class GameCompleteViewModel:ObservableObject
+    public class GameCompleteViewModel : ObservableObject
     {
 
         public RelayCommand<object> GoToMainMenuCommand { get; set; }
-        public RelayCommand<object> PlayAgainCommand{ get; set; }
+        public RelayCommand<object> PlayAgainCommand { get; set; }
         private ObservableObject _currentPage;
         public ObservableObject CurrentPage
         {
@@ -25,6 +25,18 @@ namespace PuzzleGame.MVVM.ViewModels
                 {
                     _currentPage = value;
                     EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Publish(CurrentPage);
+                }
+            }
+        }
+        private string _time;
+        public string time
+        {
+            get => _time;
+            set
+            {
+                if (_time != value) {
+                    _time = value;
+                    OnPropertyChanged();
                 }
             }
         }
