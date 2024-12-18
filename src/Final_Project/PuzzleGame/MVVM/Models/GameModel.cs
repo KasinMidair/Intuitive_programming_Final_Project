@@ -28,6 +28,9 @@ namespace PuzzleGame.MVVM.Models
     {
         public double UnitX { get; set; }
         public double UnitY { get; private set; }
+
+        public string srcPath {  get; set; }
+
         public BitmapSource SrcImg;
         public BitmapSource blckBoxImg;
         public int BlackBox_Indx;
@@ -97,21 +100,23 @@ namespace PuzzleGame.MVVM.Models
             gamePlayBoxX = 488;
             gamePlayBoxY = 488;
 
-            string srcPath = System.IO.Path.Combine(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + $"/Assets/picture/newpic.png");
+            srcPath = System.IO.Path.Combine(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + $"/Assets/picture/HOAInewpic.png");
            
-            BitmapImage originalImage = new BitmapImage(new Uri(srcPath, UriKind.RelativeOrAbsolute));
-            double scaleX = (double)gamePlayBoxX*originalImage.DpiX/ (originalImage.PixelWidth*96);
-            double scaleY = (double)gamePlayBoxY*originalImage.DpiY / (originalImage.PixelHeight*96);
-            SrcImg = new TransformedBitmap(originalImage, new ScaleTransform(scaleX,scaleY));
-            blckBoxImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0003.png", UriKind.Absolute));
-            row =3; col =3;
+        }
 
+        public void PicDeviding()
+        {
+            BitmapImage originalImage = new BitmapImage(new Uri(srcPath, UriKind.RelativeOrAbsolute));
+            double scaleX = (double)gamePlayBoxX * originalImage.DpiX / (originalImage.PixelWidth * 96);
+            double scaleY = (double)gamePlayBoxY * originalImage.DpiY / (originalImage.PixelHeight * 96);
+            SrcImg = new TransformedBitmap(originalImage, new ScaleTransform(scaleX, scaleY));
+            blckBoxImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0003.png", UriKind.Absolute));
+            row = 3; col = 3;
             status = GameStatus.PreStart;
             playTime = 2 * 60;
             UnitX = SrcImg.PixelWidth / col;
-            UnitY = SrcImg.PixelHeight/ row;
+            UnitY = SrcImg.PixelHeight / row;
             isSetCountDown = false;
-
         }
 
         public BitmapSource ChangeDPI(BitmapSource source, double newDpiX, double newDpiY)

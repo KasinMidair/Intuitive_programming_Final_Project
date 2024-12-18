@@ -64,7 +64,6 @@
                         </TransformGroup>
                     </materialDesign:PackIcon.RenderTransform>
                 </materialDesign:PackIcon>
-
             </Grid>
             <!--<ControlTemplate.Triggers>
             <Trigger Property="ToggleButton.IsMouseOver" Value="true">
@@ -406,24 +405,122 @@
                 FontWeight="ExtraBlack"
                 Text="Gallery" />
         </Button>
-        <materialDesign:Clock
-            Grid.Row="4"
-            Grid.RowSpan="3"
-            Grid.Column="1"
-            Width="auto"
-            Height="392"
-            Margin="5,85,1,0"
-            VerticalAlignment="Top"
-            Background="Transparent"
-            DisplayAutomation="CycleWithSeconds"
-            FontSize="16"
-            Foreground="#2297C693"
-            Is24Hours="True"
-            Style="{StaticResource MaterialDesignClockVertical}" Grid.ColumnSpan="2">
-            <materialDesign:Clock.LayoutTransform>
-                <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
-            </materialDesign:Clock.LayoutTransform>
-        </materialDesign:Clock>
+        <Border
+            Grid.Column="0"
+            Background="#9DB899"
+            CornerRadius="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Border
+                    Width="50"
+                    HorizontalAlignment="Left"
+                    Background="Snow"
+                    BorderBrush="#15161C"
+                    BorderThickness="0,0,2,2"
+                    CornerRadius="10">
+                    <TextBox
+                        x:Name="Hour_TB"
+                        Grid.Column="0"
+                        materialDesign:HintAssist.Hint="00"
+                        FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                        FontSize="25"
+                        FontWeight="SemiBold"
+                        Foreground="#15161C"
+                        Text="{Binding Hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextAlignment="Center" />
+                </Border>
+                <TextBlock
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                    FontSize="25"
+                    FontWeight="SemiBold"
+                    Foreground="snow"
+                    Text="h" />
+            </Grid>
+        </Border>
+
+        <Border
+            Grid.Column="2"
+            Background="#9DB899"
+            BorderBrush="#15161C"
+            BorderThickness="0,0,2,2"
+            CornerRadius="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Border
+                    Width="50"
+                    HorizontalAlignment="Left"
+                    Background="Snow"
+                    CornerRadius="10">
+                    <TextBox
+                        x:Name="Minute_TB"
+                        Grid.Column="0"
+                        materialDesign:HintAssist.Hint="00"
+                        FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                        FontSize="25"
+                        FontWeight="SemiBold"
+                        Foreground="#15161C"
+                        Text="{Binding Minute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextAlignment="Center" />
+                </Border>
+                <TextBlock
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                    FontSize="25"
+                    FontWeight="SemiBold"
+                    Foreground="snow"
+                    Text="m" />
+            </Grid>
+        </Border>
+
+        <Border
+            Grid.Column="4"
+            Background="#9DB899"
+            BorderBrush="#15161C"
+            BorderThickness="0,0,2,2"
+            CornerRadius="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Border
+                    Width="50"
+                    HorizontalAlignment="Left"
+                    Background="Snow"
+                    CornerRadius="10">
+                    <TextBox
+                        x:Name="Second_TB"
+                        Grid.Column="0"
+                        materialDesign:HintAssist.Hint="00"
+                        FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                        FontSize="25"
+                        FontWeight="SemiBold"
+                        Foreground="#15161C"
+                        Text="{Binding Second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextAlignment="Center" />
+                </Border>
+                <TextBlock
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                    FontSize="25"
+                    FontWeight="SemiBold"
+                    Foreground="snow"
+                    Text="s" />
+            </Grid>
+        </Border>
 
         <!--  Timer checkbox  -->
         <CheckBox
@@ -432,8 +529,8 @@
             Grid.Column="1"
             Width="133"
             Height="34"
-            Margin="19,44,0,157"
             HorizontalAlignment="Left"
+            VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             Content="Timer:"
             FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
