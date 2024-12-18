@@ -74,23 +74,25 @@ namespace PuzzleGame.MVVM.ViewModels
             _wndBgr = defaultColornum2;
             EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => LoadPicTureList(o));
 
-            _loadPicListService.LoadPictureList(PictureList, "HOAI");
+            _loadPicListService.LoadPictureList(PictureList, "000001");
 
             AddPicturePageOpenCommand = new RelayCommand<object>((o) => 
             {
                 CusDialogService.Instance.ShowAddPicture(new AddPictureViewModel(this.PictureList)); 
             });
 
-            DeletePictureCommand = new RelayCommand<object>((o) => { DeleteSelectedPicture(); });
+            DeletePictureCommand = new RelayCommand<object>((o) => { DeleteSelectedPicture("000001"); });
         }
+
 
         private void LoadPicTureList(string o)=> _loadPicListService.LoadPictureList(_pictureList, o);
 
-        void DeleteSelectedPicture()
+        void DeleteSelectedPicture(string playerID)
+
         {
             string n = SelectedPicture.Name;
 
-            if (_loadPicListService.DeletePicture(SelectedPicture) == true)
+            if (_loadPicListService.DeletePicture(SelectedPicture, playerID) == true)
             {
                 string url = SelectedPicture.Url;   
 
@@ -123,6 +125,9 @@ namespace PuzzleGame.MVVM.ViewModels
                     {
                         Console.WriteLine($"Lỗi khi xóa tệp: {ex.Message}");
                     }
+
+                    
+
                 }
             }
         }

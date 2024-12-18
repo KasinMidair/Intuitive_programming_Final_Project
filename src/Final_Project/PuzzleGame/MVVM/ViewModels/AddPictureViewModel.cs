@@ -87,7 +87,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
             ChoosePictureCommand = new RelayCommand<object>((o) =>{ ChoosePic(); });
 
-            AddPictureCommand = new RelayCommand<object>((o) =>{ AddPic("HOAI"); });
+            AddPictureCommand = new RelayCommand<object>((o) =>{ AddPic("000001"); });
         }
 
         void ChoosePic()
@@ -102,7 +102,7 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
-        void AddPic (string PlayerName)
+        void AddPic (string playerID)
         {
             bool check = false;
 
@@ -116,7 +116,7 @@ namespace PuzzleGame.MVVM.ViewModels
                 MessageBox.Show("Chua nhap ten tranh...");
                 check = true;
             }
-            else
+            /*else
             {
                 foreach (Picture pic in _pictureList)
                 {
@@ -127,31 +127,32 @@ namespace PuzzleGame.MVVM.ViewModels
                         break;
                     }
                 }
-            }
+            }*/
 
             if (check == false)
             {
                 NewPic = new Picture
                 {
                     Name = NewPicName,
-                    Url = Path.Combine(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + $"\\Assets\\picture\\{PlayerName}{NewPicName}.png")
+                    Url = Path.Combine(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + $"\\Assets\\picture\\{playerID}{NewPicName}.png")
                 };
 
                 File.Copy(NewPicUrl, NewPic.Url, true);
 
-                /*string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                string projectDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 string assetsDirectory = Path.Combine(projectDirectory, "/Assets/picture/");
                 string destinationPath = Path.Combine(assetsDirectory, $"{NewPicName}.png"); 
                 if (!Directory.Exists(assetsDirectory))
                 { 
-                    Directory.CreateDirectory(assetsDirectory); 
+                    Directory.CreateDirectory(assetsDirectory);
                 }
-                File.Copy(NewPicUrl, destinationPath, true);*/
+                File.Copy(NewPicUrl, destinationPath, true);
 
-                _loadPictureListService.AddPicture(NewPic, "HOAI");
-                EventAggregator.GetEvent<PubSubEvent<string>>().Publish("HOAI");
+                _loadPictureListService.AddPicture(NewPic, "000001");
+                EventAggregator.GetEvent<PubSubEvent<string>>().Publish("000001");
                 
                 MessageBox.Show("Da luu tranh... chac vay");
+                CusDialogService.Instance.CloseDialog();
             }
         }
 
