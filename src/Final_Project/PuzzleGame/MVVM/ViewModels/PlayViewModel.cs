@@ -33,9 +33,7 @@ namespace PuzzleGame.MVVM.ViewModels
         public RelayCommand<object> ShutdownCommand { get; set; }
         public RelayCommand<object> Mute_UnMuteCommand { get; set; }
         public RelayCommand<object> GoToMainMenuCommand { get; set; }
-        public RelayCommand<object> BackgroundMusic0Command { get; set; }
-        public RelayCommand<object> BackgroundMusic1Command { get; set; }
-        public RelayCommand<object> BackgroundMusic2Command { get; set; }
+        public RelayCommand<object> BackgroundMusicCommand { get; set; }
 
         private double sfxVolume;
         public double SFXVolume
@@ -163,14 +161,15 @@ namespace PuzzleGame.MVVM.ViewModels
             GoForwardCommand = new RelayCommand<object>((o) => { GoForwardPage(); });
             Mute_UnMuteCommand = new RelayCommand<object>((o) => { Mute_UnMute(); });
             GoToMainMenuCommand = new RelayCommand<object>((o) => { GoToMainMenu(); });
-            BackgroundMusic0Command = new RelayCommand<object>((o) => { MusicSystemService.Instance.ChangeBackgroundMusic(0); });
-            BackgroundMusic1Command = new RelayCommand<object>((o) => { MusicSystemService.Instance.ChangeBackgroundMusic(1); });
-            BackgroundMusic2Command = new RelayCommand<object>((o) => { MusicSystemService.Instance.ChangeBackgroundMusic(2); });
+            BackgroundMusicCommand = new RelayCommand<object>((o) => { BackgroundMusic((string)o); });
+        }
+        private void BackgroundMusic(string num)
+        {
+            MusicSystemService.Instance.ChangeBackgroundMusic(int.Parse(num));
         }
         private void GoToMainMenu()
         {
-            IsSettingVisible = !IsSettingVisible;
-            EventAggregator.GetEvent<PubSubEvent<bool>>().Publish(IsSettingVisible);
+            SettingMenuStatus();
             while (_navigationService.CanGoBack) { _navigationService.GoBack(); }
             IsGoBack = false;
             IsGoForward = _navigationService.CanGoForward;
