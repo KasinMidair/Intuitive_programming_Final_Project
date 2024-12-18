@@ -156,6 +156,34 @@
                                             Width="220"
                                             HorizontalAlignment="Left">
                                             <ScrollViewer Margin="10,6,4,6" SnapsToDevicePixels="True">
+                                                <ScrollViewer.Resources>
+                                                    <!--  ScrollBar Custom  -->
+                                                    <Style TargetType="{x:Type ScrollBar}">
+                                                        <Setter Property="Foreground" Value="Transparent" />
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                        <Setter Property="Width" Value="10" />
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="ScrollBar">
+                                                                    <Grid>
+                                                                        <Track
+                                                                            Name="PART_Track"
+                                                                            IsDirectionReversed="False"
+                                                                            Orientation="Vertical">
+                                                                            <Track.Thumb>
+                                                                                <Thumb
+                                                                                    Width="10"
+                                                                                    Background="#9097C693"
+                                                                                    BorderBrush="Black"
+                                                                                    BorderThickness="1" />
+                                                                            </Track.Thumb>
+                                                                        </Track>
+                                                                    </Grid>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </ScrollViewer.Resources>
                                                 <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
                                             </ScrollViewer>
                                         </Border>
@@ -227,36 +255,40 @@
 
 
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="350" />
             <ColumnDefinition Width="50" />
-            <ColumnDefinition Width="270" />
-            <ColumnDefinition Width="50" />
-            <ColumnDefinition Width="500" />
-            <ColumnDefinition Width="50" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="30" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="30" />
             <RowDefinition Height="20" />
-            <RowDefinition Height="110" />
-            <RowDefinition Height="110" />
-            <RowDefinition Height="130" />
-            <RowDefinition Height="130" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="105" />
+            <RowDefinition Height="105" />
+            <RowDefinition Height="235" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="145" />
         </Grid.RowDefinitions>
 
         <!--  Image holder  -->
         <Border
-            Grid.Row="1"
             Grid.RowSpan="5"
             Grid.Column="3"
+            Width="450"
+            Height="450"
+            Margin="5,26,5,9"
             Background="Snow"
             BorderBrush="#324231"
             BorderThickness="3"
             CornerRadius="15" />
         <Border
-            Grid.Row="1"
             Grid.RowSpan="5"
             Grid.Column="3"
+            Width="450"
+            Height="450"
+            Margin="5,28,5,7"
             BorderBrush="#324231"
             BorderThickness="3"
             CornerRadius="15">
@@ -269,9 +301,11 @@
         <ComboBox
             x:Name="NumberSelection_Combobox"
             Grid.Row="2"
-            Grid.Column="1"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
             Height="40"
-            VerticalAlignment="Bottom"
+            Margin="5,60,25,0"
+            VerticalAlignment="Top"
             Background="Snow"
             FocusVisualStyle="{x:Null}"
             FontSize="20"
@@ -293,9 +327,11 @@
         <ComboBox
             x:Name="PictureSelection_Combobox"
             Grid.Row="3"
-            Grid.Column="1"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
             Height="40"
-            VerticalAlignment="Bottom"
+            Margin="5,70,25,0"
+            VerticalAlignment="Top"
             Background="Snow"
             DisplayMemberPath="Name"
             FocusVisualStyle="{x:Null}"
@@ -309,10 +345,9 @@
         <TextBlock
             Grid.Row="2"
             Grid.Column="1"
-            Margin="0,0,0,20"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+            Width="199"
+            Height="30"
+            Margin="20,22,131,53"
             FontSize="25"
             FontWeight="SemiBold"
             Foreground="#15161C"
@@ -321,10 +356,9 @@
         <TextBlock
             Grid.Row="3"
             Grid.Column="1"
-            Margin="0,0,0,20"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+            Width="154"
+            Height="30"
+            Margin="20,31,176,44"
             FontSize="25"
             FontWeight="SemiBold"
             Foreground="#15161C"
@@ -333,12 +367,11 @@
         <!--  Play button  -->
         <Button
             x:Name="Play_BTN"
-            Grid.Row="5"
-            Grid.RowSpan="2"
-            Grid.Column="1"
+            Grid.Row="6"
+            Grid.Column="3"
             Height="50"
-            Margin="20,81,20,49"
-            materialDesign:ButtonAssist.CornerRadius="15"
+            Margin="276,0,5,95"
+            materialDesign:ButtonAssist.CornerRadius="20"
             Background="#F14666"
             BorderBrush="#1F2326"
             BorderThickness="0,0,2,2"
@@ -346,7 +379,7 @@
             FocusVisualStyle="{x:Null}"
             Foreground="Snow">
             <TextBlock
-                Height="47"
+                Height="37"
                 FontSize="32"
                 FontWeight="ExtraBlack"
                 Text="Play" />
@@ -356,11 +389,11 @@
 
         <Button
             x:Name="Gallery_BTN"
-            Grid.Row="5"
-            Grid.Column="1"
+            Grid.Row="6"
+            Grid.Column="3"
             Height="50"
-            Margin="20,12,20,68"
-            materialDesign:ButtonAssist.CornerRadius="15"
+            Margin="8,0,272,95"
+            materialDesign:ButtonAssist.CornerRadius="20"
             Background="#9DB899"
             BorderBrush="#1F2326"
             BorderThickness="0,0,2,2"
@@ -373,137 +406,24 @@
                 FontWeight="ExtraBlack"
                 Text="Gallery" />
         </Button>
-        <Border
+        <materialDesign:Clock
             Grid.Row="4"
+            Grid.RowSpan="3"
             Grid.Column="1"
-            Width="260"
-            Height="40"
-            Margin="0,34,0,0"
-            HorizontalAlignment="Center"
+            Width="auto"
+            Height="392"
+            Margin="5,85,1,0"
             VerticalAlignment="Top"
             Background="Transparent"
-            CornerRadius="10">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="80" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="80" />
-                </Grid.ColumnDefinitions>
-
-                <Border
-                    Grid.Column="0"
-                    Background="#9DB899"
-                    CornerRadius="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Border
-                            Width="50"
-                            HorizontalAlignment="Left"
-                            Background="Snow"
-                            CornerRadius="10">
-                            <TextBox
-                                x:Name="Hour_TB"
-                                Grid.Column="0"
-                                materialDesign:HintAssist.Hint="00"
-                                FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                                FontSize="25"
-                                FontWeight="SemiBold"
-                                Foreground="#15161C"
-                                Text="{Binding Hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                TextAlignment="Center" />
-                        </Border>
-                        <TextBlock
-                            Grid.Column="1"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                            FontSize="25"
-                            FontWeight="SemiBold"
-                            Foreground="snow"
-                            Text="h" />
-                    </Grid>
-                </Border>
-
-                <Border
-                    Grid.Column="2"
-                    Background="#9DB899"
-                    CornerRadius="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Border
-                            Width="50"
-                            HorizontalAlignment="Left"
-                            Background="Snow"
-                            CornerRadius="10">
-                            <TextBox
-                                x:Name="Minute_TB"
-                                Grid.Column="0"
-                                materialDesign:HintAssist.Hint="00"
-                                FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                                FontSize="25"
-                                FontWeight="SemiBold"
-                                Foreground="#15161C"
-                                Text="{Binding Minute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                TextAlignment="Center" />
-                        </Border>
-                        <TextBlock
-                            Grid.Column="1"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                            FontSize="25"
-                            FontWeight="SemiBold"
-                            Foreground="snow"
-                            Text="m" />
-                    </Grid>
-                </Border>
-
-                <Border
-                    Grid.Column="4"
-                    Background="#9DB899"
-                    CornerRadius="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="50" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Border
-                            Width="50"
-                            HorizontalAlignment="Left"
-                            Background="Snow"
-                            CornerRadius="10">
-                            <TextBox
-                                x:Name="Second_TB"
-                                Grid.Column="0"
-                                materialDesign:HintAssist.Hint="00"
-                                FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                                FontSize="25"
-                                FontWeight="SemiBold"
-                                Foreground="#15161C"
-                                Text="{Binding Second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                TextAlignment="Center" />
-                        </Border>
-                        <TextBlock
-                            Grid.Column="1"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                            FontSize="25"
-                            FontWeight="SemiBold"
-                            Foreground="snow"
-                            Text="s" />
-                    </Grid>
-                </Border>
-            </Grid>
-        </Border>
+            DisplayAutomation="CycleWithSeconds"
+            FontSize="16"
+            Foreground="#2297C693"
+            Is24Hours="True"
+            Style="{StaticResource MaterialDesignClockVertical}" Grid.ColumnSpan="2">
+            <materialDesign:Clock.LayoutTransform>
+                <ScaleTransform ScaleX="0.6" ScaleY="0.6" />
+            </materialDesign:Clock.LayoutTransform>
+        </materialDesign:Clock>
 
         <!--  Timer checkbox  -->
         <CheckBox
@@ -512,8 +432,8 @@
             Grid.Column="1"
             Width="133"
             Height="34"
+            Margin="19,44,0,157"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             Content="Timer:"
             FontFamily="pack://application:,,,/Assets/Fonts/#Itim"

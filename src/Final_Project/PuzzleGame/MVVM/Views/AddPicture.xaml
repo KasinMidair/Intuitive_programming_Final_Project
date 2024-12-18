@@ -4,11 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ViewModels="clr-namespace:PuzzleGame.MVVM.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:PuzzleGame.MVVM.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="600"
-    d:DesignWidth="460"
+    d:DesignHeight="530"
+    d:DesignWidth="420"
     AllowsTransparency="True"
     Background="Transparent"
     WindowStartupLocation="CenterScreen"
@@ -16,45 +17,63 @@
     mc:Ignorable="d">
 
     <Border
+        Width="380"
+        Height="530"
         Background="#F5C7A4"
+        BorderBrush="#324231"
         BorderThickness="2"
-        CornerRadius="50">
+        CornerRadius="30">
+
+        <!--  Using trigger to catch MouseDown event  -->
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseDown">
+                <i:InvokeCommandAction Command="{Binding MoveWndCommand}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition Width="380" />
+                <ColumnDefinition Width="330" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="380" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="350" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="40" />
                 <RowDefinition Height="20" />
                 <RowDefinition Height="50" />
-                <RowDefinition Height="40" />
+                <RowDefinition Height="20" />
             </Grid.RowDefinitions>
 
             <!--  Picture holder  -->
             <Border
-                Grid.RowSpan="2"
+                Grid.Row="1"
                 Grid.Column="1"
-                Margin="0,40,0,10"
-                CornerRadius="20">
+                Margin="1,6,3,17"
+                CornerRadius="10">
                 <Canvas>
                     <Border
-                        Width="380"
-                        Height="380"
+                        Canvas.Left="1"
+                        Canvas.Top="5"
+                        Width="325"
+                        Height="325"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
                         BorderBrush="#324231"
                         BorderThickness="5"
                         Canvas.ZIndex="2"
-                        CornerRadius="20" />
-
+                        CornerRadius="10" />
                     <Image
                         x:Name="PictreHolder"
-                        Width="380"
-                        Height="380"
+                        Canvas.Left="6"
+                        Canvas.Top="9"
+                        Width="315"
+                        Height="315"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
                         Canvas.ZIndex="1"
                         Source="{Binding NewPicUrl, Mode=OneWay}">
                         <Image.InputBindings>
@@ -70,7 +89,7 @@
                 x:Name="ChoosePicture_BTN"
                 Grid.Row="5"
                 Grid.Column="1"
-                Width="200"
+                Width="145"
                 Height="50"
                 HorizontalAlignment="Left"
                 materialDesign:ButtonAssist.CornerRadius="20"
@@ -79,8 +98,9 @@
                 BorderThickness="0,0,2,2"
                 Command="{Binding ChoosePictureCommand}"
                 Content="Choose Picture"
+                FocusVisualStyle="{x:Null}"
                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                FontSize="20"
+                FontSize="16"
                 FontWeight="SemiBold"
                 Foreground="Snow" />
 
@@ -89,17 +109,19 @@
                 x:Name="Add_BTN"
                 Grid.Row="5"
                 Grid.Column="1"
-                Width="160"
+                Width="145"
                 Height="50"
-                HorizontalAlignment="Right"
+                Margin="185,0,0,0"
+                HorizontalAlignment="Left"
                 materialDesign:ButtonAssist.CornerRadius="20"
                 Background="#F14666"
                 BorderBrush="#1F2326"
                 BorderThickness="0,0,2,2"
                 Command="{Binding AddPictureCommand}"
-                Content="Add"
+                Content="Add Picture"
+                FocusVisualStyle="{x:Null}"
                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                FontSize="20"
+                FontSize="16"
                 FontWeight="SemiBold"
                 Foreground="Snow" />
 

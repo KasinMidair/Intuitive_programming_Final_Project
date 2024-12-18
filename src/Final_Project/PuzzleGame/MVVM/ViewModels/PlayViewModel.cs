@@ -26,17 +26,16 @@ namespace PuzzleGame.MVVM.ViewModels
         //Service and EventAggreator
         public NavigationService _navigationService;
 
-        //Command
+        #region Command
         public RelayCommand<object> SettingCommand { get; set; }
         public RelayCommand<object> GoBackCommand { get; set; }
         public RelayCommand<object> GoForwardCommand { get; set; }
         public RelayCommand<object> ShutdownCommand { get; set; }
         public RelayCommand<object> Mute_UnMuteCommand { get; set; }
         public RelayCommand<object> GoToMainMenuCommand { get; set; }
-        public RelayCommand<object> BackgroundMusic0Command { get; set; }
-        public RelayCommand<object> BackgroundMusic1Command { get; set; }
-        public RelayCommand<object> BackgroundMusic2Command { get; set; }
+        public RelayCommand<object> BackgroundMusicChangeCommand { get; set; }
         public RelayCommand<object> CopyIdCommand { get; set; }
+        #endregion
 
         private double sfxVolume;
         public double SFXVolume
@@ -109,8 +108,6 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
-        #endregion
-
         public SolidColorBrush WndBgr
         {
             get => _wndBgr;
@@ -120,6 +117,30 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        SolidColorBrush toolBarColor;
+        public SolidColorBrush ToolBarColor
+        {
+            get => toolBarColor;
+            set
+            {
+                toolBarColor = value;
+                OnPropertyChanged();
+            }
+        }
+
+        int mscSelectedOption;
+        public int MscSelectedOption
+        {
+            get => mscSelectedOption;
+            set
+            {
+                mscSelectedOption = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         ObservableObject _currentPage;
         public ObservableObject CurrentPage
         {
@@ -133,16 +154,6 @@ namespace PuzzleGame.MVVM.ViewModels
         } //  the page show in Frame in realtime
 
 
-        SolidColorBrush toolBarColor;
-        public SolidColorBrush ToolBarColor
-        {
-            get => toolBarColor;
-            set
-            {
-                toolBarColor = value;
-                OnPropertyChanged();
-            }
-        }
 
 
         public PlayViewModel()
@@ -159,21 +170,26 @@ namespace PuzzleGame.MVVM.ViewModels
             IsGoBack = false;
             IsGoForward = false;
             IsMusicMute = "Mute";
-            BackgroundVolume = Properties.Settings.Default.BGVolume ;  //using application settings to save basic data.
+            BackgroundVolume = Properties.Settings.Default.BGVolume;  //using application settings to save basic data.
             SFXVolume = Properties.Settings.Default.SFXVolume;
+            MscSelectedOption = Properties.Settings.Default.BGMusicSong;
+            MusicSystemService.Instance.ChangeBackgroundMusic(MscSelectedOption);
 
-            //init command 
-            SettingCommand = new RelayCommand<object>((o)=> { SettingMenuStatus(); });
-            ShutdownCommand = new RelayCommand<object>((o) => {  QuitApp(); });
+            #region init command 
+
+            SettingCommand = new RelayCommand<object>((o) => { SettingMenuStatus(); });
+            ShutdownCommand = new RelayCommand<object>((o) => { QuitApp(); });
             GoBackCommand = new RelayCommand<object>((o) => { GoBackPage(); });
             GoForwardCommand = new RelayCommand<object>((o) => { GoForwardPage(); });
             Mute_UnMuteCommand = new RelayCommand<object>((o) => { Mute_UnMute(); });
             GoToMainMenuCommand = new RelayCommand<object>((o) => { GoToMainMenu(); });
-            BackgroundMusic0Command = new RelayCommand<object>((o) => { MusicSystemService.Instance.ChangeBackgroundMusic(0); });
-            BackgroundMusic1Command = new RelayCommand<object>((o) => { MusicSystemService.Instance.ChangeBackgroundMusic(1); });
-            BackgroundMusic2Command = new RelayCommand<object>((o) => { MusicSystemService.Instance.ChangeBackgroundMusic(2); });
+            BackgroundMusicChangeCommand = new RelayCommand<object>((o) => { BackgroundMusicChanged((string)o); });
             CopyIdCommand = new RelayCommand<object>((o) => { CopyId((string)o); });
+
+            #endregion
+
         }
+
 
         #region Execute Command
         private void SettingMenuStatus() 
@@ -233,8 +249,19 @@ namespace PuzzleGame.MVVM.ViewModels
             while (_navigationService.CanGoBack) { GoBackPage(); }
              AvoidNavigate();
         }
+        private void BackgroundMusicChanged(string o)
+        {
+            int.TryParse(o, out int mscNum);
+            Properties.Settings.Default.BGMusicSong=mscNum;
+            Properties.Settings.Default.Save();
+            MusicSystemService.Instance.ChangeBackgroundMusic(mscNum);
+        }
 
-        private void CopyId(string o) => Clipboard.SetText(o);
+        private void CopyId(string o) 
+        {
+            Clipboard.SetText(o);
+            _= CusDialogService.Instance.ShowDialog("You have copied the ID<3");
+        }
 
         #endregion
 

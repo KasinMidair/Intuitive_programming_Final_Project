@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Enumeration;
 using System.Linq;
@@ -20,23 +21,8 @@ namespace PuzzleGame.MVVM.ViewModels
 {
     class AddPictureViewModel: ObservableObject
     {
-        public readonly CusDialogService _cusDialogService = new CusDialogService();
-        public readonly GalleryViewModel _galleryViewModel = new GalleryViewModel();
+        ObservableCollection<Picture> _pictureList;
         public readonly LoadPictureListService _loadPictureListService = new LoadPictureListService();
-
-        private ObservableObject _currentPage;
-        public ObservableObject CurrentPage
-        {
-            get => _currentPage;
-            set
-            {
-                if (_currentPage != value)
-                {
-                    _currentPage = value;
-                    EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Publish(CurrentPage);
-                }
-            }
-        }
 
         Connection conn = new Connection();
 
@@ -93,9 +79,9 @@ namespace PuzzleGame.MVVM.ViewModels
         public string path { get; set; }
 
 
-        public AddPictureViewModel()
+        public AddPictureViewModel(ObservableCollection<Picture> pictureList)
         {
-
+            _pictureList = pictureList;
             _wndBgr = defaultColornum1;
             NewPicUrl = @"/Assets/Imgs/AddPicBackGround.jpg";
 
@@ -132,7 +118,7 @@ namespace PuzzleGame.MVVM.ViewModels
             }
             else
             {
-                foreach (Picture pic in _galleryViewModel.PictureList)
+                foreach (Picture pic in _pictureList)
                 {
                     if (NewPicName == pic.Name)
                     {
@@ -163,7 +149,8 @@ namespace PuzzleGame.MVVM.ViewModels
                 File.Copy(NewPicUrl, destinationPath, true);*/
 
                 _loadPictureListService.AddPicture(NewPic, "HOAI");
-                _galleryViewModel._loadPicListService.LoadPictureList(_galleryViewModel.PictureList, "HOAI");
+                EventAggregator.GetEvent<PubSubEvent<string>>().Publish("HOAI");
+                
                 MessageBox.Show("Da luu tranh... chac vay");
             }
         }

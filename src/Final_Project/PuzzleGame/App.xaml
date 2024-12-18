@@ -4,11 +4,13 @@
              xmlns:local="clr-namespace:PuzzleGame"
              xmlns:viewmodel="clr-namespace:PuzzleGame.MVVM.ViewModels"
              xmlns:view="clr-namespace:PuzzleGame.MVVM.Views.Pages"
+             xmlns:store="clr-namespace:PuzzleGame.Stores"
              xmlns:prism="clr-namespace:Prism.Events;assembly=Prism.Events">
     <Application.Resources>
 
         <ResourceDictionary>
             <BooleanToVisibilityConverter x:Key="IsVisible" />
+            <store:StringConverter x:Key="IsChecked" />
             <prism:EventAggregator x:Key="AppEventAggregator"/>
 
             <ResourceDictionary.MergedDictionaries>

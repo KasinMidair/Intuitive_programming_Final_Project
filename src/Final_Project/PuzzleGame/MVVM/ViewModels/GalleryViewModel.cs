@@ -72,17 +72,19 @@ namespace PuzzleGame.MVVM.ViewModels
         public GalleryViewModel()
         {
             _wndBgr = defaultColornum2;
-            PictureList = new ObservableCollection<Picture>();
+            EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => LoadPicTureList(o));
 
             _loadPicListService.LoadPictureList(PictureList, "HOAI");
 
             AddPicturePageOpenCommand = new RelayCommand<object>((o) => 
             {
-                CusDialogService.Instance.ShowAddPicture(new AddPictureViewModel()); 
+                CusDialogService.Instance.ShowAddPicture(new AddPictureViewModel(this.PictureList)); 
             });
 
             DeletePictureCommand = new RelayCommand<object>((o) => { DeleteSelectedPicture(); });
         }
+
+        private void LoadPicTureList(string o)=> _loadPicListService.LoadPictureList(_pictureList, o);
 
         void DeleteSelectedPicture()
         {
@@ -90,7 +92,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
             if (_loadPicListService.DeletePicture(SelectedPicture) == true)
             {
-                string url = SelectedPicture.Url;
+                string url = SelectedPicture.Url;   
 
                 // Đảm bảo SelectedPicture không còn được sử dụng
                 SelectedPicture = null;

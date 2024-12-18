@@ -46,5 +46,17 @@ namespace PuzzleGame.Properties {
                 this["SFXVolume"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int BGMusicSong {
+            get {
+                return ((int)(this["BGMusicSong"]));
+            }
+            set {
+                this["BGMusicSong"] = value;
+            }
+        }
     }
 }

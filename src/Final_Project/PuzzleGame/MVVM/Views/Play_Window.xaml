@@ -331,30 +331,32 @@
                                         Grid.Row="0"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Command="{Binding BackgroundMusic0Command}"
-                                        CommandParameter="{Binding ElementName=SettingMenu}"
+                                        Command="{Binding BackgroundMusicChangeCommand}"
+                                        CommandParameter="0"
                                         Content="Joyful Jingles"
                                         FocusVisualStyle="{x:Null}"
-                                        Foreground="#101610" />
-                                    <RadioButton
-                                        Grid.Row="2"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Command="{Binding BackgroundMusic2Command}"
-                                        CommandParameter="{Binding ElementName=SettingMenu}"
-                                        Content="Cloud Garden"
-                                        FocusVisualStyle="{x:Null}"
                                         Foreground="#101610"
-                                        IsChecked="True" />
+                                        IsChecked="{Binding MscSelectedOption, Converter={StaticResource IsChecked}, ConverterParameter=0}" />
                                     <RadioButton
                                         Grid.Row="1"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Command="{Binding BackgroundMusic1Command}"
-                                        CommandParameter="{Binding ElementName=SettingMenu}"
+                                        Command="{Binding BackgroundMusicChangeCommand}"
+                                        CommandParameter="1"
                                         Content="Silly Symphony"
                                         FocusVisualStyle="{x:Null}"
-                                        Foreground="#101610" />
+                                        Foreground="#101610"
+                                        IsChecked="{Binding MscSelectedOption, Converter={StaticResource IsChecked}, ConverterParameter=1}" />
+                                    <RadioButton
+                                        Grid.Row="2"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Command="{Binding BackgroundMusicChangeCommand}"
+                                        CommandParameter="2"
+                                        Content="Cloud Garden"
+                                        FocusVisualStyle="{x:Null}"
+                                        Foreground="#101610"
+                                        IsChecked="{Binding MscSelectedOption, Converter={StaticResource IsChecked}, ConverterParameter=2}" />
                                 </Grid>
                             </Border>
                         </StackPanel>
@@ -545,7 +547,6 @@
                 materialDesign:ButtonAssist.CornerRadius="10"
                 BorderBrush="Transparent"
                 Command="{Binding GoBackCommand}"
-                CommandParameter="{Binding ElementName=BackBTN}"
                 Style="{StaticResource ResourceKey=BTN}"
                 Visibility="{Binding IsGoBack, Converter={StaticResource IsVisible}}">
                 <Button.Background>
@@ -563,7 +564,6 @@
             </Button>
 
             <!--  GoForward button  -->
-
             <Border
                 Canvas.Left="829"
                 Canvas.Top="39"
@@ -587,7 +587,6 @@
                     VerticalAlignment="Center"
                     BorderBrush="Transparent"
                     Command="{Binding GoForwardCommand}"
-                    CommandParameter="{Binding ElementName=GoForwardBTN}"
                     Style="{StaticResource ResourceKey=BTN}"
                     Visibility="{Binding IsGoForward, Converter={StaticResource IsVisible}}">
 
@@ -607,7 +606,6 @@
             </Border>
 
 
-
             <!--  info modal  -->
             <materialDesign:DrawerHost
                 x:Name="DrawerHost"
@@ -621,15 +619,7 @@
                 BorderThickness="2"
                 BottomDrawerBackground="{DynamicResource SecondaryHueLightBrush}"
                 BottomDrawerCornerRadius="20 20 0 0">
-                <materialDesign:DrawerHost.Style>
-                    <Style BasedOn="{StaticResource {x:Type materialDesign:DrawerHost}}" TargetType="materialDesign:DrawerHost">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsChecked, ElementName=BackgroundToggle}" Value="True">
-                                <Setter Property="OverlayBackground" Value="{DynamicResource PrimaryHueMidBrush}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </materialDesign:DrawerHost.Style>
+
                 <materialDesign:DrawerHost.BottomDrawerContent>
                     <Canvas Height="455" Margin="0,80,0,0">
                         <ScrollViewer
@@ -643,7 +633,7 @@
                             HorizontalScrollBarVisibility="Disabled"
                             VerticalScrollBarVisibility="Auto">
                             <ScrollViewer.Resources>
-                                <!--  Tùy chỉnh ScrollBar  -->
+                                <!--  ScrollBar Custom -->
                                 <Style TargetType="{x:Type ScrollBar}">
                                     <Setter Property="Foreground" Value="Transparent" />
                                     <Setter Property="Background" Value="Transparent" />
