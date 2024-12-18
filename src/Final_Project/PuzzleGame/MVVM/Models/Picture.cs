@@ -10,7 +10,7 @@ namespace PuzzleGame.MVVM.Models
     {
         public string Name { get; set; }
         public string Url { get; set; }
-        public string PlayerName { get; set; }
+        public string PlayerID { get; set; }
         public bool isDefault { get; set; }
     }
 }

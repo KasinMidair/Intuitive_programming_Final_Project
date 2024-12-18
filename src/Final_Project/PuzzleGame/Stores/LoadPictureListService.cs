@@ -18,9 +18,9 @@ namespace PuzzleGame.Stores
     {
         Connection connection = new Connection();
 
-        public void LoadPictureList(ObservableCollection<Picture> PicList, string name)
+        public void LoadPictureList(ObservableCollection<Picture> PicList, string id)
         {
-            connection.dataAdapter = new SqlDataAdapter($"Select PICNAME, PICPATH, PLAYERNAME, isDEFAULT from PICTURE where isDEFAULT = 1 or PLAYERNAME = '{name}'", connection.connStr);
+            connection.dataAdapter = new SqlDataAdapter($"Select PICNAME, PICPATH, PLAYERID, isDEFAULT from PICTURE where isDEFAULT = 1 or PLAYERID = '{id}'", connection.connStr);
 
             connection.dataAdapter.Fill(connection.ds, "PICTURE");
             connection.dt = connection.ds.Tables["PICTURE"];
@@ -31,13 +31,13 @@ namespace PuzzleGame.Stores
                 { 
                     Name = Convert.ToString(dr["PICNAME"]), 
                     Url = Convert.ToString(dr["PICPATH"]),
-                    PlayerName = Convert.ToString(dr["PLAYERNAME"]),
+                    PlayerID = Convert.ToString(dr["PLAYERID"]),
                     isDefault = Convert.ToBoolean(dr["isDEFAULT"])
                 });
             }
         }
 
-        public bool DeletePicture(Picture pic)
+        public bool DeletePicture(Picture pic, string id)
         {
             if (pic.isDefault == true)
             {
@@ -46,7 +46,7 @@ namespace PuzzleGame.Stores
             }
             else
             {
-                connection.dataAdapter.DeleteCommand = new SqlCommand($"Delete from PICTURE where PICNAME = '{pic.Name}'", connection.Conn);
+                connection.dataAdapter.DeleteCommand = new SqlCommand($"Delete from PICTURE where PICNAME = '{pic.Name}' and PLAYERID = '{id}'", connection.Conn);
 
                 DataRow[] dataRow = connection.dt.Select($"PICNAME = '{pic.Name}'");
                 foreach (DataRow dr in dataRow)
@@ -59,7 +59,7 @@ namespace PuzzleGame.Stores
             }
         }
 
-        public void AddPicture(Picture newPicture, string PlayerName)
+        public void AddPicture(Picture newPicture, string PlayerID)
         {
             connection.dataAdapter = new ($"Select * from PICTURE", connection.connStr);
 
@@ -70,7 +70,7 @@ namespace PuzzleGame.Stores
             DataRow dataRow = connection.dt.NewRow();
             dataRow["PICNAME"] = newPicture.Name;
             dataRow["PICPATH"] = newPicture.Url;
-            dataRow["PLAYERNAME"] = PlayerName;
+            dataRow["PLAYERID"] = PlayerID;
             dataRow["isDEFAULT"] = 0;
 
             connection.dt.Rows.Add(dataRow);
