@@ -74,6 +74,8 @@ namespace PuzzleGame.MVVM.ViewModels
         //Command
         public RelayCommand<object> ChoosePictureCommand { get; set; }
         public RelayCommand<object> AddPictureCommand { get; set; }
+        public RelayCommand<object> CloseAddWindowCommand { get; set; }
+        public RelayCommand<object> MoveWndCommand { get; set; }
 
 
         public string path { get; set; }
@@ -86,8 +88,9 @@ namespace PuzzleGame.MVVM.ViewModels
             NewPicUrl = @"/Assets/Imgs/AddPicBackGround.jpg";
 
             ChoosePictureCommand = new RelayCommand<object>((o) =>{ ChoosePic(); });
-
             AddPictureCommand = new RelayCommand<object>((o) =>{ AddPic("000001"); });
+            CloseAddWindowCommand = new RelayCommand<object>((o) => { CusDialogService.Instance.CloseDialog();});
+            MoveWndCommand = new RelayCommand<object>((o) => { CusDialogService.Instance.MoveDialog(); });
         }
 
         void ChoosePic()
@@ -152,7 +155,6 @@ namespace PuzzleGame.MVVM.ViewModels
                 EventAggregator.GetEvent<PubSubEvent<string>>().Publish("000001");
                 
                 MessageBox.Show("Da luu tranh... chac vay");
-                CusDialogService.Instance.CloseDialog();
             }
         }
 

@@ -33,7 +33,7 @@ namespace PuzzleGame.Stores
         {
             var rlt= new TaskCompletionSource<CustomDialogResult>();
             currDialog = new CustomDialog();
-            currDialog.DataContext = new CustomDialogViewModel(msg,btn_type,rlt,this);
+            currDialog.DataContext = new CustomDialogViewModel(msg,btn_type,rlt);
             currDialog.ShowDialog();
 
             return  await rlt.Task;

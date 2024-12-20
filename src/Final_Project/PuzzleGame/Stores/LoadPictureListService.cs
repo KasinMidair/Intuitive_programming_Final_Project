@@ -20,11 +20,16 @@ namespace PuzzleGame.Stores
 
         public void LoadPictureList(ObservableCollection<Picture> PicList, string id)
         {
-            connection.dataAdapter = new SqlDataAdapter($"Select PICNAME, PICPATH, PLAYERID, isDEFAULT from PICTURE where isDEFAULT = 1 or PLAYERID = '{id}'", connection.connStr);
 
+            connection.dataAdapter = new SqlDataAdapter($"Select PICNAME, PICPATH, PLAYERID, isDEFAULT from PICTURE where isDEFAULT = 1 or PLAYERID = '{id}'", connection.connStr);
+            if (connection.ds.Tables.Contains("PICTURE"))
+            {
+                connection.ds.Tables.Remove(connection.ds.Tables["PICTURE"]);
+            }
             connection.dataAdapter.Fill(connection.ds, "PICTURE");
             connection.dt = connection.ds.Tables["PICTURE"];
 
+            PicList.Clear();
             foreach (DataRow dr in connection.dt.Rows)
             {
                 PicList.Add(new Picture

@@ -75,7 +75,7 @@ namespace PuzzleGame.MVVM.ViewModels
             EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => LoadPicTureList(o));
 
             _loadPicListService.LoadPictureList(PictureList, "000001");
-
+            SelectedPicture = PictureList.ElementAt(0);
             AddPicturePageOpenCommand = new RelayCommand<object>((o) => 
             {
                 CusDialogService.Instance.ShowAddPicture(new AddPictureViewModel(this.PictureList)); 

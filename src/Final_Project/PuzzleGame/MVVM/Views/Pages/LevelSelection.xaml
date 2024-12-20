@@ -18,7 +18,7 @@
     <Page.Resources>
 
         <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
-            <Grid Margin="-110,0,-120,0">
+            <Grid Margin="-115,0,-120,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="30" />
@@ -101,7 +101,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ComboBox}">
-                        <Grid Margin="10,0,20,0">
+                        <Grid Margin="72,-3,20,0">
                             <ToggleButton
                                 Name="ToggleButton"
                                 Grid.ColumnSpan="2"
@@ -111,9 +111,9 @@
                                 Template="{StaticResource ComboBoxToggleButton}" />
                             <ContentPresenter
                                 Name="ContentSite"
-                                Margin="15,-3,23,3"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
+                                Width="110"
+                                Height="24"
+                                Margin="24,4,124,10"
                                 Content="{TemplateBinding SelectionBoxItem}"
                                 ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                 ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
@@ -132,7 +132,7 @@
                                 Visibility="Hidden" />
                             <Popup
                                 Name="Popup"
-                                Margin="0,55,0,-80"
+                                Margin="100"
                                 AllowsTransparency="True"
                                 Focusable="False"
                                 IsOpen="{TemplateBinding IsDropDownOpen}"
@@ -140,21 +140,22 @@
                                 PopupAnimation="Slide">
 
                                 <Border
-                                    Width="220"
-                                    Background="White"
+                                    Width="232"
+                                    Margin="250,0,0,0"
+                                    Background="Snow"
                                     CornerRadius="10">
                                     <Grid
                                         Name="DropDown"
-                                        Width="250"
+                                        Width="220"
                                         MaxHeight="{TemplateBinding MaxDropDownHeight}"
                                         HorizontalAlignment="Left"
                                         SnapsToDevicePixels="True">
 
                                         <Border
                                             x:Name="DropDownBorder"
-                                            Width="220"
+                                            Width="250"
                                             HorizontalAlignment="Left">
-                                            <ScrollViewer Margin="10,6,4,6" SnapsToDevicePixels="True">
+                                            <ScrollViewer Margin="15,6,4,6" SnapsToDevicePixels="True">
                                                 <ScrollViewer.Resources>
                                                     <!--  ScrollBar Custom  -->
                                                     <Style TargetType="{x:Type ScrollBar}">
@@ -228,7 +229,9 @@
                     <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                         <Border
                             x:Name="Border"
+                            Width="200"
                             Padding="10,2,2,2"
+                            HorizontalAlignment="Left"
                             CornerRadius="7"
                             FocusVisualStyle="{x:Null}"
                             SnapsToDevicePixels="true">
@@ -254,56 +257,52 @@
 
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="30" />
             <ColumnDefinition Width="350" />
             <ColumnDefinition Width="50" />
             <ColumnDefinition />
-            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="60" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="20" />
+            <RowDefinition Height="150" />
             <RowDefinition Height="105" />
-            <RowDefinition Height="105" />
-            <RowDefinition Height="235" />
+            <RowDefinition Height="200" />
             <RowDefinition Height="20" />
             <RowDefinition Height="145" />
         </Grid.RowDefinitions>
 
         <!--  Image holder  -->
+
         <Border
-            Grid.RowSpan="5"
-            Grid.Column="3"
+            Grid.Row="1"
+            Grid.RowSpan="4"
+            Grid.Column="2"
+            Grid.ColumnSpan="2"
             Width="450"
             Height="450"
-            Margin="5,26,5,9"
-            Background="Snow"
+            Margin="28,18,2,7"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             BorderBrush="#324231"
-            BorderThickness="3"
-            CornerRadius="15" />
-        <Border
-            Grid.RowSpan="5"
-            Grid.Column="3"
-            Width="450"
-            Height="450"
-            Margin="5,28,5,7"
-            BorderBrush="#324231"
-            BorderThickness="3"
+            BorderThickness="5"
+            Canvas.ZIndex="1"
             CornerRadius="15">
             <Border.Background>
-                <ImageBrush x:Name="ImageHolder" ImageSource="{Binding SelectedPicture.Url}" />
+                <ImageBrush ImageSource="{Binding SelectedPicture.Url}" Stretch="UniformToFill" />
             </Border.Background>
         </Border>
+
 
         <!--  Number seclection combobox  -->
         <ComboBox
             x:Name="NumberSelection_Combobox"
             Grid.Row="2"
-            Grid.RowSpan="2"
             Grid.ColumnSpan="2"
-            Height="40"
-            Margin="5,60,25,0"
+            Height="35"
+            Margin="-11,95,41,0"
             VerticalAlignment="Top"
             Background="Snow"
             FocusVisualStyle="{x:Null}"
@@ -328,8 +327,8 @@
             Grid.Row="3"
             Grid.RowSpan="2"
             Grid.ColumnSpan="2"
-            Height="40"
-            Margin="5,70,25,0"
+            Height="35"
+            Margin="-11,77,41,0"
             VerticalAlignment="Top"
             Background="Snow"
             DisplayMemberPath="Name"
@@ -344,9 +343,8 @@
         <TextBlock
             Grid.Row="2"
             Grid.Column="1"
-            Width="199"
             Height="30"
-            Margin="20,22,131,53"
+            Margin="26,49,105,71"
             FontSize="25"
             FontWeight="SemiBold"
             Foreground="#15161C"
@@ -355,9 +353,8 @@
         <TextBlock
             Grid.Row="3"
             Grid.Column="1"
-            Width="154"
             Height="30"
-            Margin="20,31,176,44"
+            Margin="31,30,155,45"
             FontSize="25"
             FontWeight="SemiBold"
             Foreground="#15161C"
@@ -369,7 +366,7 @@
             Grid.Row="6"
             Grid.Column="3"
             Height="50"
-            Margin="276,0,5,95"
+            Margin="266,0,15,95"
             materialDesign:ButtonAssist.CornerRadius="20"
             Background="#F14666"
             BorderBrush="#1F2326"
@@ -389,9 +386,10 @@
         <Button
             x:Name="Gallery_BTN"
             Grid.Row="6"
-            Grid.Column="3"
+            Grid.Column="2"
+            Grid.ColumnSpan="2"
             Height="50"
-            Margin="8,0,272,95"
+            Margin="38,0,292,95"
             materialDesign:ButtonAssist.CornerRadius="20"
             Background="#9DB899"
             BorderBrush="#1F2326"
@@ -405,122 +403,6 @@
                 FontWeight="ExtraBlack"
                 Text="Gallery" />
         </Button>
-        <Border
-            Grid.Column="0"
-            Background="#9DB899"
-            CornerRadius="10">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Border
-                    Width="50"
-                    HorizontalAlignment="Left"
-                    Background="Snow"
-                    BorderBrush="#15161C"
-                    BorderThickness="0,0,2,2"
-                    CornerRadius="10">
-                    <TextBox
-                        x:Name="Hour_TB"
-                        Grid.Column="0"
-                        materialDesign:HintAssist.Hint="00"
-                        FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                        FontSize="25"
-                        FontWeight="SemiBold"
-                        Foreground="#15161C"
-                        Text="{Binding Hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        TextAlignment="Center" />
-                </Border>
-                <TextBlock
-                    Grid.Column="1"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                    FontSize="25"
-                    FontWeight="SemiBold"
-                    Foreground="snow"
-                    Text="h" />
-            </Grid>
-        </Border>
-
-        <Border
-            Grid.Column="2"
-            Background="#9DB899"
-            BorderBrush="#15161C"
-            BorderThickness="0,0,2,2"
-            CornerRadius="10">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Border
-                    Width="50"
-                    HorizontalAlignment="Left"
-                    Background="Snow"
-                    CornerRadius="10">
-                    <TextBox
-                        x:Name="Minute_TB"
-                        Grid.Column="0"
-                        materialDesign:HintAssist.Hint="00"
-                        FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                        FontSize="25"
-                        FontWeight="SemiBold"
-                        Foreground="#15161C"
-                        Text="{Binding Minute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        TextAlignment="Center" />
-                </Border>
-                <TextBlock
-                    Grid.Column="1"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                    FontSize="25"
-                    FontWeight="SemiBold"
-                    Foreground="snow"
-                    Text="m" />
-            </Grid>
-        </Border>
-
-        <Border
-            Grid.Column="4"
-            Background="#9DB899"
-            BorderBrush="#15161C"
-            BorderThickness="0,0,2,2"
-            CornerRadius="10">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Border
-                    Width="50"
-                    HorizontalAlignment="Left"
-                    Background="Snow"
-                    CornerRadius="10">
-                    <TextBox
-                        x:Name="Second_TB"
-                        Grid.Column="0"
-                        materialDesign:HintAssist.Hint="00"
-                        FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                        FontSize="25"
-                        FontWeight="SemiBold"
-                        Foreground="#15161C"
-                        Text="{Binding Second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        TextAlignment="Center" />
-                </Border>
-                <TextBlock
-                    Grid.Column="1"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                    FontSize="25"
-                    FontWeight="SemiBold"
-                    Foreground="snow"
-                    Text="s" />
-            </Grid>
-        </Border>
 
         <!--  Timer checkbox  -->
         <CheckBox
@@ -529,14 +411,137 @@
             Grid.Column="1"
             Width="133"
             Height="34"
-            HorizontalAlignment="Left"
+            Margin="29,46,0,0"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             Content="Timer:"
-            FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+            FocusVisualStyle="{x:Null}"
             FontSize="25"
             FontWeight="SemiBold"
-            Foreground="#15161C" />
+            Foreground="#15161C"
+            Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" />
+
+        <!--  Timer set  -->
+        <Grid
+            Grid.Row="4"
+            Grid.RowSpan="3"
+            Grid.Column="1"
+            Margin="21,92,59,118"
+            IsEnabled="{Binding Path=IsChecked, ElementName=Timer_CB}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Border
+                Grid.ColumnSpan="3"
+                Margin="11,-2,7,119"
+                Background="Snow"
+                CornerRadius="10">
+                <TextBlock
+                    Margin="10,3,0,1"
+                    FontSize="12"
+                    Foreground="#324231"
+                    TextWrapping="Wrap">
+                    Tick the checkbox to
+                    enable setting a time limit, adding more challenge to the game."
+                </TextBlock>
+            </Border>
+            <TextBlock
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="85,65,85,33"
+                FontSize="40"
+                Text=":" />
+            <TextBlock
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="85,65,85,33"
+                FontSize="40"
+                Text=":" />
+            <Border
+                Grid.Column="0"
+                Margin="18,70,13,30"
+                Background="#9DB899"
+                CornerRadius="5">
+                <Border
+                    Margin="-4,-10,5,7"
+                    Background="Snow"
+                    CornerRadius="10"
+                    RenderTransformOrigin="0.5,0.5">
+                    <TextBox
+                        x:Name="Hour_TB"
+                        Grid.Column="0"
+                        Margin="6,-4,6,-4"
+                        materialDesign:HintAssist.Hint="00"
+                        materialDesign:TextFieldAssist.UnderlineBrush="#9DB899"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        FontSize="30"
+                        FontWeight="SemiBold"
+                        Foreground="#324231"
+                        RenderTransformOrigin="0.5,0.5"
+                        Text="{Binding Hour}"
+                        TextAlignment="Center" />
+                </Border>
+
+            </Border>
+            <Border
+                Grid.Column="1"
+                Margin="18,70,13,30"
+                Background="#9DB899"
+                CornerRadius="5">
+                <Border
+                    Margin="-4,-8,5,5"
+                    Background="Snow"
+                    CornerRadius="10"
+                    RenderTransformOrigin="0.5,0.5">
+                    <TextBox
+                        x:Name="Minute_TB"
+                        Grid.Column="0"
+                        Margin="6,-4,6,-4"
+                        materialDesign:HintAssist.Hint="00"
+                        materialDesign:TextFieldAssist.UnderlineBrush="#9DB899"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        FontSize="30"
+                        FontWeight="SemiBold"
+                        Foreground="#324231"
+                        RenderTransformOrigin="0.5,0.5"
+                        Text="{Binding Minute}"
+                        TextAlignment="Center" />
+                </Border>
+
+            </Border>
+            <Border
+                Grid.Column="2"
+                Margin="18,70,13,30"
+                Background="#9DB899"
+                CornerRadius="5">
+                <Border
+                    Margin="-4,-8,5,5"
+                    Background="Snow"
+                    CornerRadius="10"
+                    RenderTransformOrigin="0.5,0.5">
+                    <TextBox
+                        x:Name="Second_TB"
+                        Grid.Column="0"
+                        Margin="6,-4,6,-4"
+                        materialDesign:HintAssist.Hint="00"
+                        materialDesign:TextFieldAssist.UnderlineBrush="#9DB899"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        FontSize="30"
+                        FontWeight="SemiBold"
+                        Foreground="#324231"
+                        RenderTransformOrigin="0.5,0.5"
+                        Text="{Binding Second}"
+                        TextAlignment="Center" />
+                </Border>
+
+            </Border>
+        </Grid>
     </Grid>
 
 </Page>

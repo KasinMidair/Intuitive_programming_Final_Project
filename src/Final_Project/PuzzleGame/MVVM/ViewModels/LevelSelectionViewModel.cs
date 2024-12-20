@@ -97,11 +97,13 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public LevelSelectionViewModel()
         {
+            NumberOfPieces = "0";
             _wndBgr = defaultColornum2;
             PictureList = new ObservableCollection<Picture>();
             _loadPicListService.LoadPictureList(PictureList, "000001");
             // _loadPicListService.LoadPictureList(PictureList);
 
+            SelectedPicture = PictureList.ElementAt(0);
             OpenGalleryCommand = new RelayCommand<object>((o) => {CurrentPage = new GalleryViewModel();});
 
             PlayCommand = new RelayCommand<object>((o) => 
