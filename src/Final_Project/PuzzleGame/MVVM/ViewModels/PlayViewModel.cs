@@ -161,7 +161,6 @@ namespace PuzzleGame.MVVM.ViewModels
             //Message subcriber
             EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Subscribe((o) => OnCurrentPageChanged(o));
             EventAggregator.GetEvent<PubSubEvent<GameStatus>>().Subscribe((o) => Appstatus(o));
-            EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => MainMenuFromGameComplete(o));
             MusicSystemService.Instance.ChangeBackgroundMusic(2);
 
             toolBarColor = defaultColornum2;
@@ -193,21 +192,26 @@ namespace PuzzleGame.MVVM.ViewModels
         private void SettingMenuStatus() 
         { 
             IsSettingVisible = !IsSettingVisible;
-            EventAggregator.GetEvent<PubSubEvent<bool>>().Publish(IsSettingVisible);
+            if (_currentPage is GameRoundViewModel)
+            {
+               EventAggregator.GetEvent<PubSubEvent<bool>>().Publish(IsSettingVisible); //if setting menu is shown,countdown is paused.
+            }
         }
+
         private void QuitApp()
         {
-            MusicSystemService.Instance.Dispose();
-            Application.Current.Shutdown();
-        
-        }
-        private void MainMenuFromGameComplete(string input)
-        {
-            if (input == "Main menu")
+            string msgText = "Are you sure about quitting the game ?";
+            if (_currentPage is GameRoundViewModel && GameModel.Instance.Status==GameStatus.StartGame)
             {
-                while (_navigationService.CanGoBack) { GoBackPage(); }
-                AvoidNavigate();
+                msgText = msgText + " (Your gameplay will not be saved.)";
             }
+            CustomDialogResult rlt= CusDialogService.Instance.ShowDialog(msgText, true).Result;
+            if (rlt == CustomDialogResult.Yes)
+            {
+                MusicSystemService.Instance.Dispose();
+                Application.Current.Shutdown();
+            }
+        
         }
         public void  GoBackPage()
         {
@@ -250,9 +254,14 @@ namespace PuzzleGame.MVVM.ViewModels
 
         private void GoToMainMenu()
         {
-            SettingMenuStatus();
-            while (_navigationService.CanGoBack) { GoBackPage(); }
-            AvoidNavigate();
+            CustomDialogResult rlt = CusDialogService.Instance.ShowDialog("Do you really want to log out?", true).Result;
+            if (rlt == CustomDialogResult.Yes)
+            {
+                while (_navigationService.CanGoBack) { GoBackPage(); }
+                AvoidNavigate();
+                SettingMenuStatus();
+
+            }
         }
         private void BackgroundMusic(string num)
         {

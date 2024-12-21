@@ -309,17 +309,9 @@
             FontSize="20"
             FontWeight="SemiBold"
             Foreground="#15161C"
+            ItemsSource="{Binding NumberOfPiecesList}"
             SelectedIndex="0"
-            SelectedItem="{Binding NumberOfPieces}">
-            <ComboBoxItem Content="3 x 3" />
-            <ComboBoxItem Content="4 x 4" />
-            <ComboBoxItem Content="5 x 5" />
-            <ComboBoxItem Content="6 x 6" />
-            <ComboBoxItem Content="7 x 7" />
-            <ComboBoxItem Content="8 x 8" />
-            <ComboBoxItem Content="9 x 9" />
-
-        </ComboBox>
+            SelectedItem="{Binding NumberOfPieces}" />
 
         <!--  Picture selection combobox  -->
         <ComboBox
@@ -372,6 +364,7 @@
             BorderBrush="#1F2326"
             BorderThickness="0,0,2,2"
             Command="{Binding PlayCommand}"
+            CommandParameter="{Binding Path=IsChecked, ElementName=Timer_CB}"
             FocusVisualStyle="{x:Null}"
             Foreground="Snow">
             <TextBlock

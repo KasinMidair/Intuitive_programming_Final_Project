@@ -17,10 +17,6 @@
         <view:GameRound />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type viewmodel:GameCompleteViewModel}">
-        <view:GameComplete />
-    </DataTemplate>
-
     <DataTemplate DataType="{x:Type viewmodel:GalleryViewModel}">
         <view:Gallery />
     </DataTemplate>

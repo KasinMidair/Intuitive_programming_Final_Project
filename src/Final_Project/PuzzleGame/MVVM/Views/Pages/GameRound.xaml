@@ -15,7 +15,7 @@
     store:FocusHelper.IsFocused="{Binding IsFocused}"
     FocusVisualStyle="{x:Null}"
     Focusable="True"
-    FontFamily="{DynamicResource MaterialDesignFont}"
+    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
     TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -49,15 +49,123 @@
     <Canvas Background="Transparent">
 
 
+        <Canvas
+            x:Name="SettingMenu"
+            Width="920"
+            Height="600"
+            Background="#00000001"
+            Canvas.ZIndex="6">
+
+            <!--  Pannel animation  -->
+            <Canvas.Style>
+                <Style TargetType="Canvas">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsEndGameVisible}" Value="False">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource SlideDownAnimation}" />
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource SlideUpAnimation}" />
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Canvas.Style>
+
+            <Canvas.RenderTransform>
+                <TranslateTransform Y="-1000" />
+            </Canvas.RenderTransform>
+            <Border
+                Canvas.Left="215"
+                Canvas.Top="70"
+                Width="490"
+                Height="460"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="#fffeeb"
+                BorderBrush="#F5C7A4"
+                BorderThickness="7"
+                CornerRadius="25">
+                <Canvas>
+                    <TextBlock
+                        Width="446"
+                        Height="60"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top" TextAlignment="Center"
+                        FontSize="21" TextWrapping="Wrap"
+                        Foreground="#222426" Canvas.Top="32" Canvas.Left="14" Text="{Binding EndGameText}">
+
+
+                    </TextBlock>
+                    <Image Stretch="Fill"
+                        Canvas.Left="68"
+                        Canvas.Top="100"
+                        Width="334"
+                        Height="271"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Source="{Binding EndGameImmageSource}" />
+                    <Border
+                        Height="119"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        CornerRadius="15">
+                        <StackPanel />
+
+                    </Border>
+
+                    <!--  Func Button  -->
+                    <Grid
+                        Canvas.Left="75"
+                        Canvas.Top="347"
+                        Width="392"
+                        Height="126"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            x:Name="BTN_LeaderBoard"
+                            Grid.Column="0"
+                            Height="40"
+                            Margin="-17,34,72,52"
+                            materialDesign:ButtonAssist.CornerRadius="17"
+                            Background="#97C693"
+                            BorderBrush="#97C693"
+                            Command="{Binding GoToMainMenuCommand}"
+                            Content="LeaderBoard"
+                            FocusVisualStyle="{x:Null}"
+                            FontSize="20" />
+                        <Button
+                            x:Name="BTN_PlayAgain"
+                            Height="40"
+                            Margin="188,34,69,52"
+                            materialDesign:ButtonAssist.CornerRadius="17"
+                            Background="#97C693"
+                            BorderBrush="#97C693"
+                            Command="{Binding PlayAgainCommand}"
+                            Content="Play Again"
+                            FocusVisualStyle="{x:Null}"
+                            FontSize="20" Grid.ColumnSpan="2" />
+                    </Grid>
+
+                </Canvas>
+
+            </Border>
+        </Canvas>
+
+
         <!--  Game Play Frame  -->
         <Canvas
             Canvas.Left="61"
             Canvas.Top="52"
             Width="488"
             Height="488"
-            Canvas.ZIndex="5"
             HorizontalAlignment="Center"
-            VerticalAlignment="Center">
+            VerticalAlignment="Center"
+            Canvas.ZIndex="5">
 
             <!--  Using ItemsControl to display Pieces  -->
             <ItemsControl ItemsSource="{Binding ImgPieces}">
@@ -68,12 +176,13 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button FocusVisualStyle="{x:Null}"
+                        <Button
                             Width="{Binding Path=Img.Width}"
                             Height="{Binding Path=Img.Height}"
-                            BorderThickness="0" 
-                            Command="{Binding RelativeSource={RelativeSource AncestorType=Page}, Path=DataContext.MouseControlCommand}" 
-                            CommandParameter="{Binding CusPiece}">
+                            BorderThickness="0"
+                            Command="{Binding RelativeSource={RelativeSource AncestorType=Page}, Path=DataContext.MouseControlCommand}"
+                            CommandParameter="{Binding CusPiece}"
+                            FocusVisualStyle="{x:Null}">
                             <Button.Background>
                                 <ImageBrush ImageSource="{Binding Img}" />
                             </Button.Background>

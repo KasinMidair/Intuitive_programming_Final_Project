@@ -42,6 +42,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
         //Connection connection = new Connection();
         public ObservableCollection<Picture> PictureList { get; set; }
+        public ObservableCollection<string> NumberOfPiecesList { get; set; }
 
         Picture? _selectedPicture;
         public Picture? SelectedPicture
@@ -97,21 +98,36 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public LevelSelectionViewModel()
         {
-            NumberOfPieces = "0";
+            NumberOfPieces = "3 x 3";
+            Hour = Minute = Second = "00";
             _wndBgr = defaultColornum2;
             PictureList = new ObservableCollection<Picture>();
+            NumberOfPiecesList = new ObservableCollection<string>();
+
+            for (int i = 3; i <= 9; i++) 
+            {
+                NumberOfPiecesList.Add($"{i} x {i}");
+            }
             _loadPicListService.LoadPictureList(PictureList, "000001");
             // _loadPicListService.LoadPictureList(PictureList);
 
             SelectedPicture = PictureList.ElementAt(0);
             OpenGalleryCommand = new RelayCommand<object>((o) => {CurrentPage = new GalleryViewModel();});
 
-            PlayCommand = new RelayCommand<object>((o) => 
-            {
-                GameModel.Instance.srcPath = SelectedPicture.Url;
-                GameModel.Instance.PicDeviding();
-                CurrentPage = new GameRoundViewModel();
-            });
+            PlayCommand = new RelayCommand<object>((o) => {   SetGameRoundData((bool)o);    });
+        }
+
+        /// <summary>
+        /// set data for a game round and navigate to it
+        /// </summary>
+        /// <param name="isCounting"></param>
+        public void SetGameRoundData(bool isCounting)
+        {
+            int piecesNum = NumberOfPiecesList.IndexOf(NumberOfPieces)+3;
+            long PlayTime = (isCounting)? (long.Parse(Hour)*60*60+ int.Parse(Minute)*60+ int.Parse(Second)):0;
+            GameModel.Instance.SetData(piecesNum, piecesNum, SelectedPicture.Url, PlayTime);
+            GameModel.Instance.PicDeviding();
+            CurrentPage = new GameRoundViewModel();
         }
     }
 }

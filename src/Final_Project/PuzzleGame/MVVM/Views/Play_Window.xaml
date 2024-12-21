@@ -68,11 +68,12 @@
                 <Canvas.RenderTransform>
                     <TranslateTransform Y="-1000" />
                 </Canvas.RenderTransform>
-                <Border
+
+                <Border BorderThickness="5" BorderBrush="#FFFEEB"
                     Canvas.Left="122"
-                    Canvas.Top="78"
+                    Canvas.Top="70"
                     Width="676"
-                    Height="447"
+                    Height="460"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     Background="{Binding ToolBarColor}"
@@ -383,9 +384,9 @@
                                 BorderBrush="#97C693"
                                 Command="{Binding GoToMainMenuCommand}"
                                 CommandParameter="{Binding ElementName=SettingMenu}"
-                                FocusVisualStyle="{x:Null}">
-                                <TextBlock FontSize="20" Text="Main menu" />
-                            </Button>
+                                Content="Main menu"
+                                FocusVisualStyle="{x:Null}"
+                                FontSize="20" />
                             <!--  Enter continue game button  -->
                             <Button
                                 x:Name="SettingBackBTN"
@@ -397,12 +398,9 @@
                                 BorderBrush="#97C693"
                                 Command="{Binding SettingCommand}"
                                 CommandParameter="{Binding ElementName=SettingMenu}"
-                                FocusVisualStyle="{x:Null}">
-                                <TextBlock
-                                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                                    FontSize="20"
-                                    Text="Back" />
-                            </Button>
+                                Content="Back"
+                                FocusVisualStyle="{x:Null}"
+                                FontSize="20" />
 
                         </Grid>
                     </Canvas>
@@ -538,12 +536,12 @@
 
             <!--  Back button  -->
             <Button
-                Canvas.Left="40"
-                Canvas.Top="40"
+                Canvas.Left="25"
+                Canvas.Top="24"
                 Width="50"
                 Height="40"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
                 materialDesign:ButtonAssist.CornerRadius="10"
                 BorderBrush="Transparent"
                 Command="{Binding GoBackCommand}"
@@ -565,11 +563,11 @@
 
             <!--  GoForward button  -->
             <Border
-                Canvas.Left="829"
-                Canvas.Top="39"
+                Canvas.Left="845"
+                Canvas.Top="25"
                 Width="50"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
                 CornerRadius="20"
                 RenderTransformOrigin="0.5,0.5">
                 <Border.RenderTransform>
@@ -633,7 +631,7 @@
                             HorizontalScrollBarVisibility="Disabled"
                             VerticalScrollBarVisibility="Auto">
                             <ScrollViewer.Resources>
-                                <!--  ScrollBar Custom -->
+                                <!--  ScrollBar Custom  -->
                                 <Style TargetType="{x:Type ScrollBar}">
                                     <Setter Property="Foreground" Value="Transparent" />
                                     <Setter Property="Background" Value="Transparent" />
@@ -704,13 +702,19 @@
                                         Height="214"
                                         Source="pack://application:,,,/Assets/Imgs/info_demopic2.png" />
                                 </StackPanel>
-
                                 <TextBlock
                                     Width="730"
                                     HorizontalAlignment="Left"
                                     FontSize="16"
                                     Foreground="Snow"
-                                    TextWrapping="Wrap" />
+                                    TextWrapping="Wrap">
+                                    Many puzzle games offer different difficulty levels, from easy to hard, based on the number of pieces or complexity of the puzzle.
+                                </TextBlock>
+                                <Image
+                                    Width="332"
+                                    Height="250"
+                                    Margin="-200,0,0,0"
+                                    Source="pack://application:,,,/Assets/Imgs/info_demopic3.png" />
 
                                 <TextBlock
                                     Width="730"
@@ -718,8 +722,22 @@
                                     FontSize="16"
                                     Foreground="Snow"
                                     TextWrapping="Wrap">
-                                    Many puzzle games offer different difficulty levels, from easy to hard, based on the number of pieces or complexity of the puzzle.Puzzle games are a great way to relax,
-                                    improve cognitive skills, and enjoy a sense of accomplishment once the puzzle is completed.
+                                    Add your favorite picture to the gallery, and you can start puzzling with it.
+                                    <StackPanel
+                                        Height="280"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Orientation="Horizontal">
+                                        <Image
+                                            Width="283"
+                                            Height="214"
+                                            Margin="50"
+                                            Source="pack://application:,,,/Assets/Imgs/info_demopic5.png" />
+                                        <Image
+                                            Width="280"
+                                            Height="214"
+                                            Source="pack://application:,,,/Assets/Imgs/info_demopic4.png" />
+                                    </StackPanel>
                                 </TextBlock>
                                 <TextBlock
                                     Width="730"
@@ -728,6 +746,15 @@
                                     Foreground="Snow"
                                     TextWrapping="Wrap">
                                     To increase the game's difficulty, use the mouse to play, but you cannot immediately move a block back after moving it. To do so, another way is required.
+                                </TextBlock>
+                                <TextBlock
+                                    Width="730"
+                                    HorizontalAlignment="Left"
+                                    FontSize="16"
+                                    Foreground="Snow"
+                                    TextWrapping="Wrap">
+                                    Puzzle games are a great way to relax,
+                                    improve cognitive skills, and enjoy a sense of accomplishment once the puzzle is completed.
                                 </TextBlock>
                             </StackPanel>
                         </ScrollViewer>

@@ -4,6 +4,7 @@ using PuzzleGame.MVVM.Models;
 using PuzzleGame.Stores;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -65,10 +66,15 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             get=>GameModel.Instance.SrcImg;
         }
+        long timeSet;
 
+        public RelayCommand<object> GoToMainMenuCommand { get; set; }
+        public RelayCommand<object> PlayAgainCommand { get; set; }
         //Command handling input key
         public RelayCommand<object> HandleKeyCommand { get; set; }
         public RelayCommand<object> MouseControlCommand { get; set; }
+
+        #region Biding Properties
 
         private bool _isFocused;            //set focus 
         public bool IsFocused
@@ -83,6 +89,26 @@ namespace PuzzleGame.MVVM.ViewModels
                 }
             }
         }
+        string endGameText;
+        public string EndGameText
+        {
+            get => endGameText;
+            set
+            {
+                endGameText = value;
+                OnPropertyChanged();
+            }
+        }
+        string endGameImmageSource;
+        public string EndGameImmageSource
+        {
+            get => endGameImmageSource;
+            set
+            {
+                endGameImmageSource = value;
+                OnPropertyChanged();
+            }
+        }
         private TimeSpan _lastGameTime;
         private string _lastGameTimeStr;
         public string LastGameTimeStr
@@ -94,17 +120,29 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-        bool isEndGameVissible;
-        public bool IsEndGameVissible
+        bool isEndGameVisible;
+        public bool IsEndGameVisible
         {
-            get => isEndGameVissible;
+            get => isEndGameVisible;
             set
             {
-                isEndGameVissible = value;
+                isEndGameVisible = value;
                 OnPropertyChanged();
             }
         }
-
+        private string _time;
+        public string time
+        {
+            get => _time;
+            set
+            {
+                if (_time != value)
+                {
+                    _time = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         private int _focusPieceX;
         public int FocusPieceX
         {
@@ -126,42 +164,62 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
+        #endregion
+
         DispatcherTimer _clock;
 
         public GameRoundViewModel()
         {
             EventAggregator.GetEvent<PubSubEvent<bool>>().Subscribe((o) => IsTimerCounting(o));
             _imageProcessingService = new ImageProcessingService();
+            imgPieces = new ObservableCollection<CusPieceViewModel>();
             _wndBgr = defaultColornum1;
             IsFocused = true;
-            imgPieces = new ObservableCollection<CusPieceViewModel>();
+            timeSet = GameModel.Instance.PlayTime;
+            IsEndGameVisible = true;
+            GameModel.Instance.Status=GameStatus.StartGame;
 
             //Create CounDown timer
             _clock = new DispatcherTimer();
             _clock.Tick += _countDownClock_Tick;
             _clock.Interval = TimeSpan.FromSeconds(1);
-            _lastGameTime = new TimeSpan(0,0,0);
+            _lastGameTime = (GameModel.Instance.isSetCountDown)? TimeSpan.FromSeconds(GameModel.Instance.PlayTime):new TimeSpan(0,0,0);
             LastGameTimeStr = _lastGameTime.ToString(@"hh\:mm\:ss");
-            GameModel.Instance.Status=GameStatus.StartGame;
+
+            //command def
+            GoToMainMenuCommand = new RelayCommand<object>((o) => { CurrentPage = new LevelSelectionViewModel(); });
+            PlayAgainCommand = new RelayCommand<object>((o) => { CurrentPage = new LevelSelectionViewModel(); });
             HandleKeyCommand = new RelayCommand<object>(o => { Game_Control((string)o) ;});
             MouseControlCommand = new RelayCommand<object> (o => { Mouse_Control((CusPiece)o); });
+
+
             StartGame();
+
 
         }
 
         private void IsTimerCounting(bool isCounting)
         {
-            if(isCounting==false) _clock.Stop();
+            if(GameModel.Instance.Status == GameStatus.EndGame) { return; } 
+            if (isCounting==false) _clock.Stop();
             else _clock.Start();
         }
 
+        /// <summary>
+        /// countdown func
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _countDownClock_Tick(object? sender, EventArgs e)
         {
-            if (GameModel.Instance.isSetCountDown==true)
+            if (GameModel.Instance.isSetCountDown)
             {
+                _lastGameTime = _lastGameTime.Subtract(TimeSpan.FromSeconds(1));
                 if (--GameModel.Instance.PlayTime == 0)    IsLose();
             }
+            else
             _lastGameTime= _lastGameTime.Add(TimeSpan.FromSeconds(1));
+
             LastGameTimeStr = _lastGameTime.ToString(@"hh\:mm\:ss");
         }
 
@@ -173,22 +231,20 @@ namespace PuzzleGame.MVVM.ViewModels
         /// 
         public void StartGame()
         {
-            if (GameModel.Instance.Status == GameStatus.StartGame)
+            GameModel.Instance.Status = GameStatus.StartGame;
+            _imageProcessingService.SplitIntoPieces(ImgPieces);
+            int inversion;
+            do
             {
-                _imageProcessingService.SplitIntoPieces(ImgPieces);
-                int inversion;
-                do
-                {
-                    inversion = _imageProcessingService.ShufflePieces(ImgPieces);
+                inversion = _imageProcessingService.ShufflePieces(ImgPieces);
 
-                    if (!IsSolvable(inversion))                   //check whether it is solvable or not
-                    {                                             //If not ,make it sovable.
-                        MakeItSovable(ref inversion);
-                    }
+                if (!IsSolvable(inversion))                   //check whether it is solvable or not
+                {                                             //If not ,make it sovable.
+                    MakeItSovable(ref inversion);
                 }
-                while (inversion == 0); 
-
             }
+            while (inversion == 0); 
+
 
             if (imgPieces == null)                          
                 throw new Exception("Load Image Error");
@@ -265,7 +321,7 @@ namespace PuzzleGame.MVVM.ViewModels
         /// <returns></returns>
         private void Game_Control(string sKey)
         {
-            if (GameModel.Instance.Status == GameStatus.PreStart)
+            if (GameModel.Instance.Status !=GameStatus.StartGame)
                 return;
             int moveIndex = -1;
             CusPiece tmp = imgPieces[GameModel.Instance.BlackBox_Indx].CusPiece;
@@ -344,23 +400,35 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public void IsLose()
         {
+            EndGameImmageSource = "pack://application:,,,/Assets/Imgs/Lose.png";
+            EndGameText = "\"Amazing try, Don't sad! Winning takes practice, and you're on the right path!\"";
             GameModel.Instance.Status = GameStatus.EndGame;
-            ReleaseClock();
-            CustomDialogResult a = CusDialogService.Instance.ShowDialog("Lose").Result;
-            if (a == CustomDialogResult.OK)
+            IsEndGameVisible = false;
+            if (GameModel.Instance.isSetCountDown)
             {
-                MessageBox.Show("OKKKKK");
+                time = "Time: " + TimeSpan.FromSeconds(timeSet).ToString(@"hh\:mm\:ss");
             }
+            else
+                time = "Time: " + LastGameTimeStr;
+            ReleaseClock();
+           
         }
 
 
         public void IsWin()
         {
+            EndGameImmageSource = "pack://application:,,,/Assets/Imgs/Win.png";
+            EndGameText = "\"You completed the round in just 3 minutes!You're a true champion! Keep up the amazing work!\"";
             GameModel.Instance.Status = GameStatus.EndGame;
-            GameCompleteViewModel gameCompleteViewModel = new GameCompleteViewModel();
-            gameCompleteViewModel.time = "Time: " + LastGameTimeStr;
-            CurrentPage = gameCompleteViewModel;
-            ReleaseClock();
+            IsEndGameVisible =false;
+            if (GameModel.Instance.isSetCountDown)
+            {
+                time = "Time: " + TimeSpan.FromSeconds(timeSet).ToString(@"hh\:mm\:ss");
+            }
+            else
+                time = "Time: " + LastGameTimeStr;
+
+           ReleaseClock();
         }
         private void ReleaseClock()
         {

@@ -25,6 +25,11 @@
 
   <ItemGroup>
     <Content Include="Assets\favicon.ico" />
+    <Resource Include="Assets\Imgs\Lose.png" />
+    <Resource Include="Assets\Imgs\Win.png" />
+    <Resource Include="Assets\Imgs\info_demopic4.png" />
+    <Resource Include="Assets\Imgs\info_demopic5.png" />
+    <Resource Include="Assets\Imgs\info_demopic3.png" />
     <Resource Include="Assets\Imgs\Close_BTN.jpg" />
 	 <Resource Include="Assets\Imgs\slideFun.png" />
     <Resource Include="Assets\Imgs\LeaderBoard_ico.png" />
