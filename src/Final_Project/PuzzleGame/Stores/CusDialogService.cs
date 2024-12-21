@@ -22,8 +22,13 @@ namespace PuzzleGame.Stores
         }
 
         Window currDialog;
-        public void CloseDialog()
+        Window currAddPicDialog;
+        public void CloseDialog(string addPic="")
         {
+            if (addPic == "AddPic")
+            {
+                currAddPicDialog.Close();
+            }
             currDialog.Close();
         }
 
@@ -41,9 +46,9 @@ namespace PuzzleGame.Stores
         public void ShowAddPicture(ObservableObject vm)
         {
             var rlt = new TaskCompletionSource<CustomDialogResult>();
-            currDialog = new AddPicture();
-            currDialog.DataContext = vm;
-            currDialog.ShowDialog();
+            currAddPicDialog = new AddPicture();
+            currAddPicDialog.DataContext = vm;
+            currAddPicDialog.ShowDialog();
         }
     }
 }

@@ -404,12 +404,6 @@ namespace PuzzleGame.MVVM.ViewModels
             EndGameText = "\"Amazing try, Don't sad! Winning takes practice, and you're on the right path!\"";
             GameModel.Instance.Status = GameStatus.EndGame;
             IsEndGameVisible = false;
-            if (GameModel.Instance.isSetCountDown)
-            {
-                time = "Time: " + TimeSpan.FromSeconds(timeSet).ToString(@"hh\:mm\:ss");
-            }
-            else
-                time = "Time: " + LastGameTimeStr;
             ReleaseClock();
            
         }
@@ -417,16 +411,17 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public void IsWin()
         {
-            EndGameImmageSource = "pack://application:,,,/Assets/Imgs/Win.png";
-            EndGameText = "\"You completed the round in just 3 minutes!You're a true champion! Keep up the amazing work!\"";
-            GameModel.Instance.Status = GameStatus.EndGame;
-            IsEndGameVisible =false;
             if (GameModel.Instance.isSetCountDown)
             {
-                time = "Time: " + TimeSpan.FromSeconds(timeSet).ToString(@"hh\:mm\:ss");
+                time = "Time: " + TimeSpan.FromSeconds(timeSet - GameModel.Instance.PlayTime).ToString(@"hh\:mm\:ss");
             }
             else
                 time = "Time: " + LastGameTimeStr;
+            EndGameImmageSource = "pack://application:,,,/Assets/Imgs/Win.png";
+            EndGameText = $"\"You completed the round in just {time}!You're a true champion! Keep up the amazing work!\"";
+            GameModel.Instance.Status = GameStatus.EndGame;
+            IsEndGameVisible =false;
+
 
            ReleaseClock();
         }

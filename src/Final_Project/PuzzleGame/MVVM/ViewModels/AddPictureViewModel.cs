@@ -89,7 +89,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
             ChoosePictureCommand = new RelayCommand<object>((o) =>{ ChoosePic(); });
             AddPictureCommand = new RelayCommand<object>((o) =>{ AddPic("000001"); });
-            CloseAddWindowCommand = new RelayCommand<object>((o) => { CusDialogService.Instance.CloseDialog();});
+            CloseAddWindowCommand = new RelayCommand<object>((o) => { CusDialogService.Instance.CloseDialog("AddPic");});
             MoveWndCommand = new RelayCommand<object>((o) => { CusDialogService.Instance.MoveDialog(); });
         }
 
@@ -153,8 +153,8 @@ namespace PuzzleGame.MVVM.ViewModels
 
                 _loadPictureListService.AddPicture(NewPic, "000001");
                 EventAggregator.GetEvent<PubSubEvent<string>>().Publish("000001");
-                
-                MessageBox.Show("Da luu tranh... chac vay");
+
+                _ = CusDialogService.Instance.ShowDialog("Picture is saved!...I think so:)))");
             }
         }
 

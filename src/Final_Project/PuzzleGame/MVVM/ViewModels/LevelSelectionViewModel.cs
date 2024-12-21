@@ -103,7 +103,7 @@ namespace PuzzleGame.MVVM.ViewModels
             _wndBgr = defaultColornum2;
             PictureList = new ObservableCollection<Picture>();
             NumberOfPiecesList = new ObservableCollection<string>();
-
+            EventAggregator.GetEvent<PubSubEvent<KeyValuePair<string,string>>>().Subscribe((o) => LoadPicTureList(o.Key));
             for (int i = 3; i <= 9; i++) 
             {
                 NumberOfPiecesList.Add($"{i} x {i}");
@@ -116,6 +116,13 @@ namespace PuzzleGame.MVVM.ViewModels
 
             PlayCommand = new RelayCommand<object>((o) => {   SetGameRoundData((bool)o);    });
         }
+        private void LoadPicTureList(string o)
+        {
+            _loadPicListService.LoadPictureList(PictureList, o);
+            SelectedPicture = PictureList.ElementAt(0);
+
+        }
+
 
         /// <summary>
         /// set data for a game round and navigate to it

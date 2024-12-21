@@ -85,7 +85,12 @@ namespace PuzzleGame.MVVM.ViewModels
         }
 
 
-        private void LoadPicTureList(string o)=> _loadPicListService.LoadPictureList(_pictureList, o);
+        private void LoadPicTureList(string o) {
+            _loadPicListService.LoadPictureList(_pictureList, o);
+            SelectedPicture = PictureList.ElementAt(0);
+            EventAggregator.GetEvent<PubSubEvent<KeyValuePair<string, string>>>()
+            .Publish(new KeyValuePair<string, string>("000001", "add"));
+        }
 
         void DeleteSelectedPicture(string playerID)
 
@@ -119,16 +124,16 @@ namespace PuzzleGame.MVVM.ViewModels
                     {
                         using (FileStream fs = new FileStream(url, FileMode.Open, FileAccess.Read, FileShare.None)) { }
                         File.Delete(url);
+
                         Console.WriteLine("File đã được xóa thành công.");
                     }
                     catch (IOException ex)
                     {
                         Console.WriteLine($"Lỗi khi xóa tệp: {ex.Message}");
                     }
-
-                    
-
                 }
+                EventAggregator.GetEvent<PubSubEvent<KeyValuePair<string, string>>>()
+                .Publish(new KeyValuePair<string, string>("000001", "delete"));
             }
         }
 

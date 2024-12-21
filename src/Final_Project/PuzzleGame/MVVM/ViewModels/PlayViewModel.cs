@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using Azure;
+using Caliburn.Micro;
 using MaterialDesignColors.ColorManipulation;
 using PuzzleGame.Core;
 using PuzzleGame.Core.Helper;
@@ -257,7 +258,8 @@ namespace PuzzleGame.MVVM.ViewModels
             CustomDialogResult rlt = CusDialogService.Instance.ShowDialog("Do you really want to log out?", true).Result;
             if (rlt == CustomDialogResult.Yes)
             {
-                while (_navigationService.CanGoBack) { GoBackPage(); }
+
+                FrameNavigation(new MainMenuViewModel());
                 AvoidNavigate();
                 SettingMenuStatus();
 
@@ -298,9 +300,10 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public void AvoidNavigate()
         {
-            IsGoForward=false;
-            IsGoBack=false;
             _navigationService.RemoveBackEntry();
+            IsGoForward =false;
+            IsGoBack=false;
+
         }
 
 

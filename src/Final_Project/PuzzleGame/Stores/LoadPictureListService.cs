@@ -46,7 +46,7 @@ namespace PuzzleGame.Stores
         {
             if (pic.isDefault == true)
             {
-                MessageBox.Show("Khong the xoa tranh mac dinh!");
+                MessageBox.Show("Can not delete DEFAULT PICTURE!");
                 return false;
             }
             else
@@ -66,11 +66,17 @@ namespace PuzzleGame.Stores
 
         public void AddPicture(Picture newPicture, string PlayerID)
         {
-            connection.dataAdapter = new($"Select * from PICTURE", connection.connStr);
+            connection.dataAdapter = new($"Select * from PICTURE", connection.connStr); 
 
             connection.dataAdapter.Fill(connection.ds, "PICTURE");
             connection.dt = connection.ds.Tables["PICTURE"];
 
+            //check if picture existed
+            var existingRow = connection.dt.AsEnumerable().FirstOrDefault(row =>
+                    row.Field<string>("PICNAME") == newPicture.Name &&
+                    row.Field<string>("PLAYERID") == PlayerID
+                    );
+            if (existingRow != null) return;
 
             DataRow dataRow = connection.dt.NewRow();
             dataRow["PICNAME"] = newPicture.Name;

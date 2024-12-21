@@ -10,6 +10,6 @@ namespace PuzzleGame.Core
     public interface ICusDialogService
     {
         public abstract Task<CustomDialogResult> ShowDialog(string msg, bool rslt = false);
-        public abstract void CloseDialog();
+        public abstract void CloseDialog(string addPic);
     }
 }
