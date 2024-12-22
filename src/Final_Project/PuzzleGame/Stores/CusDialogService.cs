@@ -29,7 +29,7 @@ namespace PuzzleGame.Stores
             {
                 currAddPicDialog.Close();
             }
-            currDialog.Close();
+            else currDialog.Close();
         }
 
         public void MoveDialog() => currDialog.DragMove();

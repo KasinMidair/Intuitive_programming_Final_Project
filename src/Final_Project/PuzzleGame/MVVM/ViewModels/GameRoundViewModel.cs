@@ -400,6 +400,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public void IsLose()
         {
+            MusicSystemService.Instance.EndGame_Sound(0);
             EndGameImmageSource = "pack://application:,,,/Assets/Imgs/Lose.png";
             EndGameText = "\"Amazing try, Don't sad! Winning takes practice, and you're on the right path!\"";
             GameModel.Instance.Status = GameStatus.EndGame;
@@ -411,6 +412,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public void IsWin()
         {
+            MusicSystemService.Instance.EndGame_Sound(1);
             if (GameModel.Instance.isSetCountDown)
             {
                 time = "Time: " + TimeSpan.FromSeconds(timeSet - GameModel.Instance.PlayTime).ToString(@"hh\:mm\:ss");

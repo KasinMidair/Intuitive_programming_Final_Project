@@ -107,7 +107,7 @@
                                     Height="20"
                                     Margin="6,28,12,2"
                                     FontSize="20"
-                                    Text="KassinMidair" />
+                                    Text="{Binding SettingUserName}" />
                                 <Border
                                     Grid.RowSpan="2"
                                     Margin="6,9,7,8"
@@ -153,7 +153,7 @@
                                             Margin="1,0,75,0"
                                             VerticalAlignment="Center"
                                             Foreground="Snow"
-                                            Text="123456" />
+                                            Text="{Binding SettingUserId}" />
 
 
                                         <!--  Copy button  -->
@@ -165,6 +165,7 @@
                                             Padding="0"
                                             materialDesign:ButtonAssist.CornerRadius="10"
                                             Background="#ccc9ff"
+                                            IsEnabled="{Binding IsLogin}"
                                             BorderThickness="0"
                                             Command="{Binding CopyIdCommand}"
                                             CommandParameter="{Binding Text, ElementName=IDTextBlock}"

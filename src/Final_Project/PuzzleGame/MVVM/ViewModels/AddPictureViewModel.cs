@@ -22,7 +22,6 @@ namespace PuzzleGame.MVVM.ViewModels
     class AddPictureViewModel: ObservableObject
     {
         ObservableCollection<Picture> _pictureList;
-        public readonly LoadPictureListService _loadPictureListService = new LoadPictureListService();
 
         Connection conn = new Connection();
 
@@ -88,7 +87,7 @@ namespace PuzzleGame.MVVM.ViewModels
             NewPicUrl = @"/Assets/Imgs/AddPicBackGround.jpg";
 
             ChoosePictureCommand = new RelayCommand<object>((o) =>{ ChoosePic(); });
-            AddPictureCommand = new RelayCommand<object>((o) =>{ AddPic("000001"); });
+            AddPictureCommand = new RelayCommand<object>((o) =>{ AddPic(GameModel.Instance.Player.Id); });
             CloseAddWindowCommand = new RelayCommand<object>((o) => { CusDialogService.Instance.CloseDialog("AddPic");});
             MoveWndCommand = new RelayCommand<object>((o) => { CusDialogService.Instance.MoveDialog(); });
         }
@@ -111,12 +110,12 @@ namespace PuzzleGame.MVVM.ViewModels
 
             if (NewPicUrl == null || NewPicUrl == @"/Assets/Imgs/AddPicBackGround.jpg")
             {
-                MessageBox.Show("Chua chon tranh...");
+                _ = CusDialogService.Instance.ShowDialog("You have not selected an image yet..!");
                 check = true;
             }
             else if (NewPicName == null || NewPicName == "")
             {
-                MessageBox.Show("Chua nhap ten tranh...");
+                _ = CusDialogService.Instance.ShowDialog("The Image name not entered yet.!");
                 check = true;
             }
             /*else
@@ -151,9 +150,11 @@ namespace PuzzleGame.MVVM.ViewModels
                 }
                 File.Copy(NewPicUrl, destinationPath, true);
 
-                _loadPictureListService.AddPicture(NewPic, "000001");
-                EventAggregator.GetEvent<PubSubEvent<string>>().Publish("000001");
-
+                LoadPictureListService.Instance.AddPicture(NewPic, GameModel.Instance.Player.Id);
+                //load the list after adding picture
+                LoadPictureListService.Instance.LoadPictureList(GameModel.Instance.Player.Id);
+                EventAggregator.GetEvent<PubSubEvent<string>>().Publish(GameModel.Instance.Player.Id); 
+                
                 _ = CusDialogService.Instance.ShowDialog("Picture is saved!...I think so:)))");
             }
         }

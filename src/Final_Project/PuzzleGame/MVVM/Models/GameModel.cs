@@ -37,6 +37,7 @@ namespace PuzzleGame.MVVM.Models
         public int gamePlayBoxX;
         public int gamePlayBoxY;
 
+        public Player Player {  get; set; }
         string _gameRoundPicUrl;
         public string GameRoundPicUrl
         {
@@ -97,6 +98,8 @@ namespace PuzzleGame.MVVM.Models
         }
         private GameModel()
         {
+
+
             gamePlayBoxX = 488;
             gamePlayBoxY = 488;
             status = GameStatus.PreStart;

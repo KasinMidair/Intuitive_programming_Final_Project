@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.ComponentModel;
 using System.Windows;
+using System.Reflection;
 
 
 
@@ -39,17 +40,21 @@ namespace PuzzleGame.Stores
             }
         }
         List<string> bgAudioSources;
+        List<string> endGameAudioSources;
         string sfxAdioSource;
         readonly MediaPlayer _sfx;
         MediaClock _sfxClock;
         int curbgAudio;
         readonly MediaPlayer _backgroundMusic;
         MediaClock _backgroundClock;
+        readonly MediaPlayer _endGameMusic;
+        MediaClock _endGameClock;
 
         public MusicSystemService()
         {
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject())) return;
 
+            //BG audio sys
             bgAudioSources = new List<string>();
             curbgAudio = 2;
             List<string> bgAudioPaths = new List<string>()
@@ -58,22 +63,54 @@ namespace PuzzleGame.Stores
                 "Assets/Audio/BGMusicNum2.mp3",
                 "Assets/Audio/BGMusicNum3.mp3"
             };
-            sfxAdioSource = ExtractEmbeddedResource("Assets/Audio/btn_click.mp3");
             _backgroundMusic = new MediaPlayer();
-            _sfx = new MediaPlayer();
             foreach (var item in bgAudioPaths)
             {
                 bgAudioSources.Add(ExtractEmbeddedResource(item));
             }
 
+
+            //SFX audio sys
+            endGameAudioSources = new List<string>();
+            List<string> endGameAudioPaths= new List<string>()
+            {
+                "Assets/Audio/Lose.wav",
+                "Assets/Audio/Win.wav"
+            };
+            _endGameMusic = new MediaPlayer();
+            foreach (var item in endGameAudioPaths)
+            {
+                endGameAudioSources.Add(ExtractEmbeddedResource(item));
+            }
+
+
+            //SFX button audio sys
+            _sfx = new MediaPlayer();
+            sfxAdioSource = ExtractEmbeddedResource("Assets/Audio/btn_click.mp3");
             MediaTimeline mediaTimelineSFX = new MediaTimeline(new Uri(sfxAdioSource, UriKind.RelativeOrAbsolute));
             _sfxClock = mediaTimelineSFX.CreateClock();
             _sfx.Clock = _sfxClock;
+
         }
+
+
         public void PlayBTN_ClickSound()
         {
             _sfxClock.Controller.Stop();
             _sfxClock.Controller.Begin();
+        }
+
+        public void EndGame_Sound(int endGamestatus)
+        {
+            if (_endGameClock != null)
+            {
+                _endGameClock.Controller.Stop();
+                _endGameMusic.Clock = null;
+            }
+            MediaTimeline mediaTimeline = new MediaTimeline(new Uri(endGameAudioSources[endGamestatus], UriKind.RelativeOrAbsolute));
+            _endGameClock = mediaTimeline.CreateClock();
+            _endGameMusic.Clock = _endGameClock;
+            _endGameClock.Controller.Begin();
         }
 
         public void ChangeBackgroundMusic(int bgIndex)
@@ -139,11 +176,12 @@ namespace PuzzleGame.Stores
                     _backgroundMusic.Volume = bgVolume;
                     break;
                 case AudioType.SFX_MSC:
-                    _sfx.Volume = sfxVolume;
+                    _sfx.Volume = _endGameMusic.Volume = sfxVolume;
+                  
                     break;
                 default:
                     _backgroundMusic.Volume = bgVolume;
-                    _sfx.Volume = sfxVolume;
+                    _sfx.Volume = _endGameMusic.Volume= sfxVolume;
                     break;
             }
         }

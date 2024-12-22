@@ -63,7 +63,7 @@ namespace PuzzleGame.MVVM.ViewModels
                 
             }
         }
-        #region Button Binding Properties
+        #region  Binding Properties
 
         bool isGoBack;
         public bool IsGoBack 
@@ -140,6 +140,41 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        public string SettingUserName
+        {
+            get
+            {
+                if (GameModel.Instance.Player == null)
+                    return "???????";
+                return GameModel.Instance.Player.Name;
+            }
+            set {
+                OnPropertyChanged();
+            }
+        }
+        public string SettingUserId
+        {
+            get
+            {
+                if (GameModel.Instance.Player == null)
+                    return "???????";
+                return GameModel.Instance.Player.Id;
+            }
+            set
+            {
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsLogin
+        {
+            get => (GameModel.Instance.Player == null) ? false : true;
+            set
+            {
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         ObservableObject _currentPage;
@@ -165,6 +200,7 @@ namespace PuzzleGame.MVVM.ViewModels
             MusicSystemService.Instance.ChangeBackgroundMusic(2);
 
             toolBarColor = defaultColornum2;
+
             _wndBgr = defaultColornum1;
             IsSettingVisible = true;
             IsGoBack = false;
@@ -338,12 +374,19 @@ namespace PuzzleGame.MVVM.ViewModels
         /// <param name="cur"></param>
         public void FrameNavigation(ObservableObject cur)
         {
+            if(_currentPage is UserEnterNameViewModel)
+            {
+                SettingUserId = GameModel.Instance.Player.Id;
+                SettingUserName = GameModel.Instance.Player.Name;
+                IsLogin = (GameModel.Instance.Player == null) ? false : true;
+            }
             _navigationService.Navigate(cur);
             CurrentPage = cur;
-            if (_currentPage is GameRoundViewModel)
+            if (_currentPage is GameRoundViewModel || _currentPage is UserEnterNameViewModel)
             {
                 AvoidNavigate();
             }
+
             else
             {
                 IsGoBack = true;

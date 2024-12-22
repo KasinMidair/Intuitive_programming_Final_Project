@@ -1,12 +1,16 @@
 ﻿using PuzzleGame.Core;
 using PuzzleGame.Core.Helper;
 using PuzzleGame.MVVM.Models;
+using PuzzleGame.Stores;
+using System.Net.Http.Headers;
 using System.Windows;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
-    public class UserEnterNameViewModel: ObservableObject
+    public class UserEnterNameViewModel : ObservableObject
     {
+        public readonly PlayerService _playerService = new PlayerService();
+
         private ObservableObject _currentPage;
         public ObservableObject CurrentPage
         {
@@ -22,7 +26,9 @@ namespace PuzzleGame.MVVM.ViewModels
         }
 
 
-        string _playerName {  get; set; }
+        string _playerName { get; set; }
+        string _playerPassword { get; set; }
+
         public string PlayerName
         {
             get => _playerName;
@@ -33,7 +39,6 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
-        string _playerPassword {  get; set; }
         public string PlayerPassword
         {
             get => _playerPassword;
@@ -44,61 +49,63 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
-        List<Player> PlayerList = new List<Player>();
+        Player Player { get; set; }
 
-
-        public RelayCommand<object> EnterNameCommand { get; set; } 
+        public RelayCommand<object> EnterNameCommand { get; set; }
         public RelayCommand<object> AddPlayerCommand { get; set; }
 
-        
+
         public UserEnterNameViewModel()
         {
             _wndBgr = defaultColornum2;
 
-            PlayerName = string.Empty;
-            PlayerPassword = string.Empty;
-
-            EnterNameCommand = new RelayCommand<object>(o => { CurrentPage = new LevelSelectionViewModel(); });
-            AddPlayerCommand = new RelayCommand<object>(o => { });
+            EnterNameCommand = new RelayCommand<object>(o => { Enter(PlayerName, PlayerPassword); });
+            AddPlayerCommand = new RelayCommand<object>(o => { AddPlayer(PlayerName, PlayerPassword); });
         }
 
-        bool checkName(string name)
-        {
-            foreach (Player player in PlayerList) 
-                if (player.Name == name) 
-                    return true;
-            return false;
-        }
-        
-        bool checkPlayer(string name, string password)
-        {
-            foreach (Player player in PlayerList)
-                if (player.Name == name && player.Password == password) 
-                    return true;
-            return false;
-        }
-
-        void addPlayer(string name, string password)
-        {
-            if (checkName(name) == true) 
-            {
-                MessageBox.Show("Ten nguoi choi da ton tai");
-            }
-            else
-            {
-                //them nguoi choi
-            }
-        }
 
         void Enter(string name, string password)
         {
-            if (checkPlayer(name, password) == true)
-            {
-                CurrentPage = new LevelSelectionViewModel();
-            }
+            if (name == null || name == string.Empty)
+                _ = CusDialogService.Instance.ShowDialog("NAME not entered yet.!");
+            else if (password == null || password == string.Empty)
+                _ = CusDialogService.Instance.ShowDialog("PASSWORD not entered yet.!");
             else
             {
-                MessageBox.Show("Nguoi choi khong ton tai...");
+                if (_playerService.CheckPlayerName(name) != null)
+                {
+                    Player = _playerService.CheckPlayerName(name);
+
+                    if (password != Player.Password)
+                        _ = CusDialogService.Instance.ShowDialog("NAME or PASSWORD is incorrect.!");
+                    else
+                    {
+                        GameModel.Instance.Player = this.Player;
+                        CurrentPage = new LevelSelectionViewModel();
+                    }
+                }
+                else
+                    _ = CusDialogService.Instance.ShowDialog("NAME or PASSWORD is incorrect.!");
+            }
+        }
+
+        void AddPlayer(string name, string password)
+        {
+            if (name == null || name == string.Empty)
+                _ = CusDialogService.Instance.ShowDialog("NAME not entered yet.!");
+            else if (password == null || password == string.Empty)
+                _ = CusDialogService.Instance.ShowDialog("PASSWORD not entered yet.!");
+            else
+            {
+                if (_playerService.CheckPlayerName(name) != null)
+                    _ = CusDialogService.Instance.ShowDialog("The name already exists. Please enter a different name.");
+                else
+                {
+                    _playerService.AddPlayer(name, password);
+                    _ = CusDialogService.Instance.ShowDialog("New player added successfully.");
+                }
+                
+
             }
         }
     }

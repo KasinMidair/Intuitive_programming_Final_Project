@@ -10,6 +10,7 @@
     Title="Gallery"
     d:DesignHeight="600"
     d:DesignWidth="920"
+    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
     mc:Ignorable="d">
 
     <Border>
@@ -110,11 +111,11 @@
                     Width="240"
                     Margin="10,25,10,25"
                     DisplayMemberPath="Name"
-                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
                     FontSize="20"
                     FontWeight="SemiBold"
                     Foreground="#15161C"
                     ItemsSource="{Binding PictureList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                     SelectedIndex="0"
                     SelectedItem="{Binding SelectedPicture}">
                     <ListView.Resources>

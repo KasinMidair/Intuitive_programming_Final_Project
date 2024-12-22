@@ -19,7 +19,6 @@ namespace PuzzleGame.MVVM.ViewModels
 {
     public class LevelSelectionViewModel : ObservableObject
     {
-        public readonly LoadPictureListService _loadPicListService = new LoadPictureListService();
 
         private ObservableObject? _currentPage;
         public ObservableObject? CurrentPage
@@ -41,8 +40,15 @@ namespace PuzzleGame.MVVM.ViewModels
 
 
         //Connection connection = new Connection();
-        public ObservableCollection<Picture> PictureList { get; set; }
-        public ObservableCollection<string> NumberOfPiecesList { get; set; }
+        public ObservableCollection<Picture> PictureList
+        {
+            get => LoadPictureListService.Instance.PicList;
+            set
+            {
+                LoadPictureListService.Instance.PicList = value;
+                OnPropertyChanged();
+            }
+        }
 
         Picture? _selectedPicture;
         public Picture? SelectedPicture
@@ -65,7 +71,6 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-
         string _hour, _minute, _second;
         public string Hour
         {
@@ -98,30 +103,21 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public LevelSelectionViewModel()
         {
-            NumberOfPieces = "3 x 3";
-            Hour = Minute = Second = "00";
+            NumberOfPieces = "3";
+            _hour = _minute = _second = "00";
             _wndBgr = defaultColornum2;
             PictureList = new ObservableCollection<Picture>();
-            NumberOfPiecesList = new ObservableCollection<string>();
-            EventAggregator.GetEvent<PubSubEvent<KeyValuePair<string,string>>>().Subscribe((o) => LoadPicTureList(o.Key));
-            for (int i = 3; i <= 9; i++) 
-            {
-                NumberOfPiecesList.Add($"{i} x {i}");
-            }
-            _loadPicListService.LoadPictureList(PictureList, "000001");
+            EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => LoadPicTureList(o));
+            LoadPictureListService.Instance.LoadPictureList( GameModel.Instance.Player.Id);
             // _loadPicListService.LoadPictureList(PictureList);
 
             SelectedPicture = PictureList.ElementAt(0);
             OpenGalleryCommand = new RelayCommand<object>((o) => {CurrentPage = new GalleryViewModel();});
-
             PlayCommand = new RelayCommand<object>((o) => {   SetGameRoundData((bool)o);    });
         }
-        private void LoadPicTureList(string o)
-        {
-            _loadPicListService.LoadPictureList(PictureList, o);
-            SelectedPicture = PictureList.ElementAt(0);
 
-        }
+        //set the selectionPicture is PictureList[0] if you add/delete pictures
+        private void LoadPicTureList(string o) => SelectedPicture = PictureList.ElementAt(0); 
 
 
         /// <summary>
@@ -130,8 +126,9 @@ namespace PuzzleGame.MVVM.ViewModels
         /// <param name="isCounting"></param>
         public void SetGameRoundData(bool isCounting)
         {
-            int piecesNum = NumberOfPiecesList.IndexOf(NumberOfPieces)+3;
-            long PlayTime = (isCounting)? (long.Parse(Hour)*60*60+ int.Parse(Minute)*60+ int.Parse(Second)):0;
+            int piecesNum = int.Parse(NumberOfPieces[NumberOfPieces.Length - 1].ToString());
+            //check if countdown timer is on
+            long PlayTime = (isCounting)? (long.Parse(_hour)*60*60+ int.Parse(_minute)*60+ int.Parse(_second)):0;
             GameModel.Instance.SetData(piecesNum, piecesNum, SelectedPicture.Url, PlayTime);
             GameModel.Instance.PicDeviding();
             CurrentPage = new GameRoundViewModel();

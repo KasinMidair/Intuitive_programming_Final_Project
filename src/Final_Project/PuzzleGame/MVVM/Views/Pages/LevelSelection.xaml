@@ -111,7 +111,7 @@
                                 Template="{StaticResource ComboBoxToggleButton}" />
                             <ContentPresenter
                                 Name="ContentSite"
-                                Width="110"
+                                Width="185"
                                 Height="24"
                                 Margin="24,4,124,10"
                                 Content="{TemplateBinding SelectionBoxItem}"
@@ -155,7 +155,10 @@
                                             x:Name="DropDownBorder"
                                             Width="250"
                                             HorizontalAlignment="Left">
-                                            <ScrollViewer Margin="15,6,4,6" SnapsToDevicePixels="True">
+                                            <ScrollViewer
+                                                Height="190"
+                                                Margin="15,6,4,6"
+                                                SnapsToDevicePixels="True">
                                                 <ScrollViewer.Resources>
                                                     <!--  ScrollBar Custom  -->
                                                     <Style TargetType="{x:Type ScrollBar}">
@@ -301,26 +304,31 @@
             x:Name="NumberSelection_Combobox"
             Grid.Row="2"
             Grid.ColumnSpan="2"
-            Height="35"
-            Margin="-11,95,41,0"
-            VerticalAlignment="Top"
+            Margin="-3,101,34,13"
             Background="Snow"
             FocusVisualStyle="{x:Null}"
             FontSize="20"
             FontWeight="SemiBold"
             Foreground="#15161C"
-            ItemsSource="{Binding NumberOfPiecesList}"
             SelectedIndex="0"
-            SelectedItem="{Binding NumberOfPieces}" />
+            SelectedItem="{Binding NumberOfPieces}">
+            <ComboBoxItem Content="3 x 3" />
+            <ComboBoxItem Content="4 x 4" />
+            <ComboBoxItem Content="5 x 5" />
+            <ComboBoxItem Content="6 x 6" />
+            <ComboBoxItem Content="7 x 7" />
+            <ComboBoxItem Content="8 x 8" />
+            <ComboBoxItem Content="9 x 9" />
+        </ComboBox>
+
 
         <!--  Picture selection combobox  -->
         <ComboBox
             x:Name="PictureSelection_Combobox"
             Grid.Row="3"
-            Grid.RowSpan="2"
             Grid.ColumnSpan="2"
             Height="35"
-            Margin="-11,77,41,0"
+            Margin="-3,68,33,0"
             VerticalAlignment="Top"
             Background="Snow"
             DisplayMemberPath="Name"
@@ -336,7 +344,7 @@
             Grid.Row="2"
             Grid.Column="1"
             Height="30"
-            Margin="26,49,105,71"
+            Margin="36,52,95,68"
             FontSize="25"
             FontWeight="SemiBold"
             Foreground="#15161C"
@@ -345,8 +353,7 @@
         <TextBlock
             Grid.Row="3"
             Grid.Column="1"
-            Height="30"
-            Margin="31,30,155,45"
+            Margin="41,21,145,53"
             FontSize="25"
             FontWeight="SemiBold"
             Foreground="#15161C"
@@ -404,7 +411,7 @@
             Grid.Column="1"
             Width="133"
             Height="34"
-            Margin="29,46,0,0"
+            Margin="39,40,0,0"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
             Content="Timer:"
@@ -419,7 +426,7 @@
             Grid.Row="4"
             Grid.RowSpan="3"
             Grid.Column="1"
-            Margin="21,92,59,118"
+            Margin="29,89,51,121"
             IsEnabled="{Binding Path=IsChecked, ElementName=Timer_CB}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -466,14 +473,15 @@
                     <TextBox
                         x:Name="Hour_TB"
                         Grid.Column="0"
-                        Margin="6,-4,6,-4"
+                        Margin="6,6,6,5"
                         materialDesign:HintAssist.Hint="00"
                         materialDesign:TextFieldAssist.UnderlineBrush="#9DB899"
                         BorderBrush="Transparent"
                         BorderThickness="0"
                         FontSize="30"
                         FontWeight="SemiBold"
-                        Foreground="#324231"
+                        Foreground="#9DB899"
+                        MaxLength="2"
                         RenderTransformOrigin="0.5,0.5"
                         Text="{Binding Hour}"
                         TextAlignment="Center" />
@@ -486,21 +494,21 @@
                 Background="#9DB899"
                 CornerRadius="5">
                 <Border
-                    Margin="-4,-8,5,5"
+                    Margin="-4,-10,5,7"
                     Background="Snow"
                     CornerRadius="10"
                     RenderTransformOrigin="0.5,0.5">
                     <TextBox
                         x:Name="Minute_TB"
                         Grid.Column="0"
-                        Margin="6,-4,6,-4"
+                        Margin="6,5,6,5"
                         materialDesign:HintAssist.Hint="00"
                         materialDesign:TextFieldAssist.UnderlineBrush="#9DB899"
                         BorderBrush="Transparent"
                         BorderThickness="0"
                         FontSize="30"
-                        FontWeight="SemiBold"
-                        Foreground="#324231"
+                        Foreground="#9DB899"
+                        MaxLength="2"
                         RenderTransformOrigin="0.5,0.5"
                         Text="{Binding Minute}"
                         TextAlignment="Center" />
@@ -513,21 +521,22 @@
                 Background="#9DB899"
                 CornerRadius="5">
                 <Border
-                    Margin="-4,-8,5,5"
+                    Margin="-4,-10,5,7"
                     Background="Snow"
                     CornerRadius="10"
                     RenderTransformOrigin="0.5,0.5">
                     <TextBox
                         x:Name="Second_TB"
                         Grid.Column="0"
-                        Margin="6,-4,6,-4"
+                        Margin="6,6,6,5"
                         materialDesign:HintAssist.Hint="00"
                         materialDesign:TextFieldAssist.UnderlineBrush="#9DB899"
                         BorderBrush="Transparent"
                         BorderThickness="0"
                         FontSize="30"
                         FontWeight="SemiBold"
-                        Foreground="#324231"
+                        Foreground="#9DB899"
+                        MaxLength="2"
                         RenderTransformOrigin="0.5,0.5"
                         Text="{Binding Second}"
                         TextAlignment="Center" />

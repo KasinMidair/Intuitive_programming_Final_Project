@@ -24,13 +24,6 @@ namespace PuzzleGame.MVVM.Views.Pages
         {
             InitializeComponent();
         }
-        private void PictureSelection_Combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
-        }
-        private void NumberSelection_Combobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }

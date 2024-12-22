@@ -1,18 +1,7 @@
-﻿using PuzzleGame.MVVM.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PuzzleGame.Core;
-using MaterialDesignColors.ColorManipulation;
+﻿using PuzzleGame.Core;
 using PuzzleGame.Core.Helper;
-using System.Windows;
+using PuzzleGame.MVVM.Models;
 using PuzzleGame.Stores;
-using System.Security.Cryptography.Xml;
-using Prism.Common;
 using System.Collections.ObjectModel;
 using System.IO;
 
@@ -20,7 +9,6 @@ namespace PuzzleGame.MVVM.ViewModels
 {
     class GalleryViewModel : ObservableObject
     {
-        public readonly LoadPictureListService _loadPicListService = new LoadPictureListService();
     
         private ObservableObject _currentPage;
         public ObservableObject CurrentPage
@@ -41,13 +29,12 @@ namespace PuzzleGame.MVVM.ViewModels
         public string SelectedPicUrl;
 
         //Pictures...
-        ObservableCollection<Picture> _pictureList = new ObservableCollection<Picture>();
         public ObservableCollection<Picture> PictureList
         {
-            get => _pictureList;
+            get => LoadPictureListService.Instance.PicList;
             set
             {
-                _pictureList = value;
+                LoadPictureListService.Instance.PicList = value;
                 OnPropertyChanged();
             }
         }
@@ -72,52 +59,35 @@ namespace PuzzleGame.MVVM.ViewModels
         public GalleryViewModel()
         {
             _wndBgr = defaultColornum2;
-            EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => LoadPicTureList(o));
-
-            _loadPicListService.LoadPictureList(PictureList, "000001");
+            EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => LoadPicTureList());
+            LoadPictureListService.Instance.LoadPictureList(GameModel.Instance.Player.Id);
             SelectedPicture = PictureList.ElementAt(0);
             AddPicturePageOpenCommand = new RelayCommand<object>((o) => 
             {
                 CusDialogService.Instance.ShowAddPicture(new AddPictureViewModel(this.PictureList)); 
             });
 
-            DeletePictureCommand = new RelayCommand<object>((o) => { DeleteSelectedPicture("000001"); });
+            DeletePictureCommand = new RelayCommand<object>((o) => { DeleteSelectedPicture(GameModel.Instance.Player.Id); });
         }
 
 
-        private void LoadPicTureList(string o) {
-            _loadPicListService.LoadPictureList(_pictureList, o);
-            SelectedPicture = PictureList.ElementAt(0);
-            EventAggregator.GetEvent<PubSubEvent<KeyValuePair<string, string>>>()
-            .Publish(new KeyValuePair<string, string>("000001", "add"));
-        }
+        //set the selectionPicture is PictureList[0] if you add/delete pictures
+        private void LoadPicTureList() =>    SelectedPicture = PictureList.ElementAt(0);
+        
 
         void DeleteSelectedPicture(string playerID)
 
         {
             string n = SelectedPicture.Name;
 
-            if (_loadPicListService.DeletePicture(SelectedPicture, playerID) == true)
+            if (LoadPictureListService.Instance.DeletePicture(SelectedPicture, playerID) == true)
             {
                 string url = SelectedPicture.Url;   
 
-                // Đảm bảo SelectedPicture không còn được sử dụng
                 SelectedPicture = null;
 
-                for (int i = PictureList.Count - 1; i >= 0; i--)
-                {
-                    if (PictureList[i].Name == n)
-                    {
-                        PictureList.RemoveAt(i);
-                        if (i == PictureList.Count - 1 && PictureList.Count > 0)
-                            SelectedPicture = PictureList[i--];
-                        else if (PictureList.Count > 0)
-                            SelectedPicture = PictureList[i++];
-                        break;
-                    }
-                }
 
-                // Xóa tệp
+                // delete picture file
                 if (File.Exists(url))
                 {
                     try
@@ -132,8 +102,9 @@ namespace PuzzleGame.MVVM.ViewModels
                         Console.WriteLine($"Lỗi khi xóa tệp: {ex.Message}");
                     }
                 }
-                EventAggregator.GetEvent<PubSubEvent<KeyValuePair<string, string>>>()
-                .Publish(new KeyValuePair<string, string>("000001", "delete"));
+                LoadPictureListService.Instance.LoadPictureList(playerID);
+                EventAggregator.GetEvent<PubSubEvent<string>>()
+                .Publish(GameModel.Instance.Player.Id);
             }
         }
 

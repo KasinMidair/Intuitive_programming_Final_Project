@@ -51,7 +51,7 @@ namespace PuzzleGame.MVVM.ViewModels
         private void ShowCustomDialog(string o)
         {
             CustomDialogResult a = CusDialogService.Instance.ShowDialog(o).Result;
-            if (a == CustomDialogResult.OK)
+            if (a == CustomDialogResult.OK) 
             {
                 MessageBox.Show("OKKKKK");
 
