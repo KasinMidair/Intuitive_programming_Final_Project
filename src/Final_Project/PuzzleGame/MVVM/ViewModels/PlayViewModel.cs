@@ -140,38 +140,35 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
-
+        string settingUserName;
         public string SettingUserName
         {
-            get
+            get => settingUserName;
+            set 
             {
-                if (GameModel.Instance.Player == null)
-                    return "???????";
-                return GameModel.Instance.Player.Name;
-            }
-            set {
-                OnPropertyChanged();
-            }
-        }
-        public string SettingUserId
-        {
-            get
-            {
-                if (GameModel.Instance.Player == null)
-                    return "???????";
-                return GameModel.Instance.Player.Id;
-            }
-            set
-            {
+                settingUserName = value;
                 OnPropertyChanged();
             }
         }
 
-        public bool IsLogin
+        string settingUserId;
+        public string SettingUserId
         {
-            get => (GameModel.Instance.Player == null) ? false : true;
+            get => settingUserId;
             set
             {
+                settingUserId= value;
+                OnPropertyChanged();
+            }
+        }
+
+        bool isLogin;
+        public bool IsLogin
+        {
+            get => isLogin;
+            set
+            {
+                isLogin = value;
                 OnPropertyChanged();
             }
         }
@@ -253,12 +250,18 @@ namespace PuzzleGame.MVVM.ViewModels
         public void  GoBackPage()
         {
             _navigationService.GoBack();
-            IsGoBack = _navigationService.CanGoBack;
-            IsGoForward = true;
+            
            Application.Current.Dispatcher.InvokeAsync(() =>
            {
                 CurrentPage = (ObservableObject)_navigationService.Content;
+               if (_currentPage is LevelSelectionViewModel)
+               {
+                   IsGoBack = false;
+               }
+               else IsGoBack = _navigationService.CanGoBack;
+               IsGoForward = true;
            });
+           
         }
 
         private void GoForwardPage()
@@ -291,15 +294,20 @@ namespace PuzzleGame.MVVM.ViewModels
 
         private void GoToMainMenu()
         {
-            CustomDialogResult rlt = CusDialogService.Instance.ShowDialog("Do you really want to log out?", true).Result;
-            if (rlt == CustomDialogResult.Yes)
+            if (IsLogin)     //check player login 
             {
+                CustomDialogResult rlt = CusDialogService.Instance.ShowDialog("Do you really want to log out?", true).Result;
+             
+                if (rlt == CustomDialogResult.Yes)
+                {
+                    GameModel.Instance.Player = null;
+                    FrameNavigation(new MainMenuViewModel());
+                    AvoidNavigate();
+                    SettingMenuStatus();
 
-                FrameNavigation(new MainMenuViewModel());
-                AvoidNavigate();
-                SettingMenuStatus();
-
+                }
             }
+            
         }
         private void BackgroundMusic(string num)
         {
@@ -374,24 +382,40 @@ namespace PuzzleGame.MVVM.ViewModels
         /// <param name="cur"></param>
         public void FrameNavigation(ObservableObject cur)
         {
-            if(_currentPage is UserEnterNameViewModel)
+
+
+            //user info setting
+            if (GameModel.Instance.Player != null)
             {
                 SettingUserId = GameModel.Instance.Player.Id;
                 SettingUserName = GameModel.Instance.Player.Name;
-                IsLogin = (GameModel.Instance.Player == null) ? false : true;
+                IsLogin = true;
             }
-            _navigationService.Navigate(cur);
-            CurrentPage = cur;
-            if (_currentPage is GameRoundViewModel || _currentPage is UserEnterNameViewModel)
-            {
-                AvoidNavigate();
-            }
-
             else
             {
-                IsGoBack = true;
-                IsGoForward = false;
+                SettingUserId = "??????";
+                SettingUserName = "?????????";
+                IsLogin = false;
             }
+
+
+            //back/foward status setting
+            _navigationService.Navigate(cur);
+            CurrentPage = cur;
+            if (_currentPage is GameRoundViewModel || _currentPage is LevelSelectionViewModel)
+            {
+
+                AvoidNavigate();
+            }
+            else
+            {
+                IsGoForward = _navigationService.CanGoForward;
+                IsGoBack = _navigationService.CanGoBack;
+            }
+
+           
+
+
         }
         
     }

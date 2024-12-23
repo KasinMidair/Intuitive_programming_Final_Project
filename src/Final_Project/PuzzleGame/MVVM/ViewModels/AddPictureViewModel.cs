@@ -89,7 +89,7 @@ namespace PuzzleGame.MVVM.ViewModels
             ChoosePictureCommand = new RelayCommand<object>((o) =>{ ChoosePic(); });
             AddPictureCommand = new RelayCommand<object>((o) =>{ AddPic(GameModel.Instance.Player.Id); });
             CloseAddWindowCommand = new RelayCommand<object>((o) => { CusDialogService.Instance.CloseDialog("AddPic");});
-            MoveWndCommand = new RelayCommand<object>((o) => { CusDialogService.Instance.MoveDialog(); });
+            MoveWndCommand = new RelayCommand<object>((o) => { CusDialogService.Instance.MoveDialog(false); });
         }
 
         void ChoosePic()

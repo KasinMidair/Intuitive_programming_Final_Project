@@ -32,7 +32,15 @@ namespace PuzzleGame.Stores
             else currDialog.Close();
         }
 
-        public void MoveDialog() => currDialog.DragMove();
+        public void MoveDialog(bool isCusDialog=true)
+        {
+            if (isCusDialog)
+            {
+                currDialog.DragMove();
+            }
+            else
+                currAddPicDialog.DragMove();
+        }
 
         public  async Task<CustomDialogResult> ShowDialog(string msg, bool btn_type=false)
         {

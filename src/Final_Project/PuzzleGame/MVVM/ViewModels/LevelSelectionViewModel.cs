@@ -57,7 +57,7 @@ namespace PuzzleGame.MVVM.ViewModels
             set
             { 
                 _selectedPicture = value;
-                OnPropertyChanged("SelectedPicture");
+                OnPropertyChanged();
             }
         }
 
@@ -71,6 +71,22 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
+        private bool timerChecked;
+
+        public bool TimerChecked
+        {
+            get => timerChecked; 
+            set
+            {
+                timerChecked = value; 
+                OnPropertyChanged();    
+
+            }
+        }
+    
+
+        
+
         string _hour, _minute, _second;
         public string Hour
         {
@@ -104,6 +120,7 @@ namespace PuzzleGame.MVVM.ViewModels
         public LevelSelectionViewModel()
         {
             NumberOfPieces = "3";
+            timerChecked = false;
             _hour = _minute = _second = "00";
             _wndBgr = defaultColornum2;
             PictureList = new ObservableCollection<Picture>();

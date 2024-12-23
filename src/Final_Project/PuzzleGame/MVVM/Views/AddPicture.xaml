@@ -78,11 +78,12 @@
                             Canvas.Left="6"
                             Canvas.Top="9"
                             Width="315"
-                            Height="315" Stretch="UniformToFill"
+                            Height="315"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Canvas.ZIndex="1"
-                            Source="{Binding NewPicUrl, Mode=OneWay}">
+                            Source="{Binding NewPicUrl, Mode=OneWay}"
+                            Stretch="UniformToFill">
                             <Image.InputBindings>
                                 <MouseBinding Command="{Binding ChoosePictureCommand}" Gesture="LeftClick" />
                             </Image.InputBindings>

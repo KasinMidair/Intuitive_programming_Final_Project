@@ -60,7 +60,6 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             _wndBgr = defaultColornum2;
             EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => LoadPicTureList());
-            LoadPictureListService.Instance.LoadPictureList(GameModel.Instance.Player.Id);
             SelectedPicture = PictureList.ElementAt(0);
             AddPicturePageOpenCommand = new RelayCommand<object>((o) => 
             {
@@ -86,7 +85,6 @@ namespace PuzzleGame.MVVM.ViewModels
 
                 SelectedPicture = null;
 
-
                 // delete picture file
                 if (File.Exists(url))
                 {
@@ -102,6 +100,7 @@ namespace PuzzleGame.MVVM.ViewModels
                         Console.WriteLine($"Lỗi khi xóa tệp: {ex.Message}");
                     }
                 }
+                //Load the picture list after delete picture
                 LoadPictureListService.Instance.LoadPictureList(playerID);
                 EventAggregator.GetEvent<PubSubEvent<string>>()
                 .Publish(GameModel.Instance.Player.Id);
