@@ -1,6 +1,7 @@
 ﻿using PuzzleGame.Core;
 using PuzzleGame.Core.Helper;
 using PuzzleGame.MVVM.Models;
+using PuzzleGame.MVVM.Views.Pages;
 using PuzzleGame.Stores;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -15,6 +16,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
     public class GameRoundViewModel:ObservableObject
     {
+        public Leaderboard leaderboardserivce = new Leaderboard();
         private ObservableObject _currentPage;
         public ObservableObject CurrentPage
         {
@@ -349,7 +351,9 @@ namespace PuzzleGame.MVVM.ViewModels
             GameModel.Instance.BlackBox_Indx = moveIndex;
 
             if (UpdateStatus(imgPieces))
+            {
                 IsWin();
+            }
             return;
         }
 
@@ -419,12 +423,16 @@ namespace PuzzleGame.MVVM.ViewModels
             }
             else
                 time = "Time: " + LastGameTimeStr;
+            GameModel.Instance.GameRound.PlayerID = GameModel.Instance.Player.Id;
+            GameModel.Instance.GameRound.PlayerName = GameModel.Instance.Player.Name;
+            GameModel.Instance.GameRound.Pieces = Row.ToString() + "x" + Col.ToString();
+            GameModel.Instance.GameRound.Time = LastGameTimeStr;
+            GameModel.Instance.GameRound.Date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            GameModel.Instance.LeaderBoardService.AddGameRound(GameModel.Instance.GameRound);
             EndGameImmageSource = "pack://application:,,,/Assets/Imgs/Win.png";
             EndGameText = $"\"You completed the round in just {time}!You're a true champion! Keep up the amazing work!\"";
             GameModel.Instance.Status = GameStatus.EndGame;
-            IsEndGameVisible =false;
-
-
+            IsEndGameVisible = false;
            ReleaseClock();
         }
         private void ReleaseClock()

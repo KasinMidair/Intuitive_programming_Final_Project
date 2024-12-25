@@ -12,6 +12,8 @@ using DryIoc.ImTools;
 using PuzzleGame.MVVM.ViewModels;
 using System.ComponentModel;
 using System.IO;
+using PuzzleGame.Stores;
+using PuzzleGame.MVVM.Views.Pages;
 
 
 namespace PuzzleGame.MVVM.Models
@@ -29,15 +31,36 @@ namespace PuzzleGame.MVVM.Models
         public double UnitX { get; set; }
         public double UnitY { get; private set; }
 
-        public string srcPath {  get; set; }
+        public string srcPath { get; set; }
 
         public BitmapSource SrcImg;
         public BitmapSource blckBoxImg;
         public int BlackBox_Indx;
         public int gamePlayBoxX;
         public int gamePlayBoxY;
+        public Player Player { get; set; }
+        private GameRound _gameRound;
 
-        public Player Player {  get; set; }
+        public GameRound GameRound
+        {
+            get
+            {
+                if (_gameRound == null)
+                {
+                    _gameRound = new GameRound();
+                }
+                return _gameRound;
+            }
+        }
+        private LeaderBoardService _leaderBoardService;
+        public LeaderBoardService LeaderBoardService
+        {
+            get
+            {
+                if (_leaderBoardService == null) { _leaderBoardService = new LeaderBoardService(); }
+                return _leaderBoardService;
+            }
+        }
         string _gameRoundPicUrl;
         public string GameRoundPicUrl
         {
