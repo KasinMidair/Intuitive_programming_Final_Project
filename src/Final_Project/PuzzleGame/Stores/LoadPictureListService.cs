@@ -16,15 +16,36 @@ namespace PuzzleGame.Stores
 {
     public class LoadPictureListService
     {
+        private static volatile LoadPictureListService _instance;
+        public static LoadPictureListService Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new LoadPictureListService();
+                }
+
+                return _instance;
+            }
+        }
+        public ObservableCollection<Picture> PicList = new ObservableCollection<Picture>();
         Connection connection = new Connection();
 
-        public void LoadPictureList(ObservableCollection<Picture> PicList, string id)
+        public void LoadPictureList(string id)
         {
+
             connection.dataAdapter = new SqlDataAdapter($"Select PICNAME, PICPATH, PLAYERID, isDEFAULT from PICTURE where isDEFAULT = 1 or PLAYERID = '{id}'", connection.connStr);
 
+            //check if PICTURE table is existed before putting data in, if it exists then delete it
+            if (connection.ds.Tables.Contains("PICTURE"))
+            {
+                connection.ds.Tables.Remove(connection.ds.Tables["PICTURE"]);
+            }
             connection.dataAdapter.Fill(connection.ds, "PICTURE");
             connection.dt = connection.ds.Tables["PICTURE"];
 
+            PicList.Clear();
             foreach (DataRow dr in connection.dt.Rows)
             {
                 PicList.Add(new Picture
@@ -41,7 +62,7 @@ namespace PuzzleGame.Stores
         {
             if (pic.isDefault == true)
             {
-                MessageBox.Show("Khong the xoa tranh mac dinh!");
+                _ = CusDialogService.Instance.ShowDialog("Can not delete DEFAULT PICTURE!");
                 return false;
             }
             else
@@ -61,11 +82,17 @@ namespace PuzzleGame.Stores
 
         public void AddPicture(Picture newPicture, string PlayerID)
         {
-            connection.dataAdapter = new($"Select * from PICTURE", connection.connStr);
+            connection.dataAdapter = new($"Select * from PICTURE", connection.connStr); 
 
             connection.dataAdapter.Fill(connection.ds, "PICTURE");
             connection.dt = connection.ds.Tables["PICTURE"];
 
+            //check if picture existed
+            var existingRow = connection.dt.AsEnumerable().FirstOrDefault(row =>
+                    row.Field<string>("PICNAME") == newPicture.Name &&
+                    row.Field<string>("PLAYERID") == PlayerID
+                    );
+            if (existingRow != null) return;
 
             DataRow dataRow = connection.dt.NewRow();
             dataRow["PICNAME"] = newPicture.Name;
@@ -78,5 +105,6 @@ namespace PuzzleGame.Stores
             SqlCommandBuilder commandBuilder = new SqlCommandBuilder(connection.dataAdapter);
             connection.dataAdapter.Update(connection.ds, "PICTURE");
         }
+
     }
 }

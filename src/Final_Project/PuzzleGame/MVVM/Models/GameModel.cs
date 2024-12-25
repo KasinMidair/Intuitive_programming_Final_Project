@@ -37,6 +37,7 @@ namespace PuzzleGame.MVVM.Models
         public int gamePlayBoxX;
         public int gamePlayBoxY;
 
+        public Player Player {  get; set; }
         string _gameRoundPicUrl;
         public string GameRoundPicUrl
         {
@@ -50,7 +51,7 @@ namespace PuzzleGame.MVVM.Models
             }
         }
 
-        int playTime;
+        long playTime;
         public bool isSetCountDown { get; set; }
         public int row, col;
         private static volatile GameModel _instance;
@@ -61,7 +62,7 @@ namespace PuzzleGame.MVVM.Models
         {
             get
             {
-                if (_instance == null || _instance.Status == GameStatus.EndGame)
+                if (_instance == null )
                 {
                     lock (key)
                     {
@@ -84,7 +85,7 @@ namespace PuzzleGame.MVVM.Models
             }
         }
 
-        public int PlayTime
+        public long PlayTime
         {
             get
             {
@@ -97,26 +98,29 @@ namespace PuzzleGame.MVVM.Models
         }
         private GameModel()
         {
+
+
             gamePlayBoxX = 488;
             gamePlayBoxY = 488;
+            status = GameStatus.PreStart;
+            blckBoxImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0003.png", UriKind.Absolute));
 
-            srcPath = System.IO.Path.Combine(Directory.GetCurrentDirectory().Remove(Directory.GetCurrentDirectory().Length - 24, 24) + $"/Assets/picture/HOAInewpic.png");
-           
         }
-
+        public void SetData(int r,int c,string imgSrcPath ,long _playTime)
+        {
+            srcPath = imgSrcPath;
+            row =r; col = c;
+            playTime = _playTime;
+            isSetCountDown = (_playTime==0)? false:true;
+        }
         public void PicDeviding()
         {
             BitmapImage originalImage = new BitmapImage(new Uri(srcPath, UriKind.RelativeOrAbsolute));
             double scaleX = (double)gamePlayBoxX * originalImage.DpiX / (originalImage.PixelWidth * 96);
             double scaleY = (double)gamePlayBoxY * originalImage.DpiY / (originalImage.PixelHeight * 96);
             SrcImg = new TransformedBitmap(originalImage, new ScaleTransform(scaleX, scaleY));
-            blckBoxImg = new BitmapImage(new Uri("pack://application:,,,/Assets/Imgs/Sprite-0003.png", UriKind.Absolute));
-            row = 3; col = 3;
-            status = GameStatus.PreStart;
-            playTime = 2 * 60;
             UnitX = SrcImg.PixelWidth / col;
             UnitY = SrcImg.PixelHeight / row;
-            isSetCountDown = false;
         }
 
         public BitmapSource ChangeDPI(BitmapSource source, double newDpiX, double newDpiY)

@@ -9,7 +9,7 @@ namespace PuzzleGame.Core
 {
     public class ObservableObject : INotifyPropertyChanged
     {
-        protected SolidColorBrush defaultColornum1 = new SolidColorBrush( Color.FromArgb(255, 4, 12, 18));
+        protected SolidColorBrush defaultColornum1 = new SolidColorBrush( Color.FromArgb(255, 38, 38, 38));
         protected SolidColorBrush defaultColornum2 = new SolidColorBrush(Color.FromArgb(255, 245, 199, 164));
         protected SolidColorBrush _wndBgr;
 

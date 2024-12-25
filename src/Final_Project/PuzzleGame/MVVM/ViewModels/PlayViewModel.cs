@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using Azure;
+using Caliburn.Micro;
 using MaterialDesignColors.ColorManipulation;
 using PuzzleGame.Core;
 using PuzzleGame.Core.Helper;
@@ -62,7 +63,7 @@ namespace PuzzleGame.MVVM.ViewModels
                 
             }
         }
-        #region Button Binding Properties
+        #region  Binding Properties
 
         bool isGoBack;
         public bool IsGoBack 
@@ -139,6 +140,38 @@ namespace PuzzleGame.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
+        string settingUserName;
+        public string SettingUserName
+        {
+            get => settingUserName;
+            set 
+            {
+                settingUserName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        string settingUserId;
+        public string SettingUserId
+        {
+            get => settingUserId;
+            set
+            {
+                settingUserId= value;
+                OnPropertyChanged();
+            }
+        }
+
+        bool isLogin;
+        public bool IsLogin
+        {
+            get => isLogin;
+            set
+            {
+                isLogin = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         ObservableObject _currentPage;
@@ -161,10 +194,10 @@ namespace PuzzleGame.MVVM.ViewModels
             //Message subcriber
             EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Subscribe((o) => OnCurrentPageChanged(o));
             EventAggregator.GetEvent<PubSubEvent<GameStatus>>().Subscribe((o) => Appstatus(o));
-            EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => MainMenuFromGameComplete(o));
             MusicSystemService.Instance.ChangeBackgroundMusic(2);
 
             toolBarColor = defaultColornum2;
+
             _wndBgr = defaultColornum1;
             IsSettingVisible = true;
             IsGoBack = false;
@@ -193,31 +226,42 @@ namespace PuzzleGame.MVVM.ViewModels
         private void SettingMenuStatus() 
         { 
             IsSettingVisible = !IsSettingVisible;
-            EventAggregator.GetEvent<PubSubEvent<bool>>().Publish(IsSettingVisible);
+            if (_currentPage is GameRoundViewModel)
+            {
+               EventAggregator.GetEvent<PubSubEvent<bool>>().Publish(IsSettingVisible); //if setting menu is shown,countdown is paused.
+            }
         }
+
         private void QuitApp()
         {
-            MusicSystemService.Instance.Dispose();
-            Application.Current.Shutdown();
-        
-        }
-        private void MainMenuFromGameComplete(string input)
-        {
-            if (input == "Main menu")
+            string msgText = "Are you sure about quitting the game ?";
+            if (_currentPage is GameRoundViewModel && GameModel.Instance.Status==GameStatus.StartGame)
             {
-                while (_navigationService.CanGoBack) { GoBackPage(); }
-                AvoidNavigate();
+                msgText = msgText + " (Your gameplay will not be saved.)";
             }
+            CustomDialogResult rlt= CusDialogService.Instance.ShowDialog(msgText, true).Result;
+            if (rlt == CustomDialogResult.Yes)
+            {
+                MusicSystemService.Instance.Dispose();
+                Application.Current.Shutdown();
+            }
+        
         }
         public void  GoBackPage()
         {
             _navigationService.GoBack();
-            IsGoBack = _navigationService.CanGoBack;
-            IsGoForward = true;
+            
            Application.Current.Dispatcher.InvokeAsync(() =>
            {
                 CurrentPage = (ObservableObject)_navigationService.Content;
+               if (_currentPage is LevelSelectionViewModel)
+               {
+                   IsGoBack = false;
+               }
+               else IsGoBack = _navigationService.CanGoBack;
+               IsGoForward = true;
            });
+           
         }
 
         private void GoForwardPage()
@@ -250,9 +294,20 @@ namespace PuzzleGame.MVVM.ViewModels
 
         private void GoToMainMenu()
         {
-            SettingMenuStatus();
-            while (_navigationService.CanGoBack) { GoBackPage(); }
-            AvoidNavigate();
+            if (IsLogin)     //check player login 
+            {
+                CustomDialogResult rlt = CusDialogService.Instance.ShowDialog("Do you really want to log out?", true).Result;
+             
+                if (rlt == CustomDialogResult.Yes)
+                {
+                    GameModel.Instance.Player = null;
+                    FrameNavigation(new MainMenuViewModel());
+                    AvoidNavigate();
+                    SettingMenuStatus();
+
+                }
+            }
+            
         }
         private void BackgroundMusic(string num)
         {
@@ -289,9 +344,10 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public void AvoidNavigate()
         {
-            IsGoForward=false;
-            IsGoBack=false;
             _navigationService.RemoveBackEntry();
+            IsGoForward =false;
+            IsGoBack=false;
+
         }
 
 
@@ -326,17 +382,40 @@ namespace PuzzleGame.MVVM.ViewModels
         /// <param name="cur"></param>
         public void FrameNavigation(ObservableObject cur)
         {
+
+
+            //user info setting
+            if (GameModel.Instance.Player != null)
+            {
+                SettingUserId = GameModel.Instance.Player.Id;
+                SettingUserName = GameModel.Instance.Player.Name;
+                IsLogin = true;
+            }
+            else
+            {
+                SettingUserId = "??????";
+                SettingUserName = "?????????";
+                IsLogin = false;
+            }
+
+
+            //back/foward status setting
             _navigationService.Navigate(cur);
             CurrentPage = cur;
-            if (_currentPage is GameRoundViewModel)
+            if (_currentPage is GameRoundViewModel || _currentPage is LevelSelectionViewModel)
             {
+
                 AvoidNavigate();
             }
             else
             {
-                IsGoBack = true;
-                IsGoForward = false;
+                IsGoForward = _navigationService.CanGoForward;
+                IsGoBack = _navigationService.CanGoBack;
             }
+
+           
+
+
         }
         
     }

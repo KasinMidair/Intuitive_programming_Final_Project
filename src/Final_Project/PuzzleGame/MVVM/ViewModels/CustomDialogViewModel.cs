@@ -21,7 +21,6 @@ namespace PuzzleGame.MVVM.ViewModels
     public class CustomDialogViewModel : ObservableObject
     {
         TaskCompletionSource<CustomDialogResult> _rlt;
-        CusDialogService _dialogService;
         string _message;        //Message showed on Dialog
         public string Message 
         { 
@@ -62,15 +61,14 @@ namespace PuzzleGame.MVVM.ViewModels
         public RelayCommand<string> CustomDialogResultCommand{ get; set; }
         public RelayCommand<object> MoveWndCommand { get; set; }
 
-        public CustomDialogViewModel(string msg,bool btn_type, TaskCompletionSource<CustomDialogResult> rlt ,CusDialogService service)
+        public CustomDialogViewModel(string msg,bool btn_type, TaskCompletionSource<CustomDialogResult> rlt )
         {
             Message = msg;
             IsYsNoIcon = btn_type;
             IsOKIcon = !btn_type;
             this._rlt = rlt;
-            _dialogService = service;
             CustomDialogResultCommand = new RelayCommand<string>(o => SwitchResult(o));
-            MoveWndCommand = new RelayCommand<object>((o) => { _dialogService.MoveDialog(); });
+            MoveWndCommand = new RelayCommand<object>((o) => { CusDialogService.Instance.MoveDialog(); });
         }
 
         private void SwitchResult(string o)
@@ -89,7 +87,7 @@ namespace PuzzleGame.MVVM.ViewModels
             MusicSystemService.Instance.PlayBTN_ClickSound();
 
             _rlt.TrySetResult(DialogResult);
-            _dialogService.CloseDialog();
+            CusDialogService.Instance.CloseDialog();
         }
 
         

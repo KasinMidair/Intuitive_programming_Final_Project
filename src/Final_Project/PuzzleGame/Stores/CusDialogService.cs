@@ -22,18 +22,31 @@ namespace PuzzleGame.Stores
         }
 
         Window currDialog;
-        public void CloseDialog()
+        Window currAddPicDialog;
+        public void CloseDialog(string addPic="")
         {
-            currDialog.Close();
+            if (addPic == "AddPic")
+            {
+                currAddPicDialog.Close();
+            }
+            else currDialog.Close();
         }
 
-        public void MoveDialog() => currDialog.DragMove();
+        public void MoveDialog(bool isCusDialog=true)
+        {
+            if (isCusDialog)
+            {
+                currDialog.DragMove();
+            }
+            else
+                currAddPicDialog.DragMove();
+        }
 
         public  async Task<CustomDialogResult> ShowDialog(string msg, bool btn_type=false)
         {
             var rlt= new TaskCompletionSource<CustomDialogResult>();
             currDialog = new CustomDialog();
-            currDialog.DataContext = new CustomDialogViewModel(msg,btn_type,rlt,this);
+            currDialog.DataContext = new CustomDialogViewModel(msg,btn_type,rlt);
             currDialog.ShowDialog();
 
             return  await rlt.Task;
@@ -41,9 +54,9 @@ namespace PuzzleGame.Stores
         public void ShowAddPicture(ObservableObject vm)
         {
             var rlt = new TaskCompletionSource<CustomDialogResult>();
-            currDialog = new AddPicture();
-            currDialog.DataContext = vm;
-            currDialog.ShowDialog();
+            currAddPicDialog = new AddPicture();
+            currAddPicDialog.DataContext = vm;
+            currAddPicDialog.ShowDialog();
         }
     }
 }

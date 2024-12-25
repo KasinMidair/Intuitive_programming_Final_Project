@@ -24,12 +24,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Audio\Lose.wav" />
+    <Resource Include="Assets\Audio\Win.wav" />
     <Content Include="Assets\favicon.ico" />
+    <Resource Include="Assets\picture\picB.png" />
+    <Resource Include="Assets\picture\picC.png" />
+    <Resource Include="Assets\Imgs\Lose.png" />
+    <Resource Include="Assets\Imgs\Win.png" />
+    <Resource Include="Assets\Imgs\info_demopic4.png" />
+    <Resource Include="Assets\Imgs\info_demopic5.png" />
+    <Resource Include="Assets\Imgs\info_demopic3.png" />
+    <Resource Include="Assets\Imgs\Close_BTN.jpg" />
 	 <Resource Include="Assets\Imgs\slideFun.png" />
     <Resource Include="Assets\Imgs\LeaderBoard_ico.png" />
     <Resource Include="Assets\Imgs\info_demopic2.png" />
     <Resource Include="Assets\Imgs\info_demopic.png" />
-    <Resource Include="Assets\picture\pic10.png" />
+    <Resource Include="Assets\picture\picA.png" />
     <Resource Include="Assets\Imgs\Mute_BTN.png" />
     <Resource Include="Assets\Imgs\info_BTN.png" />
     <Resource Include="Assets\Imgs\avatar.jpg" />

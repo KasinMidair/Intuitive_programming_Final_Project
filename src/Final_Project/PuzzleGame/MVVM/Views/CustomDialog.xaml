@@ -34,10 +34,9 @@
         <Grid>
 
             <!--  Message textbox  -->
-            <TextBlock
+            <TextBlock Width="258" TextWrapping="Wrap"
                 x:Name="CusDialogMsg"
-                Margin="76,80,34,40"
-                HorizontalAlignment="Center"
+                Margin="87,15,45,0" TextAlignment="Center"
                 VerticalAlignment="Center"
                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
                 FontSize="20"
