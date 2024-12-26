@@ -337,7 +337,7 @@ namespace PuzzleGame.MVVM.ViewModels
                    MovingPiece(tmp.XIndex, tmp.YIndex + 1, ref moveIndex);
                     break;
                 case "Right":
-                    MovingPiece(tmp.XIndex, tmp.YIndex - 1, ref moveIndex);
+                  MovingPiece(tmp.XIndex, tmp.YIndex - 1, ref moveIndex);
                     break;
             }
             if (moveIndex == -1)

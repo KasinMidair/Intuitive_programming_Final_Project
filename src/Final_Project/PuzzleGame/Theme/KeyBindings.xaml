@@ -1,20 +1,27 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <!-- UpArrow -->
-    <KeyBinding Key="Up" x:Key="Up" Command="{Binding HandleKeyCommand}" CommandParameter="Up" />
-    <!-- DowArrow -->
-    <KeyBinding Key="Down" x:Key="Down" Command="{Binding HandleKeyCommand}"  CommandParameter="Down" />
-    <!-- RightArrow -->
-    <KeyBinding Key="Right" x:Key="Right" Command="{Binding HandleKeyCommand}"  CommandParameter="Right" />
-    <!-- LeftArrow -->
-    <KeyBinding Key="Left" x:Key="Left" Command="{Binding HandleKeyCommand}" CommandParameter="Left" />
-    <!-- A -->
-    <KeyBinding Key="A" x:Key="A" Command="{Binding HandleKeyCommand}" CommandParameter="A"/>
-    <!-- S -->
-    <KeyBinding Key="S" x:Key="S" Command="{Binding HandleKeyCommand}" CommandParameter="S"  />
-    <!-- W -->
-    <KeyBinding Key="W" x:Key="W" Command="{Binding HandleKeyCommand}" CommandParameter="W" />
-    <!-- D -->
-    <KeyBinding Key="D" x:Key="D" Command="{Binding HandleKeyCommand}" CommandParameter="D" />
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  UpArrow  -->
+    <KeyBinding
+        x:Key="Up"
+        Key="Up"
+        Command="{Binding HandleKeyCommand}"
+        CommandParameter="Up" />
+    <!--  DowArrow  -->
+    <KeyBinding
+        x:Key="Down"
+        Key="Down"
+        Command="{Binding HandleKeyCommand}"
+        CommandParameter="Down" />
+    <!--  RightArrow  -->
+    <KeyBinding
+        x:Key="Right"
+        Key="Right"
+        Command="{Binding HandleKeyCommand}"
+        CommandParameter="Right" />
+    <!--  LeftArrow  -->
+    <KeyBinding
+        x:Key="Left"
+        Key="Left"
+        Command="{Binding HandleKeyCommand}"
+        CommandParameter="Left" />
 
 </ResourceDictionary>

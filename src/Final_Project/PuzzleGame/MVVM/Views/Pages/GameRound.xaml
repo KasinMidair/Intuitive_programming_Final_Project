@@ -39,12 +39,7 @@
         <StaticResource ResourceKey="Down" />
         <StaticResource ResourceKey="Right" />
         <StaticResource ResourceKey="Left" />
-        <StaticResource ResourceKey="A" />
-        <StaticResource ResourceKey="W" />
-        <StaticResource ResourceKey="S" />
-        <StaticResource ResourceKey="D" />
     </Page.InputBindings>
-
 
     <Canvas Background="Transparent">
 
@@ -88,23 +83,26 @@
                 CornerRadius="25">
                 <Canvas>
                     <TextBlock
+                        Canvas.Left="14"
+                        Canvas.Top="32"
                         Width="446"
                         Height="60"
                         HorizontalAlignment="Center"
-                        VerticalAlignment="Top" TextAlignment="Center"
-                        FontSize="19" TextWrapping="Wrap"
-                        Foreground="#222426" Canvas.Top="32" Canvas.Left="14" Text="{Binding EndGameText}">
-
-
-                    </TextBlock>
-                    <Image Stretch="Fill"
+                        VerticalAlignment="Top"
+                        FontSize="19"
+                        Foreground="#222426"
+                        Text="{Binding EndGameText}"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap" />
+                    <Image
                         Canvas.Left="81"
                         Canvas.Top="100"
                         Width="320"
                         Height="271"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Source="{Binding EndGameImmageSource}" />
+                        Source="{Binding EndGameImmageSource}"
+                        Stretch="Fill" />
                     <Border
                         Height="119"
                         HorizontalAlignment="Center"
@@ -140,6 +138,7 @@
                             FontSize="20" />
                         <Button
                             x:Name="BTN_PlayAgain"
+                            Grid.Column="1"
                             Height="40"
                             Margin="2,34,59,52"
                             materialDesign:ButtonAssist.CornerRadius="17"
@@ -148,7 +147,7 @@
                             Command="{Binding PlayAgainCommand}"
                             Content="Play Again"
                             FocusVisualStyle="{x:Null}"
-                            FontSize="20" Grid.Column="1" />
+                            FontSize="20" />
                     </Grid>
 
                 </Canvas>

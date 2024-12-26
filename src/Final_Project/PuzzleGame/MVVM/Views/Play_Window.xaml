@@ -69,7 +69,7 @@
                     <TranslateTransform Y="-1000" />
                 </Canvas.RenderTransform>
 
-                <Border BorderThickness="5" BorderBrush="#FFFEEB"
+                <Border
                     Canvas.Left="122"
                     Canvas.Top="70"
                     Width="676"
@@ -77,6 +77,8 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     Background="{Binding ToolBarColor}"
+                    BorderBrush="#FFFEEB"
+                    BorderThickness="5"
                     CornerRadius="25">
                     <Canvas>
 
@@ -165,11 +167,11 @@
                                             Padding="0"
                                             materialDesign:ButtonAssist.CornerRadius="10"
                                             Background="#ccc9ff"
-                                            IsEnabled="{Binding IsLogin}"
                                             BorderThickness="0"
                                             Command="{Binding CopyIdCommand}"
                                             CommandParameter="{Binding Text, ElementName=IDTextBlock}"
-                                            FocusVisualStyle="{x:Null}">
+                                            FocusVisualStyle="{x:Null}"
+                                            IsEnabled="{Binding IsLogin}">
                                             <TextBlock
                                                 Height="16"
                                                 FontSize="12"
@@ -685,7 +687,7 @@
                                     FontSize="16"
                                     Foreground="Snow"
                                     TextWrapping="Wrap">
-                                    The goal is to rearrange jumbled pieces to form a complete image or solve a given puzzle. Moving pieces into their correct spots, usually by using the mouse,Arrow keys or WASD .
+                                    The goal is to rearrange jumbled pieces to form a complete image or solve a given puzzle. Moving pieces into their correct spots, usually by using the mouse,Arrow keys .
                                 </TextBlock>
 
                                 <!--  demo pic  -->

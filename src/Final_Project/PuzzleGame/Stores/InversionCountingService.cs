@@ -8,42 +8,21 @@ namespace PuzzleGame.Stores
 {
     public class InversionCountingService
     {
-
-        private static InversionCountingService? _instance;
-        public static InversionCountingService Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new InversionCountingService();
-                }
-
-                return _instance;
-            }
-        }
         public static int CountInversions(List<int> ls)
         {
             List<int> temp = new List<int>(ls.Count);
             return MergeSortAndCount(ls, 0, ls.Count - 1);
         }
 
-        /// <summary>
-        /// Using MergeSort to counting number of Inversions
-        /// </summary>
-        /// <param name="ls"></param>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
-        private static int MergeSortAndCount(List<int> ls,int left, int right)
+        private static int MergeSortAndCount(List<int> ls, int left, int right)
         {
             int mid, inversionCount = 0;
             if (left < right)
             {
                 mid = (left + right) / 2;
 
-                inversionCount += MergeSortAndCount(ls,left, mid);         
-                inversionCount += MergeSortAndCount(ls,mid + 1, right);
+                inversionCount += MergeSortAndCount(ls, left, mid);
+                inversionCount += MergeSortAndCount(ls, mid + 1, right);
 
                 inversionCount += MergeAndCount(ls, left, mid, right);
             }
@@ -52,7 +31,6 @@ namespace PuzzleGame.Stores
 
         private static int MergeAndCount(List<int> ls, int left, int mid, int right)
         {
-
             int i = left;
             int j = mid + 1;
             int k = left;
@@ -61,29 +39,20 @@ namespace PuzzleGame.Stores
 
             while (i <= mid && j <= right)
             {
-                if (ls[i] <= ls[j]) 
-                    temp.Add(ls[i++]);
-                else 
+                if (ls[i] <= ls[j]) temp.Add(ls[i++]);
+                else
                 {
                     inversionCount += (mid - i + 1);        //counting nummber > ls[j]
                     temp.Add(ls[j++]);
-
                 }
             }
+            while (i <= mid) { temp.Add(ls[i++]); }
 
-            while (i <= mid)
-            {
-                temp.Add(ls[i++]);
-            }
-
-            while (j <= right)
-            {
-                temp.Add(ls[j++]);
-            }
+            while (j <= right) { temp.Add(ls[j++]); }
 
             for (i = left; i <= right; i++)
             {
-                ls[i] = temp[i-left];
+                ls[i] = temp[i - left];
             }
 
             return inversionCount;

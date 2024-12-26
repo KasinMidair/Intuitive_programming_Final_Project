@@ -28,36 +28,44 @@ namespace PuzzleGame.MVVM.Models
     {
         public double UnitX { get; set; }
         public double UnitY { get; private set; }
+        public int row { get; set; }
+        public int col { get; set; }
+        public Player Player { get; set; }
+        public bool isSetCountDown { get; set; }
 
-        public string srcPath {  get; set; }
-
-        public BitmapSource SrcImg;
-        public BitmapSource blckBoxImg;
+        public BitmapSource SrcImg, blckBoxImg;
         public int BlackBox_Indx;
-        public int gamePlayBoxX;
-        public int gamePlayBoxY;
+        public int gamePlayBoxX, gamePlayBoxY;
+        string srcPath;
 
-        public Player Player {  get; set; }
-        string _gameRoundPicUrl;
-        public string GameRoundPicUrl
+
+        private GameStatus status;
+        public GameStatus Status
         {
             get
             {
-                return _gameRoundPicUrl;
+                return status;
             }
             set
             {
-                _gameRoundPicUrl = value;
+                status = value;
+            }
+        }
+        long playTime;
+        public long PlayTime
+        {
+            get
+            {
+                return playTime;
+            }
+            set
+            {
+                playTime = value;
             }
         }
 
-        long playTime;
-        public bool isSetCountDown { get; set; }
-        public int row, col;
-        private static volatile GameModel _instance;
-        private GameStatus status;
         private static object key = new object();
-
+        private static volatile GameModel _instance;
         public static GameModel Instance
         {
             get
@@ -73,29 +81,8 @@ namespace PuzzleGame.MVVM.Models
                 return _instance;
             }
         }
-        public GameStatus Status
-        {
-            get
-            {
-                return status;
-            }
-            set
-            {
-                status = value;
-            }
-        }
 
-        public long PlayTime
-        {
-            get
-            {
-                return playTime;
-            }
-            set
-            {
-                playTime = value;
-            }
-        }
+
         private GameModel()
         {
 
@@ -113,6 +100,7 @@ namespace PuzzleGame.MVVM.Models
             playTime = _playTime;
             isSetCountDown = (_playTime==0)? false:true;
         }
+
         public void PicDeviding()
         {
             BitmapImage originalImage = new BitmapImage(new Uri(srcPath, UriKind.RelativeOrAbsolute));
@@ -121,34 +109,6 @@ namespace PuzzleGame.MVVM.Models
             SrcImg = new TransformedBitmap(originalImage, new ScaleTransform(scaleX, scaleY));
             UnitX = SrcImg.PixelWidth / col;
             UnitY = SrcImg.PixelHeight / row;
-        }
-
-        public BitmapSource ChangeDPI(BitmapSource source, double newDpiX, double newDpiY)
-        {
-            int width = source.PixelWidth;
-            int height = source.PixelHeight;
-
-            // caculate stride:  Bytes in one line ( Height x width(pixel num,direaction:horizontal ))
-            int bytesPerPixel = (source.Format.BitsPerPixel + 7) / 8;
-            int stride = width * bytesPerPixel;
-
-            // pixel data from source
-            byte[] pixelData = new byte[height * stride];
-            source.CopyPixels(pixelData, stride, 0);
-
-            // Create new bitmap with new DPI
-            BitmapSource newBitmap = BitmapSource.Create(
-                width,          
-                height,         
-                newDpiX,        // DPI X
-                newDpiY,        // DPI Y
-                source.Format,  // Pixel format
-                source.Palette, // Palette (can be null)
-                pixelData,      // pixel data
-                stride          // Stride
-            );
-
-            return newBitmap;
         }
         
     }

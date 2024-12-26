@@ -54,7 +54,6 @@ namespace PuzzleGame.MVVM.Models
             this.YIndex = _custom.YIndex;
 
         }
-
         public CusPiece(int xIndex, int yIndex, int imgIdx)
         {
                 this.ImgIdx = imgIdx;
@@ -74,7 +73,6 @@ namespace PuzzleGame.MVVM.Models
             p2.ImgIdx = tmpImgIdx;
         }
 
-
         /// <summary>
         /// Check if this CusPiece is in the correct position
         /// </summary>
@@ -83,11 +81,10 @@ namespace PuzzleGame.MVVM.Models
         {
             return xIndex * GameModel.Instance.col + yIndex == imgIdx;
         }
+
         public int CurrentImgIndex()
         {
             return xIndex * GameModel.Instance.col + yIndex;
         }
-
-
     }
 }
