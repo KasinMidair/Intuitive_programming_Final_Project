@@ -300,7 +300,7 @@ namespace PuzzleGame.MVVM.ViewModels
              
                 if (rlt == CustomDialogResult.Yes)
                 {
-                    GameModel.Instance.Player = null;
+                    //GameModel.Instance.Player = null;
                     FrameNavigation(new MainMenuViewModel());
                     AvoidNavigate();
                     SettingMenuStatus();

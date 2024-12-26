@@ -39,6 +39,7 @@ namespace PuzzleGame.Stores
                 return _instance;
             }
         }
+
         List<string> bgAudioSources;
         List<string> endGameAudioSources;
         string sfxAdioSource;
@@ -162,12 +163,6 @@ namespace PuzzleGame.Stores
             return tempFilePath;
         }
 
-        /// <summary>
-        /// set the application audio volume
-        /// </summary>
-        /// <param name="audioType"></param>
-        /// <param name="bgVolume"></param>
-        /// <param name="sfxVolume"></param>
         public void SetVolume(AudioType audioType, double bgVolume, double sfxVolume)
         {
             switch (audioType)

@@ -12,6 +12,8 @@ using DryIoc.ImTools;
 using PuzzleGame.MVVM.ViewModels;
 using System.ComponentModel;
 using System.IO;
+using PuzzleGame.Stores;
+using PuzzleGame.MVVM.Views.Pages;
 
 
 namespace PuzzleGame.MVVM.Models
@@ -32,11 +34,7 @@ namespace PuzzleGame.MVVM.Models
         public int col { get; set; }
         public Player Player { get; set; }
         public bool isSetCountDown { get; set; }
-
-        public BitmapSource SrcImg, blckBoxImg;
-        public int BlackBox_Indx;
-        public int gamePlayBoxX, gamePlayBoxY;
-        string srcPath;
+        public string srcPath { get; set; }
 
 
         private GameStatus status;
@@ -51,6 +49,36 @@ namespace PuzzleGame.MVVM.Models
                 status = value;
             }
         }
+
+        public BitmapSource SrcImg;
+        public BitmapSource blckBoxImg;
+        public int BlackBox_Indx;
+        public int gamePlayBoxX;
+        public int gamePlayBoxY;
+        private GameRound _gameRound;
+
+        public GameRound GameRound
+        {
+            get
+            {
+                if (_gameRound == null)
+                {
+                    _gameRound = new GameRound();
+                }
+                return _gameRound;
+            }
+        }
+        private LeaderBoardService _leaderBoardService;
+        public LeaderBoardService LeaderBoardService
+        {
+            get
+            {
+                if (_leaderBoardService == null) { _leaderBoardService = new LeaderBoardService(); }
+                return _leaderBoardService;
+            }
+        }
+
+
         long playTime;
         public long PlayTime
         {

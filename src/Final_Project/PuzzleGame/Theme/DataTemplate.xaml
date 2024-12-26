@@ -21,6 +21,10 @@
         <view:Gallery />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type viewmodel:LeaderBoardViewModel}">
+        <view:Leaderboard />
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type viewmodel:LevelSelectionViewModel}">
         <view:LevelSelection />
     </DataTemplate>

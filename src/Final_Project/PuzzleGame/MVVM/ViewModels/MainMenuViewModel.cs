@@ -32,7 +32,7 @@ namespace PuzzleGame.MVVM.ViewModels
 
         public RelayCommand<object> StartCommand { get; set; } //command for start button
         public RelayCommand<object> ShutdownCommand { get; set; } //command for Exit button
-        public RelayCommand<string> ShowMSGBoxCommand { get; set; }
+        public RelayCommand<string> LeaderBoardCommand { get; set; }// command for achievement button
 
 
         public MainMenuViewModel()
@@ -43,19 +43,13 @@ namespace PuzzleGame.MVVM.ViewModels
                 CurrentPage = new UserEnterNameViewModel();
 
             });
-            ShowMSGBoxCommand = new RelayCommand<string>((o) => { ShowCustomDialog(o); });
+            LeaderBoardCommand = new RelayCommand<string>((o) =>
+            {
+                CurrentPage = new LeaderBoardViewModel();
+            });
             ShutdownCommand = new RelayCommand<object>((o) => {
                 EventAggregator.GetEvent<PubSubEvent<GameStatus>>().Publish(GameStatus.QuitApp);
             });
-        }
-        private void ShowCustomDialog(string o)
-        {
-            CustomDialogResult a = CusDialogService.Instance.ShowDialog(o).Result;
-            if (a == CustomDialogResult.OK) 
-            {
-                MessageBox.Show("OKKKKK");
-
-            }
         }
     }
 }

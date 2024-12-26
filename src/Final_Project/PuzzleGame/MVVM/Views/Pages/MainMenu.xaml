@@ -46,7 +46,7 @@
             Height="90"
             Margin="10,10,10,5"
             HorizontalAlignment="Center"
-            Command="{Binding ShowMSGBoxCommand}"
+            Command="{Binding LeaderBoardCommand}"
             CommandParameter="Hien roy ne!"
             Style="{StaticResource ResourceKey=BTN}">
             <Button.Background>
