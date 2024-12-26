@@ -26,20 +26,16 @@ namespace PuzzleGame.Stores
                 return _instance;
             }
         }
-        public ObservableCollection<LeaderBoardService> Leaderboard = new ObservableCollection<LeaderBoardService>();
+        public ObservableCollection<GameRound> GameRoundsList = new ObservableCollection<GameRound>();
         Connection connection = new Connection();
 
         // load data tu table GAMEROUND vao gameRounds
         public void LoadGameRounds(ObservableCollection<GameRound> gameRounds)
         {
             connection.dataAdapter = new SqlDataAdapter($"Select GAMEID, PLAYERNAME, PLAYERID, PIECES, PLAYTIME, PLAYDATE from GAMEROUND", connection.connStr);
-            if (connection.ds.Tables.Contains("GAMEROUND"))
-            {
-                connection.ds.Tables.Remove(connection.ds.Tables["GAMEROUND"]);
-            }
             connection.dataAdapter.Fill(connection.ds, "GAMEROUND");
             connection.dt = connection.ds.Tables["GAMEROUND"];
-            Leaderboard.Clear();
+            GameRoundsList.Clear();
             foreach (DataRow dr in connection.dt.Rows)
             {
                 gameRounds.Add(new GameRound

@@ -335,82 +335,37 @@
                       FontSize="20"
                       FontWeight="SemiBold"
                       Foreground="#15161C"
-                      ItemsSource="{Binding LeaderboardList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                      ItemsSource="{Binding gameRoundsList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                      Margin="5">
                 <ListView.Resources>
-                    <!--  ScrollBar Custom  -->
-                    <Style TargetType="{x:Type ListView}">
-                        <Setter Property="BorderThickness"
-                                Value="0" />
-                        <Setter Property="FocusVisualStyle"
-                                Value="{x:Null}" />
-                    </Style>
-                    <Style TargetType="{x:Type ScrollBar}">
-                        <Setter Property="Foreground"
-                                Value="Transparent" />
-                        <Setter Property="Background"
-                                Value="Transparent" />
-                        <Setter Property="Width"
-                                Value="10" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="ScrollBar">
-                                    <Grid>
-                                        <Track Name="PART_Track"
-                                               IsDirectionReversed="False"
-                                               Orientation="Vertical">
-                                            <Track.Thumb>
-                                                <Thumb Width="12"
-                                                       Background="#51644F" />
-                                            </Track.Thumb>
-                                        </Track>
-                                    </Grid>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
+                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Left" />
                     </Style>
                 </ListView.Resources>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}">
-                        <Setter Property="SnapsToDevicePixels"
-                                Value="true" />
-                        <Setter Property="Foreground"
-                                Value="#07131B" />
-                        <Setter Property="OverridesDefaultStyle"
-                                Value="true" />
-                        <Setter Property="FocusVisualStyle"
-                                Value="{x:Null}" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                    <Border x:Name="Border"
-                                            Width="235"
-                                            Padding="10,2,2,2"
-                                            HorizontalAlignment="Left"
-                                            CornerRadius="7"
-                                            FocusVisualStyle="{x:Null}"
-                                            SnapsToDevicePixels="true">
-                                        <ContentPresenter />
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsSelected"
-                                                 Value="true">
-                                            <Setter TargetName="Border"
-                                                    Property="Background"
-                                                    Value="#62F5C7A4" />
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver"
-                                                 Value="true">
-                                            <Setter TargetName="Border"
-                                                    Property="Background"
-                                                    Value="#629DE199" />
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Game ID" Width="100"
+                                        DisplayMemberBinding="{Binding GameId}">
+                        </GridViewColumn>
+                        <GridViewColumn Header="Player name"
+                                        Width="150"
+                                        DisplayMemberBinding="{Binding PlayerName}" />
+                        <GridViewColumn Header="Player ID"
+                                        Width="120"
+                                        DisplayMemberBinding="{Binding PlayerID}" />
+                        <GridViewColumn Header="Pieces"
+                                        Width="100"
+                                        DisplayMemberBinding="{Binding Pieces}" />
+                        <GridViewColumn Header="Play time"
+                                        Width="100"
+                                        DisplayMemberBinding="{Binding Time}" />
+                        <GridViewColumn Header="Date"
+                                        Width="250"
+                                        DisplayMemberBinding="{Binding Date}" />
+                    </GridView>
+                </ListView.View>
             </ListView>
         </Border>
         <Button x:Name="AddBTN"

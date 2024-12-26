@@ -16,8 +16,8 @@ namespace PuzzleGame.MVVM.ViewModels
     public class LeaderBoardViewModel : ObservableObject
     {
 
-        private ObservableObject? _currentPage;
-        public ObservableObject? CurrentPage
+        private ObservableObject _currentPage;
+        public ObservableObject CurrentPage
         {
             get => _currentPage;
             set
@@ -29,11 +29,22 @@ namespace PuzzleGame.MVVM.ViewModels
                 }
             }
         }
+        Connection connection = new Connection();
 
+        public ObservableCollection<Models.GameRound> gameRoundsList
+        {
+            get => LeaderBoardService.Instance.GameRoundsList;
+            set
+            {
+                LeaderBoardService.Instance.GameRoundsList = value;
+                OnPropertyChanged();
+            }
+        }
 
         public LeaderBoardViewModel()
         {
             _wndBgr = defaultColornum2;
+            LeaderBoardService.Instance.LoadGameRounds(gameRoundsList);
         }
     }
 }
