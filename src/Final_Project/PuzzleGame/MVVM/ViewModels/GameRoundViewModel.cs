@@ -17,8 +17,8 @@ namespace PuzzleGame.MVVM.ViewModels
     public class GameRoundViewModel:ObservableObject
     {
         public Leaderboard leaderboardserivce = new Leaderboard();
-        private ObservableObject _currentPage;
-        public ObservableObject CurrentPage
+        private ObservableObject? _currentPage;
+        public ObservableObject? CurrentPage
         {
             get => _currentPage;
             set
@@ -71,6 +71,7 @@ namespace PuzzleGame.MVVM.ViewModels
         long timeSet;
 
         public RelayCommand<object> GoToMainMenuCommand { get; set; }
+        public RelayCommand<object> GoToLeaderboardCommand { get; set; }
         public RelayCommand<object> PlayAgainCommand { get; set; }
         //Command handling input key
         public RelayCommand<object> HandleKeyCommand { get; set; }
@@ -189,6 +190,7 @@ namespace PuzzleGame.MVVM.ViewModels
             LastGameTimeStr = _lastGameTime.ToString(@"hh\:mm\:ss");
 
             //command def
+            GoToLeaderboardCommand = new RelayCommand<object>((o) => { CurrentPage = new LeaderBoardViewModel(); });
             GoToMainMenuCommand = new RelayCommand<object>((o) => { CurrentPage = new LevelSelectionViewModel(); });
             PlayAgainCommand = new RelayCommand<object>((o) => { CurrentPage = new LevelSelectionViewModel(); });
             HandleKeyCommand = new RelayCommand<object>(o => { Game_Control((string)o) ;});
@@ -410,7 +412,6 @@ namespace PuzzleGame.MVVM.ViewModels
             GameModel.Instance.Status = GameStatus.EndGame;
             IsEndGameVisible = false;
             ReleaseClock();
-           
         }
 
 

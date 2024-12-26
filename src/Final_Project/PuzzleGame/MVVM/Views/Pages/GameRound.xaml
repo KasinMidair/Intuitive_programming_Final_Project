@@ -134,7 +134,7 @@
                             materialDesign:ButtonAssist.CornerRadius="17"
                             Background="#97C693"
                             BorderBrush="#97C693"
-                            Command="{Binding GoToMainMenuCommand}"
+                            Command="{Binding GoToLeaderboardCommand}"
                             Content="LeaderBoard"
                             FocusVisualStyle="{x:Null}"
                             FontSize="20" />

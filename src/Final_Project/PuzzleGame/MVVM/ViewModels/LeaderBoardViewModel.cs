@@ -1,18 +1,20 @@
 ﻿using PuzzleGame.Core;
+using PuzzleGame.Core.Helper;
 using PuzzleGame.MVVM.Models;
+using PuzzleGame.MVVM.Views.Pages;
 using PuzzleGame.Stores;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Threading;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
     public class LeaderBoardViewModel : ObservableObject
     {
-        public readonly LeaderBoardService _leaderBoardService = new LeaderBoardService();
 
         private ObservableObject? _currentPage;
         public ObservableObject? CurrentPage
@@ -28,14 +30,10 @@ namespace PuzzleGame.MVVM.ViewModels
             }
         }
 
-        public ObservableCollection<GameRound> GameRounds;
-
 
         public LeaderBoardViewModel()
         {
-            GameRounds = new ObservableCollection<GameRound>();
-
-            _leaderBoardService.LoadGameRounds(GameRounds);
+            _wndBgr = defaultColornum2;
         }
     }
 }

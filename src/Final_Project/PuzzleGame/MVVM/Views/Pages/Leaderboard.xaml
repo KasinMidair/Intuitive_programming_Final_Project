@@ -6,12 +6,14 @@
           xmlns:local="clr-namespace:PuzzleGame.MVVM.Views.Pages"
           xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-          Title="Leaderboard"
+          Title="LeaderBoard"
           d:DesignHeight="600"
           d:DesignWidth="920"
           FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
           mc:Ignorable="d">
-
+    <Page.DataContext>
+        <ViewModels:LeaderBoardViewModel />
+    </Page.DataContext>
     <Page.Resources>
         <ControlTemplate x:Key="ComboBoxToggleButton"
                          TargetType="{x:Type ToggleButton}">
