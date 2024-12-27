@@ -13,7 +13,7 @@ using System.Windows.Threading;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
-    public class LeaderBoardViewModel : ObservableObject
+    public class LeaderBoardViewModel : ObservableObject, INotifyPropertyChanged
     {
 
         private ObservableObject _currentPage;
@@ -29,22 +29,37 @@ namespace PuzzleGame.MVVM.ViewModels
                 }
             }
         }
-        Connection connection = new Connection();
 
+        string _numberOfPieces;
+        public string NumberOfPieces
+        {
+            get => _numberOfPieces;
+            set
+            {
+                value = value.Substring(value.Length - 5);
+                if (_numberOfPieces != value)
+                {
+                    _numberOfPieces = value;
+                    OnPropertyChanged();
+                    LeaderBoardService.Instance.GameRoundsList.Clear();
+                    gameRoundsList.Clear();
+                    LeaderBoardService.Instance.LoadGameRoundsWithPieces(gameRoundsList, _numberOfPieces);
+                }
+            }
+        }
         public ObservableCollection<Models.GameRound> gameRoundsList
         {
             get => LeaderBoardService.Instance.GameRoundsList;
             set
             {
                 LeaderBoardService.Instance.GameRoundsList = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(gameRoundsList));
             }
         }
 
         public LeaderBoardViewModel()
         {
             _wndBgr = defaultColornum2;
-            LeaderBoardService.Instance.LoadGameRounds(gameRoundsList);
         }
     }
 }

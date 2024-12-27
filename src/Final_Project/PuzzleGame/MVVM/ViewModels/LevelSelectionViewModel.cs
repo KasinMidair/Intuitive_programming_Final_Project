@@ -14,6 +14,7 @@ using Caliburn.Micro;
 using PuzzleGame.Stores;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
@@ -69,6 +70,7 @@ namespace PuzzleGame.MVVM.ViewModels
             {
                 _numberOfPieces = value;
                 OnPropertyChanged();
+                MessageBox.Show(NumberOfPieces);
             }
         }
         private bool timerChecked;

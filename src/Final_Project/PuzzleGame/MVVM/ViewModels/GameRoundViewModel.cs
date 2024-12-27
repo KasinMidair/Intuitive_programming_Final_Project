@@ -426,7 +426,7 @@ namespace PuzzleGame.MVVM.ViewModels
                 time = "Time: " + LastGameTimeStr;
             GameModel.Instance.GameRound.PlayerID = GameModel.Instance.Player.Id;
             GameModel.Instance.GameRound.PlayerName = GameModel.Instance.Player.Name;
-            GameModel.Instance.GameRound.Pieces = Row.ToString() + "x" + Col.ToString();
+            GameModel.Instance.GameRound.Pieces = Row.ToString() + " x " + Col.ToString();
             GameModel.Instance.GameRound.Time = LastGameTimeStr;
             GameModel.Instance.GameRound.Date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
             GameModel.Instance.LeaderBoardService.AddGameRound(GameModel.Instance.GameRound);

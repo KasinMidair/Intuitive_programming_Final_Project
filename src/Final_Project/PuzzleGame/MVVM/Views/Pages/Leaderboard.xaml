@@ -264,14 +264,12 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -280,14 +278,18 @@
                    FontSize="32"
                    FontWeight="Bold"
                    HorizontalAlignment="Center"
-                   Grid.Column="1"
+                   Grid.Column="0"
                    Grid.ColumnSpan="2" />
         <ComboBox Grid.Row="1"
-                  Grid.ColumnSpan="2"
                   Background="White"
+                  FontWeight="Bold"
+                  Foreground="Black"
+                  FontSize="20"
                   Grid.Column="0"
                   VerticalAlignment="Center"
-                  Margin="70, 0, 120, 0">
+                  Margin="70, 0, 120, 0"
+                  SelectedIndex="0"
+                  SelectedItem="{Binding NumberOfPieces}">
             <ComboBoxItem Content="3 x 3" />
             <ComboBoxItem Content="4 x 4" />
             <ComboBoxItem Content="5 x 5" />
@@ -296,17 +298,16 @@
             <ComboBoxItem Content="8 x 8" />
             <ComboBoxItem Content="9 x 9" />
         </ComboBox>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center">
         <Border Background="White"
                 Grid.Row="1"
                 Grid.Column="2"
                 BorderBrush="Black"
                 BorderThickness="5"
                 CornerRadius="15">
-            <TextBlock  Grid.Row="1"
-                        Grid.Column="2" />
+            <TextBlock Width="200"/>
         </Border>
-        <Button Grid.Row="1"
-                Grid.Column="3"
+        <Button 
                 Margin="5"
                 x:Name="SearchBTN"
                 Width="120"
@@ -323,6 +324,7 @@
                 FontSize="20"
                 FontWeight="SemiBold"
                 Foreground="Snow" />
+        </StackPanel>
         <Border Background="White"
                 Grid.Row="2"
                 Grid.ColumnSpan="4"
@@ -331,13 +333,18 @@
                 BorderThickness="5"
                 CornerRadius="15">
             <ListView x:Name="LeaderboardList"
-                      DisplayMemberPath="Name"
                       FontSize="20"
                       FontWeight="SemiBold"
                       Foreground="#15161C"
-                      ItemsSource="{Binding gameRoundsList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding gameRoundsList, Mode=OneWay}"
                       ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                       Margin="5">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.Resources>
                     <Style TargetType="{x:Type GridViewColumnHeader}">
                         <Setter Property="HorizontalContentAlignment"
@@ -353,7 +360,7 @@
                                         Width="150"
                                         DisplayMemberBinding="{Binding PlayerName}" />
                         <GridViewColumn Header="Player ID"
-                                        Width="120"
+                                        Width="150"
                                         DisplayMemberBinding="{Binding PlayerID}" />
                         <GridViewColumn Header="Pieces"
                                         Width="100"
@@ -368,13 +375,13 @@
                 </ListView.View>
             </ListView>
         </Border>
-        <Button x:Name="AddBTN"
+        <Button x:Name="MainMenuBTN"
                 Grid.Row="4"
-                Grid.Column="1"
+                Grid.Column="0"
                 Width="150"
                 Height="40"
-                Margin="5"
-                HorizontalAlignment="Center"
+                Margin="0, 0, 20, 0"
+                HorizontalAlignment="Right"
                 materialDesign:ButtonAssist.CornerRadius="15"
                 Background="#9DB899"
                 BorderBrush="#1F2326"
@@ -386,13 +393,13 @@
                 FontSize="20"
                 FontWeight="SemiBold"
                 Foreground="Snow" />
-        <Button x:Name="MainMenu"
+        <Button x:Name="BackBTN"
                 Grid.Row="4"
                 Grid.Column="2"
                 Width="150"
                 Height="40"
-                Margin="5"
-                HorizontalAlignment="Center"
+                Margin="20, 0, 0, 0"
+                HorizontalAlignment="Left"
                 materialDesign:ButtonAssist.CornerRadius="15"
                 Background="#9DB899"
                 BorderBrush="#1F2326"

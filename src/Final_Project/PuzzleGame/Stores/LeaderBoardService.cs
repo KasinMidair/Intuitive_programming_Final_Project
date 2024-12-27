@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Windows;
 
 namespace PuzzleGame.Stores
 {
@@ -30,12 +31,17 @@ namespace PuzzleGame.Stores
         Connection connection = new Connection();
 
         // load data tu table GAMEROUND vao gameRounds
-        public void LoadGameRounds(ObservableCollection<GameRound> gameRounds)
+        public void LoadGameRoundsWithPieces(ObservableCollection<GameRound> gameRounds, string inputPieces)
         {
-            connection.dataAdapter = new SqlDataAdapter($"Select GAMEID, PLAYERNAME, PLAYERID, PIECES, PLAYTIME, PLAYDATE from GAMEROUND", connection.connStr);
+            connection.dataAdapter = new SqlDataAdapter(
+                $"SELECT GAMEID, PLAYERNAME, PLAYERID, PIECES, PLAYTIME, PLAYDATE FROM GAMEROUND WHERE PIECES = '{inputPieces}' ORDER BY PLAYTIME",
+                connection.connStr);
             connection.dataAdapter.Fill(connection.ds, "GAMEROUND");
             connection.dt = connection.ds.Tables["GAMEROUND"];
+
+            // Clear the gameRounds list before adding new data
             GameRoundsList.Clear();
+
             foreach (DataRow dr in connection.dt.Rows)
             {
                 gameRounds.Add(new GameRound
