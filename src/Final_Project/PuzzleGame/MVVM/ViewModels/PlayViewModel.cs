@@ -194,6 +194,7 @@ namespace PuzzleGame.MVVM.ViewModels
             //Message subcriber
             EventAggregator.GetEvent<PubSubEvent<ObservableObject>>().Subscribe((o) => OnCurrentPageChanged(o));
             EventAggregator.GetEvent<PubSubEvent<GameStatus>>().Subscribe((o) => Appstatus(o));
+            EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => GoBackFromOtherView(o));
             MusicSystemService.Instance.ChangeBackgroundMusic(2);
 
             toolBarColor = defaultColornum2;
@@ -246,6 +247,14 @@ namespace PuzzleGame.MVVM.ViewModels
                 Application.Current.Shutdown();
             }
         
+        }
+        public void GoBackFromOtherView(string subscribedString)
+        {
+            if (subscribedString == "Go back")
+            {
+                GoBackPage();
+                _navigationService.RemoveBackEntry();
+            }
         }
         public void  GoBackPage()
         {

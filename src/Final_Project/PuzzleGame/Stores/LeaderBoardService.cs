@@ -29,13 +29,26 @@ namespace PuzzleGame.Stores
         }
         public ObservableCollection<GameRound> GameRoundsList = new ObservableCollection<GameRound>();
         Connection connection = new Connection();
-
-        // load data tu table GAMEROUND vao gameRounds
-        public void LoadGameRoundsWithPieces(ObservableCollection<GameRound> gameRounds, string inputPieces)
+        // Find all records in GAMEROUNDTABLE matching inputPieces and playerID or just inputPieces when playerId = null
+        public void LoadGameRounds(ObservableCollection<GameRound> gameRounds, string inputPieces, string playerId = null)
         {
-            connection.dataAdapter = new SqlDataAdapter(
-                $"SELECT GAMEID, PLAYERNAME, PLAYERID, PIECES, PLAYTIME, PLAYDATE FROM GAMEROUND WHERE PIECES = '{inputPieces}' ORDER BY PLAYTIME",
-                connection.connStr);
+            string sql = $"SELECT GAMEID, PLAYERNAME, PLAYERID, PIECES, PLAYTIME, PLAYDATE FROM GAMEROUND WHERE PIECES = '{inputPieces}'";
+
+            if (!string.IsNullOrEmpty(playerId))
+            {
+                sql += $" AND PLAYERID = '{playerId}'";
+            }
+
+            sql += " ORDER BY PLAYTIME";
+
+            connection.dataAdapter = new SqlDataAdapter(sql, connection.connStr);
+
+            // Check if GAMEROUND table exists before putting data in, if it exists then delete it
+            if (connection.ds.Tables.Contains("GAMEROUND"))
+            {
+                connection.ds.Tables.Remove(connection.ds.Tables["GAMEROUND"]);
+            }
+
             connection.dataAdapter.Fill(connection.ds, "GAMEROUND");
             connection.dt = connection.ds.Tables["GAMEROUND"];
 
@@ -55,7 +68,6 @@ namespace PuzzleGame.Stores
                 });
             }
         }
-
         // them gameRound vao table
         public void AddGameRound(GameRound gameRound)
         {
@@ -84,5 +96,6 @@ namespace PuzzleGame.Stores
 
             return rowCount;
         }
+        
     }
 }

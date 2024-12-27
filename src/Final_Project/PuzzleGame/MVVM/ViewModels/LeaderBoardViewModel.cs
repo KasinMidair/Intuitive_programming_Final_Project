@@ -29,8 +29,19 @@ namespace PuzzleGame.MVVM.ViewModels
                 }
             }
         }
-
+        private string _playerIDToSearch;
+        public string PlayerIDToSearch
+        {
+            get => _playerIDToSearch;
+            set
+            {
+                _playerIDToSearch = value;
+                OnPropertyChanged();
+            }
+        }
         string _numberOfPieces;
+        public RelayCommand<object> SearchPlayerIDCommand { get; set; }
+        public RelayCommand<object> GoBackCommand { get; set; }
         public string NumberOfPieces
         {
             get => _numberOfPieces;
@@ -41,9 +52,7 @@ namespace PuzzleGame.MVVM.ViewModels
                 {
                     _numberOfPieces = value;
                     OnPropertyChanged();
-                    LeaderBoardService.Instance.GameRoundsList.Clear();
-                    gameRoundsList.Clear();
-                    LeaderBoardService.Instance.LoadGameRoundsWithPieces(gameRoundsList, _numberOfPieces);
+                    LeaderBoardService.Instance.LoadGameRounds(gameRoundsList, NumberOfPieces);
                 }
             }
         }
@@ -60,6 +69,8 @@ namespace PuzzleGame.MVVM.ViewModels
         public LeaderBoardViewModel()
         {
             _wndBgr = defaultColornum2;
+            SearchPlayerIDCommand = new RelayCommand<object>(o => { LeaderBoardService.Instance.LoadGameRounds(gameRoundsList, NumberOfPieces, PlayerIDToSearch);});
+            GoBackCommand = new RelayCommand<object>(o => { EventAggregator.GetEvent<PubSubEvent<string>>().Publish("Go back"); });
         }
     }
 }

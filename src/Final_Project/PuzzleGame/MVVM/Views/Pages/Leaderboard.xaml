@@ -298,32 +298,45 @@
             <ComboBoxItem Content="8 x 8" />
             <ComboBoxItem Content="9 x 9" />
         </ComboBox>
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center">
-        <Border Background="White"
-                Grid.Row="1"
-                Grid.Column="2"
-                BorderBrush="Black"
-                BorderThickness="5"
-                CornerRadius="15">
-            <TextBlock Width="200"/>
-        </Border>
-        <Button 
-                Margin="5"
-                x:Name="SearchBTN"
-                Width="120"
-                Height="40"
-                HorizontalAlignment="Left"
-                materialDesign:ButtonAssist.CornerRadius="15"
-                Background="#9DB899"
-                BorderBrush="#1F2326"
-                BorderThickness="0,0,2,2"
-                Command="{Binding AddPicturePageOpenCommand}"
-                Content="Search"
-                FocusVisualStyle="{x:Null}"
-                FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                FontSize="20"
-                FontWeight="SemiBold"
-                Foreground="Snow" />
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    HorizontalAlignment="Center">
+            <Border Background="Snow"
+                    CornerRadius="35"
+                    Canvas.Left="200"
+                    Canvas.Top="200"
+                    Width="300"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    RenderTransformOrigin="0.5,0.595">
+                <TextBox  VerticalAlignment="Center"
+                          FontSize="24"
+                          materialDesign:HintAssist.Hint="Enter Player ID"
+                          Foreground="#15161C"
+                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                          Height="50"
+                          Margin="38,0,40,0"
+                          RenderTransformOrigin="0.512,0.706"
+                          FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                          Text="{Binding PlayerIDToSearch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </Border>
+            <Button Margin="5"
+                    x:Name="SearchBTN"
+                    Width="120"
+                    Height="40"
+                    HorizontalAlignment="Left"
+                    materialDesign:ButtonAssist.CornerRadius="15"
+                    Background="#9DB899"
+                    BorderBrush="#1F2326"
+                    BorderThickness="0,0,2,2"
+                    Command="{Binding SearchPlayerIDCommand}"
+                    Content="Search"
+                    FocusVisualStyle="{x:Null}"
+                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Foreground="Snow" />
         </StackPanel>
         <Border Background="White"
                 Grid.Row="2"
@@ -353,7 +366,8 @@
                 </ListView.Resources>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Game ID" Width="100"
+                        <GridViewColumn Header="Game ID"
+                                        Width="100"
                                         DisplayMemberBinding="{Binding GameId}">
                         </GridViewColumn>
                         <GridViewColumn Header="Player name"
@@ -375,36 +389,18 @@
                 </ListView.View>
             </ListView>
         </Border>
-        <Button x:Name="MainMenuBTN"
-                Grid.Row="4"
-                Grid.Column="0"
-                Width="150"
-                Height="40"
-                Margin="0, 0, 20, 0"
-                HorizontalAlignment="Right"
-                materialDesign:ButtonAssist.CornerRadius="15"
-                Background="#9DB899"
-                BorderBrush="#1F2326"
-                BorderThickness="0,0,2,2"
-                Command="{Binding AddPicturePageOpenCommand}"
-                Content="Main menu"
-                FocusVisualStyle="{x:Null}"
-                FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                FontSize="20"
-                FontWeight="SemiBold"
-                Foreground="Snow" />
         <Button x:Name="BackBTN"
                 Grid.Row="4"
-                Grid.Column="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Command="{Binding GoBackCommand}"
                 Width="150"
                 Height="40"
-                Margin="20, 0, 0, 0"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Center"
                 materialDesign:ButtonAssist.CornerRadius="15"
                 Background="#9DB899"
                 BorderBrush="#1F2326"
                 BorderThickness="0,0,2,2"
-                Command="{Binding AddPicturePageOpenCommand}"
                 Content="Back"
                 FocusVisualStyle="{x:Null}"
                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
