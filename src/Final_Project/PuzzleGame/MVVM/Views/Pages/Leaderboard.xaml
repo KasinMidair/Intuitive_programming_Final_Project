@@ -307,6 +307,7 @@
                     Canvas.Left="200"
                     Canvas.Top="200"
                     Width="300"
+                    Height="50"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     RenderTransformOrigin="0.5,0.595">
@@ -315,7 +316,7 @@
                           materialDesign:HintAssist.Hint="Enter Player ID"
                           Foreground="#15161C"
                           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                          Height="50"
+                          Height="40"
                           Margin="38,0,40,0"
                           RenderTransformOrigin="0.512,0.706"
                           FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
