@@ -78,9 +78,6 @@ namespace PuzzleGame.Stores
                 SqlCommandBuilder commandBuilder = new SqlCommandBuilder(connection.dataAdapter);
                 connection.dataAdapter.Update(connection.ds, "PICTURE");
 
-                //Load the picture list after delete picture
-                LoadPictureListService.Instance.LoadPictureList(PlayerID);
-
                 return true;
             }
         }
@@ -110,8 +107,6 @@ namespace PuzzleGame.Stores
 
             SqlCommandBuilder commandBuilder = new SqlCommandBuilder(connection.dataAdapter);
             connection.dataAdapter.Update(connection.ds, "PICTURE");
-            //Load the picture list after delete picture
-            LoadPictureListService.Instance.LoadPictureList(PlayerID);
         }
 
     }

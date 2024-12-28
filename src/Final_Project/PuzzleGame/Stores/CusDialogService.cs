@@ -30,7 +30,7 @@ namespace PuzzleGame.Stores
                 currAddPicDialog.Close();
             }
             else currDialog.Close();
-        }
+        }   
 
         public void MoveDialog(bool isCusDialog=true)
         {
