@@ -375,7 +375,7 @@
             FocusVisualStyle="{x:Null}"
             Foreground="Snow">
             <TextBlock
-                Height="37"
+                Height="52"
                 FontSize="32"
                 FontWeight="ExtraBlack"
                 Text="Play" />

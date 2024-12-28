@@ -233,7 +233,7 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
+            <RowDefinition Height="70" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -255,7 +255,7 @@
         <ComboBox
             Grid.Row="1"
             Grid.Column="0"
-            Margin="82,10,108,0"
+            Margin="88,10,102,0"
             VerticalAlignment="Top"
             Background="White"
             FocusVisualStyle="{x:Null}"
@@ -275,58 +275,68 @@
         <StackPanel
             Grid.Row="1"
             Grid.Column="1"
+            Width="290"
             HorizontalAlignment="Center"
             Orientation="Horizontal">
             <Border
-                Grid.Row="1"
-                Grid.Column="2"
-                Width="155"
-                Height="40"
-                Background="White"
+                Canvas.Left="200"
+                Canvas.Top="200"
+                Width="170"
+                Height="34"
+                VerticalAlignment="Center"
+                Background="Snow"
                 BorderBrush="#262626"
-                BorderThickness="1"
-                CornerRadius="15">
+                BorderThickness="1.2"
+                CornerRadius="15"
+                RenderTransformOrigin="0.5,0.595">
                 <TextBox
-                    Width="120"
-                    Margin="0,3,0,-1"
-                    HorizontalAlignment="Center"
-                    FocusVisualStyle="{x:Null}"
-                    FontSize="16" />
+                    Height="34"
+                    Margin="19,0,14,0"
+                    VerticalAlignment="Top"
+                    materialDesign:HintAssist.Hint="Enter Player ID"
+                    FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                    FontSize="19"
+                    Foreground="#15161C"
+                    Text="{Binding PlayerIDToSearch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Border>
             <Button
                 x:Name="SearchBTN"
-                Width="108"
+                Width="100"
                 Height="40"
                 Margin="5"
                 materialDesign:ButtonAssist.CornerRadius="15"
                 Background="#9DB899"
                 BorderBrush="#1F2326"
                 BorderThickness="0,0,2,2"
-                Command="{Binding AddPicturePageOpenCommand}"
+                Command="{Binding SearchPlayerIDCommand}"
                 Content="Search"
                 FocusVisualStyle="{x:Null}"
                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
                 FontSize="20"
                 FontWeight="SemiBold"
                 Foreground="Snow" />
+
         </StackPanel>
         <Border
             Grid.Row="2"
             Grid.ColumnSpan="2"
-            Margin="60,15,60,89"
+            Margin="60,13,60,91"
             Background="White"
             BorderBrush="Black"
             BorderThickness="4"
             CornerRadius="15">
             <ListView
                 x:Name="LeaderboardList"
-                Width="784"
-                Margin="0,16,0,5"
+                Width="750"
+                Height="Auto"
+                Margin="0,16,0,25"
                 HorizontalAlignment="Center"
+                FocusVisualStyle="{x:Null}"
                 FontSize="18"
                 Foreground="#15161C"
                 ItemsSource="{Binding gameRoundsList, Mode=OneWay}"
                 ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -336,12 +346,13 @@
                 <ListView.Resources>
                     <Style TargetType="{x:Type GridViewColumnHeader}">
                         <Setter Property="HorizontalContentAlignment" Value="Left" />
+                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                     </Style>
                 </ListView.Resources>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn
-                            Width="120"
+                            Width="180"
                             DisplayMemberBinding="{Binding PlayerName}"
                             Header="Player name" />
                         <GridViewColumn
@@ -353,13 +364,14 @@
                             DisplayMemberBinding="{Binding Pieces}"
                             Header="Pieces" />
                         <GridViewColumn
-                            Width="120"
+                            Width="130"
                             DisplayMemberBinding="{Binding Time}"
                             Header="Play time" />
                         <GridViewColumn
-                            Width="200"
+                            Width="250"
                             DisplayMemberBinding="{Binding Date}"
                             Header="Date" />
+
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -368,22 +380,24 @@
         <Button
             x:Name="BackBTN"
             Grid.Row="2"
+            Grid.Column="0"
             Grid.ColumnSpan="2"
-            Width="125"
+            Width="120"
             Height="40"
-            Margin="398,439,0,11"
+            Margin="401,412,0,28"
             HorizontalAlignment="Left"
             materialDesign:ButtonAssist.CornerRadius="15"
-            Background="#9DB899"
+            Background="#F14666"
             BorderBrush="#1F2326"
             BorderThickness="0,0,2,2"
-            Command="{Binding AddPicturePageOpenCommand}"
+            Command="{Binding GoBackCommand}"
             Content="Back"
             FocusVisualStyle="{x:Null}"
             FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
             FontSize="20"
             FontWeight="SemiBold"
             Foreground="Snow" />
+
     </Grid>
 
 </Page>
