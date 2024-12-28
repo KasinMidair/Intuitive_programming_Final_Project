@@ -312,11 +312,9 @@ namespace PuzzleGame.MVVM.ViewModels
                     //GameModel.Instance.Player = null;
                     FrameNavigation(new MainMenuViewModel());
                     AvoidNavigate();
-                    SettingMenuStatus();
-
                 }
             }
-            
+            SettingMenuStatus();
         }
         private void BackgroundMusic(string num)
         {
