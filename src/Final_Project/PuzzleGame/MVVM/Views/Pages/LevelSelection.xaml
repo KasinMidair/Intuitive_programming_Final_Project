@@ -112,7 +112,7 @@
                             <ContentPresenter
                                 Name="ContentSite"
                                 Width="185"
-                                Height="24"
+                                Height="24" 
                                 Margin="24,4,124,10"
                                 Content="{TemplateBinding SelectionBoxItem}"
                                 ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
@@ -305,7 +305,7 @@
             Grid.Row="2"
             Grid.ColumnSpan="2"
             Height="40" FocusVisualStyle="{x:Null}"
-            Margin="-3,86,34,24"
+            Margin="-3,88,34,22"
             Background="Snow"
             FontSize="20"
             FontWeight="SemiBold"

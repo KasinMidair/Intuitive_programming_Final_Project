@@ -70,7 +70,6 @@ namespace PuzzleGame.MVVM.ViewModels
             {
                 _numberOfPieces = value;
                 OnPropertyChanged();
-                MessageBox.Show(NumberOfPieces);
             }
         }
         private bool timerChecked;

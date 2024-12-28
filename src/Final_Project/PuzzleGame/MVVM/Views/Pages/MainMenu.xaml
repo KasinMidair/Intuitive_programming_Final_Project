@@ -12,7 +12,6 @@
     Title="MainMenu"
     d:DesignHeight="600"
     d:DesignWidth="920"
-    Background="Transparent"
     FontFamily="{DynamicResource MaterialDesignFont}"
     TextElement.FontSize="13"
     TextElement.FontWeight="Regular"
@@ -20,7 +19,10 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
-    <StackPanel Margin="323,235,322,11">
+    <Page.Background>
+        <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/MainMenuBackground.png" />
+    </Page.Background>
+    <StackPanel Margin="601,148,44,98">
 
         <!--  Style="{StaticResource ResourceKey=BTN}  -->
 

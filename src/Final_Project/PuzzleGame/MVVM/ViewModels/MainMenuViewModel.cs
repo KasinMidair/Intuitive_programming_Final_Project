@@ -47,7 +47,8 @@ namespace PuzzleGame.MVVM.ViewModels
             {
                 CurrentPage = new LeaderBoardViewModel();
             });
-            ShutdownCommand = new RelayCommand<object>((o) => {
+            ShutdownCommand = new RelayCommand<object>((o) => 
+            {
                 EventAggregator.GetEvent<PubSubEvent<GameStatus>>().Publish(GameStatus.QuitApp);
             });
         }

@@ -36,6 +36,13 @@ namespace PuzzleGame.Stores
             connection.dataAdapter = new SqlDataAdapter(
                 $"SELECT GAMEID, PLAYERNAME, PLAYERID, PIECES, PLAYTIME, PLAYDATE FROM GAMEROUND WHERE PIECES = '{inputPieces}' ORDER BY PLAYTIME",
                 connection.connStr);
+
+            //check if GAMEROUND table is existed before putting data in, if it exists then delete it
+            if (connection.ds.Tables.Contains("GAMEROUND"))
+            {
+                connection.ds.Tables.Remove(connection.ds.Tables["GAMEROUND"]);
+            }
+
             connection.dataAdapter.Fill(connection.ds, "GAMEROUND");
             connection.dt = connection.ds.Tables["GAMEROUND"];
 
@@ -46,7 +53,6 @@ namespace PuzzleGame.Stores
             {
                 gameRounds.Add(new GameRound
                 {
-                    GameId = Convert.ToString(dr["GAMEID"]),
                     PlayerName = Convert.ToString(dr["PLAYERNAME"]),
                     PlayerID = Convert.ToString(dr["PLAYERID"]),
                     Pieces = Convert.ToString(dr["PIECES"]),
@@ -60,7 +66,7 @@ namespace PuzzleGame.Stores
         public void AddGameRound(GameRound gameRound)
         {
             string query = $"Insert into GAMEROUND values" +
-                $"('{GetRowCount().ToString("D6")}', '{gameRound.PlayerName}', '{gameRound.PlayerID}', '{gameRound.Pieces}', '{gameRound.Time}', '{gameRound.Date}')";
+                $"('{(GetRowCount()+1).ToString("D6")}', '{gameRound.PlayerName}', '{gameRound.PlayerID}', '{gameRound.Pieces}', '{gameRound.Time}', '{gameRound.Date}')";
 
             SqlCommand command = new SqlCommand(query, connection.Conn);
 

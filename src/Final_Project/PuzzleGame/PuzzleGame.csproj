@@ -27,6 +27,7 @@
     <Resource Include="Assets\Audio\Lose.wav" />
     <Resource Include="Assets\Audio\Win.wav" />
     <Content Include="Assets\favicon.ico" />
+    <Resource Include="Assets\Imgs\MainMenuBackground.png" />
     <Resource Include="Assets\picture\picB.png" />
     <Resource Include="Assets\picture\picC.png" />
     <Resource Include="Assets\Imgs\Lose.png" />

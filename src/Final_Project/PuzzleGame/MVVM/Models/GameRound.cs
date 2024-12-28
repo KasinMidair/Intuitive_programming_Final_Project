@@ -8,16 +8,8 @@ using System.Threading.Tasks;
 
 namespace PuzzleGame.MVVM.Models
 {
-    public class GameRound : INotifyPropertyChanged
+    public class GameRound 
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
         public string GameId { get; set; }
         public string PlayerName { get; set; }
         public string PlayerID { get; set; }

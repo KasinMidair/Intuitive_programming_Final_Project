@@ -298,16 +298,16 @@ namespace PuzzleGame.MVVM.ViewModels
             {
                 CustomDialogResult rlt = CusDialogService.Instance.ShowDialog("Do you really want to log out?", true).Result;
              
-                if (rlt == CustomDialogResult.Yes)
+                if (rlt == CustomDialogResult.No)
                 {
-                    //GameModel.Instance.Player = null;
-                    FrameNavigation(new MainMenuViewModel());
-                    AvoidNavigate();
-                    SettingMenuStatus();
-
+                    return;
                 }
             }
-            
+            GameModel.Instance.Player = null;
+            FrameNavigation(new MainMenuViewModel());
+            AvoidNavigate();
+            SettingMenuStatus();
+
         }
         private void BackgroundMusic(string num)
         {
@@ -399,19 +399,18 @@ namespace PuzzleGame.MVVM.ViewModels
             }
 
 
-            //back/foward status setting
+            // back/foward status setting
             _navigationService.Navigate(cur);
-            CurrentPage = cur;
-            if (_currentPage is GameRoundViewModel || _currentPage is LevelSelectionViewModel)
+            Application.Current.Dispatcher.InvokeAsync(() =>
             {
-
-                AvoidNavigate();
-            }
-            else
-            {
-                IsGoForward = _navigationService.CanGoForward;
-                IsGoBack = _navigationService.CanGoBack;
-            }
+                CurrentPage = (ObservableObject)_navigationService.Content;
+                if (_currentPage is MainMenuViewModel || _currentPage is GameRoundViewModel || _currentPage is LevelSelectionViewModel)
+                {
+                    AvoidNavigate();
+                }
+                else IsGoBack = _navigationService.CanGoBack;
+                IsGoForward = false;
+            });
 
            
 

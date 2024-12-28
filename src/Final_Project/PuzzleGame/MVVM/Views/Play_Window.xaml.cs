@@ -15,7 +15,7 @@ namespace PuzzleGame.MVVM.Views
             
             //Setup NavigationServices
             ((PlayViewModel)this.DataContext)._navigationService = MainFrame.NavigationService;
-            ((PlayViewModel)this.DataContext).FrameNavigation (new MainMenuViewModel());
+            ((PlayViewModel)this.DataContext)._navigationService.Navigate(new MainMenuViewModel());
             MainFrame.Focusable = false;
 
         }
