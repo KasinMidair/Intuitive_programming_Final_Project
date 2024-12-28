@@ -118,18 +118,6 @@ namespace PuzzleGame.MVVM.ViewModels
                 _ = CusDialogService.Instance.ShowDialog("The Image name not entered yet.!");
                 check = true;
             }
-            /*else
-            {
-                foreach (Picture pic in _pictureList)
-                {
-                    if (NewPicName == pic.Name)
-                    {
-                        MessageBox.Show("ten tranh da ton tai...");
-                        check = true;
-                        break;
-                    }
-                }
-            }*/
 
             if (check == false)
             {
@@ -151,9 +139,7 @@ namespace PuzzleGame.MVVM.ViewModels
                 File.Copy(NewPicUrl, destinationPath, true);
 
                 LoadPictureListService.Instance.AddPicture(NewPic, GameModel.Instance.Player.Id);
-                //load the list after adding picture
-                LoadPictureListService.Instance.LoadPictureList(GameModel.Instance.Player.Id);
-                EventAggregator.GetEvent<PubSubEvent<string>>().Publish(GameModel.Instance.Player.Id); 
+                EventAggregator.GetEvent<PubSubEvent<string>>().Publish(""); 
                 
                 _ = CusDialogService.Instance.ShowDialog("Picture is saved!...I think so:)))");
             }

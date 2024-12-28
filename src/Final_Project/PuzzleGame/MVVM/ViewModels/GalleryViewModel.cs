@@ -100,10 +100,7 @@ namespace PuzzleGame.MVVM.ViewModels
                         Console.WriteLine($"Lỗi khi xóa tệp: {ex.Message}");
                     }
                 }
-                //Load the picture list after delete picture
-                LoadPictureListService.Instance.LoadPictureList(playerID);
-                EventAggregator.GetEvent<PubSubEvent<string>>()
-                .Publish(GameModel.Instance.Player.Id);
+                EventAggregator.GetEvent<PubSubEvent<string>>().Publish("");
             }
         }
 

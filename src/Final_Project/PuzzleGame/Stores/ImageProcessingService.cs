@@ -72,8 +72,6 @@ namespace PuzzleGame.Stores
 
         }
 
-
-
         /// <summary>
         /// using  Fisher-Yates algorithm( Knuth shuffle algorithm ) to shuffle all the pieces.
         /// The Fisher-Yates algorithm is a popular algorithm 
@@ -104,7 +102,7 @@ namespace PuzzleGame.Stores
             return InversionCountingService.CountInversions(ImgIndex); //counting inversions and return it. 
         }
 
-
+        //swap element
         public void Swap(List<int> arr, int a, int b)
         {
             int temp = arr[a];

@@ -44,7 +44,6 @@ namespace PuzzleGame.Stores
             return player;
         }
 
-
         // Them nguoi choi moi vao table
         public void AddPlayer(string name, string password)
         {
@@ -62,7 +61,6 @@ namespace PuzzleGame.Stores
                 connection.Conn.Close();
             }
         }
-
 
         // dem so dong trong table PLAYER
         int GetRowCount()

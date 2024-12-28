@@ -32,6 +32,7 @@ namespace PuzzleGame.Stores
         public ObservableCollection<Picture> PicList = new ObservableCollection<Picture>();
         Connection connection = new Connection();
 
+        // Reload the Piclist and get data from database
         public void LoadPictureList(string id)
         {
 
@@ -58,7 +59,8 @@ namespace PuzzleGame.Stores
             }
         }
 
-        public bool DeletePicture(Picture pic, string id)
+        // delete a picture from database
+        public bool DeletePicture(Picture pic, string PlayerID)
         {
             if (pic.isDefault == true)
             {
@@ -67,7 +69,7 @@ namespace PuzzleGame.Stores
             }
             else
             {
-                connection.dataAdapter.DeleteCommand = new SqlCommand($"Delete from PICTURE where PICNAME = '{pic.Name}' and PLAYERID = '{id}'", connection.Conn);
+                connection.dataAdapter.DeleteCommand = new SqlCommand($"Delete from PICTURE where PICNAME = '{pic.Name}' and PLAYERID = '{PlayerID}'", connection.Conn);
 
                 DataRow[] dataRow = connection.dt.Select($"PICNAME = '{pic.Name}'");
                 foreach (DataRow dr in dataRow)
@@ -76,10 +78,14 @@ namespace PuzzleGame.Stores
                 SqlCommandBuilder commandBuilder = new SqlCommandBuilder(connection.dataAdapter);
                 connection.dataAdapter.Update(connection.ds, "PICTURE");
 
+                //Load the picture list after delete picture
+                LoadPictureListService.Instance.LoadPictureList(PlayerID);
+
                 return true;
             }
         }
 
+        // add a picture from database
         public void AddPicture(Picture newPicture, string PlayerID)
         {
             connection.dataAdapter = new($"Select * from PICTURE", connection.connStr); 
@@ -104,6 +110,8 @@ namespace PuzzleGame.Stores
 
             SqlCommandBuilder commandBuilder = new SqlCommandBuilder(connection.dataAdapter);
             connection.dataAdapter.Update(connection.ds, "PICTURE");
+            //Load the picture list after delete picture
+            LoadPictureListService.Instance.LoadPictureList(PlayerID);
         }
 
     }
