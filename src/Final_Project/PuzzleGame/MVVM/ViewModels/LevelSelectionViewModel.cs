@@ -41,12 +41,13 @@ namespace PuzzleGame.MVVM.ViewModels
 
 
         //Connection connection = new Connection();
+        public ObservableCollection<Picture> pictureList = new ObservableCollection<Picture>();
         public ObservableCollection<Picture> PictureList
         {
-            get => LoadPictureListService.Instance.PicList;
+            get => pictureList;
             set
             {
-                LoadPictureListService.Instance.PicList = value;
+                pictureList = value;
                 OnPropertyChanged();
             }
         }
@@ -126,7 +127,7 @@ namespace PuzzleGame.MVVM.ViewModels
             _wndBgr = defaultColornum2;
             PictureList = new ObservableCollection<Picture>();
             EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => LoadPicTureList(o));
-            LoadPictureListService.Instance.LoadPictureList( GameModel.Instance.Player.Id);
+            LoadPictureListService.Instance.LoadPictureList(PictureList, GameModel.Instance.Player.Id);
             // _loadPicListService.LoadPictureList(PictureList);
 
             SelectedPicture = PictureList.ElementAt(0);
@@ -135,7 +136,11 @@ namespace PuzzleGame.MVVM.ViewModels
         }
 
         //set the selectionPicture is PictureList[0] if you add/delete pictures
-        private void LoadPicTureList(string o) => SelectedPicture = PictureList.ElementAt(0); 
+        private void LoadPicTureList(string o)
+        {
+            LoadPictureListService.Instance.LoadPictureList(PictureList, GameModel.Instance.Player.Id);
+            SelectedPicture = PictureList.ElementAt(0);
+        }
 
 
         /// <summary>

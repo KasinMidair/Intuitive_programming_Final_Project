@@ -4,6 +4,9 @@ using PuzzleGame.MVVM.Models;
 using PuzzleGame.Stores;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
+using System.Windows.Threading;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PuzzleGame.MVVM.ViewModels
 {
@@ -26,19 +29,18 @@ namespace PuzzleGame.MVVM.ViewModels
 
         //Connection...
         Connection connection = new Connection();
-        public string SelectedPicUrl;
 
         //Pictures...
+        public ObservableCollection<Picture> pictureList = new ObservableCollection<Picture>();
         public ObservableCollection<Picture> PictureList
         {
-            get => LoadPictureListService.Instance.PicList;
+            get => pictureList;
             set
             {
-                LoadPictureListService.Instance.PicList = value;
+                pictureList = value;
                 OnPropertyChanged();
             }
         }
-
 
         Picture _selectedPicture;
         public Picture SelectedPicture
@@ -49,7 +51,7 @@ namespace PuzzleGame.MVVM.ViewModels
                 _selectedPicture = value;
                 OnPropertyChanged();
             }
-        }
+        }   
 
 
         //Command...
@@ -60,6 +62,8 @@ namespace PuzzleGame.MVVM.ViewModels
         {
             _wndBgr = defaultColornum2;
             EventAggregator.GetEvent<PubSubEvent<string>>().Subscribe((o) => LoadPicTureList());
+
+            LoadPictureListService.Instance.LoadPictureList(PictureList, GameModel.Instance.Player.Id);
             SelectedPicture = PictureList.ElementAt(0);
             AddPicturePageOpenCommand = new RelayCommand<object>((o) => 
             {
@@ -71,26 +75,33 @@ namespace PuzzleGame.MVVM.ViewModels
 
 
         //set the selectionPicture is PictureList[0] if you add/delete pictures
-        private void LoadPicTureList() =>    SelectedPicture = PictureList.ElementAt(0);
-        
-
-        void DeleteSelectedPicture(string playerID)
-
+        private void LoadPicTureList()
         {
+            LoadPictureListService.Instance.LoadPictureList(PictureList, GameModel.Instance.Player.Id);
+
+            SelectedPicture = PictureList.ElementAt(0);
+
+        }
+
+         void DeleteSelectedPicture(string playerID)
+        {
+            string url = SelectedPicture.Url;
             string n = SelectedPicture.Name;
 
             if (LoadPictureListService.Instance.DeletePicture(SelectedPicture, playerID) == true)
             {
-                string url = SelectedPicture.Url;   
-
-                SelectedPicture = null;
+                System.Windows.Application.Current.Dispatcher.Invoke(() => {
+                    EventAggregator.GetEvent<PubSubEvent<string>>().Publish("");
+                });
 
                 // delete picture file
+
                 if (File.Exists(url))
                 {
                     try
                     {
-                        using (FileStream fs = new FileStream(url, FileMode.Open, FileAccess.Read, FileShare.None)) { }
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
                         File.Delete(url);
 
                         Console.WriteLine("File đã được xóa thành công.");
@@ -99,10 +110,9 @@ namespace PuzzleGame.MVVM.ViewModels
                     {
                         Console.WriteLine($"Lỗi khi xóa tệp: {ex.Message}");
                     }
+
                 }
-                //Load the picture list after delete picture
-                LoadPictureListService.Instance.LoadPictureList(playerID);
-                EventAggregator.GetEvent<PubSubEvent<string>>().Publish("");
+
             }
         }
 

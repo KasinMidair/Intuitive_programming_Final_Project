@@ -139,8 +139,6 @@ namespace PuzzleGame.MVVM.ViewModels
                 File.Copy(NewPicUrl, destinationPath, true);
 
                 LoadPictureListService.Instance.AddPicture(NewPic, GameModel.Instance.Player.Id);
-                //load the list after adding picture
-                LoadPictureListService.Instance.LoadPictureList(GameModel.Instance.Player.Id);
                 EventAggregator.GetEvent<PubSubEvent<string>>().Publish(""); 
                 
                 _ = CusDialogService.Instance.ShowDialog("Picture is saved!...I think so:)))");

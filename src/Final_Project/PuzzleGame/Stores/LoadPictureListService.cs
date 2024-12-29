@@ -29,11 +29,11 @@ namespace PuzzleGame.Stores
                 return _instance;
             }
         }
-        public ObservableCollection<Picture> PicList = new ObservableCollection<Picture>();
+
         Connection connection = new Connection();
 
         // Reload the Piclist and get data from database
-        public void LoadPictureList(string id)
+        public void LoadPictureList(ObservableCollection<Picture> PicList, string id)
         {
 
             connection.dataAdapter = new SqlDataAdapter($"Select PICNAME, PICPATH, PLAYERID, isDEFAULT from PICTURE where isDEFAULT = 1 or PLAYERID = '{id}'", connection.connStr);
@@ -60,7 +60,7 @@ namespace PuzzleGame.Stores
         }
 
         // delete a picture from database
-        public bool DeletePicture(Picture pic, string PlayerID)
+        public bool DeletePicture( Picture pic, string PlayerID)
         {
             if (pic.isDefault == true)
             {
@@ -107,6 +107,7 @@ namespace PuzzleGame.Stores
 
             SqlCommandBuilder commandBuilder = new SqlCommandBuilder(connection.dataAdapter);
             connection.dataAdapter.Update(connection.ds, "PICTURE");
+            //Load the picture list after delete picture
         }
 
     }
