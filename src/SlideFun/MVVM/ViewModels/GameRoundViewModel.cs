@@ -242,7 +242,8 @@ namespace SlideFun.MVVM.ViewModels
             }
             else
             _lastGameTime= _lastGameTime.Add(TimeSpan.FromSeconds(1));
-
+            _completionTime = _completionTime.Add(TimeSpan.FromSeconds(1));
+            _completionTime.Add(TimeSpan.FromSeconds(1));
             LastGameTimeStr = _lastGameTime.ToString(@"hh\:mm\:ss");
         }
 
