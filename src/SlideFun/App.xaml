@@ -1,0 +1,28 @@
+﻿<Application x:Class="SlideFun.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SlideFun"
+             xmlns:viewmodel="clr-namespace:SlideFun.MVVM.ViewModels"
+             xmlns:view="clr-namespace:SlideFun.MVVM.Views.Pages"
+             xmlns:store="clr-namespace:SlideFun.Stores"
+             xmlns:prism="clr-namespace:Prism.Events;assembly=Prism.Events">
+    <Application.Resources>
+
+        <ResourceDictionary>
+            <BooleanToVisibilityConverter x:Key="IsVisible" />
+            <store:StringConverter x:Key="IsChecked" />
+            <prism:EventAggregator x:Key="AppEventAggregator"/>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign2.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Secondary/MaterialDesignColor.Lime.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Theme/resources.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Theme/DataTemplate.xaml" />  
+                <ResourceDictionary Source="pack://application:,,,/Theme/Animation.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>

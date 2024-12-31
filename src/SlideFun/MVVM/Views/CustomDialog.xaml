@@ -1,0 +1,141 @@
+﻿<Window
+    x:Class="SlideFun.MVVM.Views.CustomDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:SlideFun.MVVM.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:SlideFun.MVVM.ViewModels"
+    x:Name="DialogWnd"
+    Title="CustonDialog"
+    Width="400"
+    Height="300"
+    AllowsTransparency="True"
+    Background="Transparent"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+
+
+    <Border Margin="0,20,10,0">
+
+        <!--  Using trigger to catch MouseDown event  -->
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseDown">
+                <i:InvokeCommandAction Command="{Binding MoveWndCommand}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
+
+        <Border.Background>
+            <ImageBrush ImageSource="/Assets/Imgs/DialogFrame.png" />
+        </Border.Background>
+        <Grid>
+
+            <!--  Message textbox  -->
+            <TextBlock Width="258" TextWrapping="Wrap"
+                x:Name="CusDialogMsg"
+                Margin="87,15,45,0" TextAlignment="Center"
+                VerticalAlignment="Center"
+                FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
+                FontSize="20"
+                Text="{Binding Message}" />
+
+            <!--  Exit button  -->
+            <Button
+                x:Name="CloseBTN"
+                Height="20"
+                Margin="342,62,27,198"
+                Background="Transparent"
+                BorderThickness="0"
+                Command="{Binding CustomDialogResultCommand}"
+                CommandParameter="None"
+                Style="{StaticResource ResourceKey=BTN}" />
+
+
+
+            <Grid Margin="100,202,65,22">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+
+                <!--  CusDialogResult.No button  -->
+                <Button
+                    x:Name="NoBTN"
+                    Grid.Column="0"
+                    Width="70"
+                    Height="40"
+                    BorderThickness="0"
+                    Command="{Binding CustomDialogResultCommand}"
+                    CommandParameter="No"
+                    Style="{StaticResource ResourceKey=BTN}"
+                    Visibility="{Binding IsYsNoIcon, Converter={StaticResource IsVisible}}">
+                    <Button.Background>
+                        <ImageBrush
+                            ImageSource="pack://application:,,,/Assets/Imgs/Dialog_BTN.png"
+                            Stretch="Uniform"
+                            Viewbox="242,30,100,40"
+                            ViewboxUnits="Absolute"
+                            Viewport="0,0,70,60"
+                            ViewportUnits="Absolute" />
+                    </Button.Background>
+
+                </Button>
+
+
+                <!--  CusDialogResult.OK button  -->
+                <Button
+                    x:Name="OKBTN"
+                    Grid.Column="1"
+                    Width="70"
+                    Height="40"
+                    BorderThickness="0"
+                    Command="{Binding CustomDialogResultCommand}"
+                    CommandParameter="OK"
+                    Style="{StaticResource ResourceKey=BTN}"
+                    Visibility="{Binding IsOKIcon, Converter={StaticResource IsVisible}}">
+                    <Button.Background>
+                        <ImageBrush
+                            ImageSource="pack://application:,,,/Assets/Imgs/Dialog_BTN.png"
+                            Stretch="Uniform"
+                            Viewbox="120,30,100,40"
+                            ViewboxUnits="Absolute"
+                            Viewport="0,0,70,60"
+                            ViewportUnits="Absolute" />
+                    </Button.Background>
+
+                </Button>
+
+                <!--  CusDialogResult.Yes button  -->
+                <Button
+                    x:Name="YesBTN"
+                    Grid.Column="2"
+                    Width="70"
+                    Height="40"
+                    BorderThickness="0"
+                    Command="{Binding CustomDialogResultCommand}"
+                    CommandParameter="Yes"
+                    Style="{StaticResource ResourceKey=BTN}"
+                    Visibility="{Binding IsYsNoIcon, Converter={StaticResource IsVisible}}">
+                    <Button.Background>
+                        <ImageBrush
+                            ImageSource="pack://application:,,,/Assets/Imgs/Dialog_BTN.png"
+                            Stretch="Uniform"
+                            Viewbox="0,30,100,40"
+                            ViewboxUnits="Absolute"
+                            Viewport="0,0,70,60"
+                            ViewportUnits="Absolute" />
+                    </Button.Background>
+
+                </Button>
+
+            </Grid>
+
+
+        </Grid>
+    </Border>
+</Window>
