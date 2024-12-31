@@ -444,7 +444,7 @@
                     Foreground="#324231"
                     TextWrapping="Wrap">
                     Tick the checkbox to
-                    enable setting a time limit, adding more challenge to the game."
+                    enable setting a time limit, adding more challenge to the game.
                 </TextBlock>
             </Border>
             <TextBlock
