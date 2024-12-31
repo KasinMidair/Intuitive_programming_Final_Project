@@ -78,6 +78,15 @@ namespace PuzzleGame.MVVM.ViewModels
         public RelayCommand<object> MouseControlCommand { get; set; }
 
         #region Biding Properties
+        public string timestatus
+        {
+            get
+            {
+                if (GameModel.Instance.isSetCountDown)
+                    return "Remaining Time";
+                return "Total Time";
+            }
+        }
 
         private bool _isFocused;            //set focus 
         public bool IsFocused

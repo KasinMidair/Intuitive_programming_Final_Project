@@ -198,6 +198,7 @@
                             VerticalAlignment="Top"
                             materialDesign:ButtonAssist.CornerRadius="15"
                             FocusVisualStyle="{x:Null}"
+                            Command="{Binding LeaderboardCommand}" 
                             Style="{StaticResource ResourceKey=BTN}">
                             <Button.Background>
                                 <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/LeaderBoard_ico.png" />

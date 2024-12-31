@@ -109,6 +109,6 @@ namespace PuzzleGame.Stores
             connection.dataAdapter.Update(connection.ds, "PICTURE");
             //Load the picture list after delete picture
         }
-
+        
     }
 }

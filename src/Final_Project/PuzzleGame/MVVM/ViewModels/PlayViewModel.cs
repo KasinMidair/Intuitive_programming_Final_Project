@@ -8,6 +8,7 @@ using PuzzleGame.MVVM.Views;
 using PuzzleGame.MVVM.Views.Pages;
 using PuzzleGame.Stores;
 using System.ComponentModel;
+using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography.Xml;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,6 +37,7 @@ namespace PuzzleGame.MVVM.ViewModels
         public RelayCommand<object> GoToMainMenuCommand { get; set; }
         public RelayCommand<object> BackgroundMusicCommand { get; set; }
         public RelayCommand<object> CopyIdCommand { get; set; }
+        public RelayCommand<object> LeaderboardCommand { get; set; }
         #endregion
 
         private double sfxVolume;
@@ -219,6 +221,10 @@ namespace PuzzleGame.MVVM.ViewModels
             GoToMainMenuCommand = new RelayCommand<object>((o) => { GoToMainMenu(); });
             BackgroundMusicCommand = new RelayCommand<object>((o) => { BackgroundMusic((string)o); });
             CopyIdCommand = new RelayCommand<object>((o) => { CopyId((string)o); });
+            LeaderboardCommand = new RelayCommand<object>((o) => {
+                FrameNavigation(new LeaderBoardViewModel());
+                SettingMenuStatus();    
+            });
             #endregion
 
         }
@@ -253,7 +259,6 @@ namespace PuzzleGame.MVVM.ViewModels
             if (subscribedString == "Go back")
             {
                 GoBackPage();
-                _navigationService.RemoveBackEntry();
             }
         }
         public void  GoBackPage()

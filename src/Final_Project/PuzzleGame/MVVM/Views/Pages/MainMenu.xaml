@@ -19,59 +19,80 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
-    <Page.Background>
-        <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/MainMenuBackground.png" />
-    </Page.Background>
-    <StackPanel Margin="601,148,44,98">
+    <Border CornerRadius="15">
+        <Border.Background>
+            <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/MainMenuBackground.png" />
+        </Border.Background>
+        <Canvas>
+            <Button
+                Canvas.Left="240"
+                Canvas.Top="84"
+                Width="250"
+                Height="210"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Style="{StaticResource ResourceKey=BTN}">
+                <Button.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/SlideFun.png" />
+                </Button.Background>
+            </Button>
+            <Border
+                Margin="604,160,56,100"
+                Background="#57000000"
+                CornerRadius="15">
+                <StackPanel Margin="0,2,0,18">
 
-        <!--  Style="{StaticResource ResourceKey=BTN}  -->
+                    <!--  Style="{StaticResource ResourceKey=BTN}  -->
 
-        <!--  Start button  -->
-        <Button
-            x:Name="startBTN"
-            Width="210"
-            Height="90"
-            Margin="15,15,15,5"
-            HorizontalAlignment="Center"
-            Command="{Binding StartCommand}"
-            CommandParameter="startBTN"
-            Style="{StaticResource ResourceKey=BTN}">
-            <Button.Background>
-                <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Start_BTN.png" />
-            </Button.Background>
-        </Button>
+                    <!--  Start button  -->
+                    <Button
+                        x:Name="startBTN"
+                        Width="210"
+                        Height="90"
+                        Margin="15,15,15,5"
+                        HorizontalAlignment="Center"
+                        Command="{Binding StartCommand}"
+                        CommandParameter="startBTN"
+                        Style="{StaticResource ResourceKey=BTN}">
+                        <Button.Background>
+                            <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Start_BTN.png" />
+                        </Button.Background>
+                    </Button>
 
-        <!--  Achievement button  -->
-        <Button
-            x:Name="AchievementBTN"
-            Width="210"
-            Height="90"
-            Margin="10,10,10,5"
-            HorizontalAlignment="Center"
-            Command="{Binding LeaderBoardCommand}"
-            CommandParameter="Hien roy ne!"
-            Style="{StaticResource ResourceKey=BTN}">
-            <Button.Background>
-                <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Achievement_BTN.png" />
-            </Button.Background>
-        </Button>
+                    <!--  Achievement button  -->
+                    <Button
+                        x:Name="AchievementBTN"
+                        Width="210"
+                        Height="90"
+                        Margin="10,10,10,5"
+                        HorizontalAlignment="Center"
+                        Command="{Binding LeaderBoardCommand}"
+                        CommandParameter="Hien roy ne!"
+                        Style="{StaticResource ResourceKey=BTN}">
+                        <Button.Background>
+                            <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Achievement_BTN.png" />
+                        </Button.Background>
+                    </Button>
 
-        <!--  Exit button  -->
-        <Button
-            x:Name="ExitBTN"
-            Width="210"
-            Height="90"
-            Margin="10,10,10,5"
-            HorizontalAlignment="Center"
-            Command="{Binding ShutdownCommand}"
-            CommandParameter="{Binding ElementName=ExitBTN}"
-            Style="{StaticResource ResourceKey=BTN}">
-            <Button.Background>
-                <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Exit_BTN.png" />
-            </Button.Background>
-        </Button>
+                    <!--  Exit button  -->
+                    <Button
+                        x:Name="ExitBTN"
+                        Width="210"
+                        Height="90"
+                        Margin="10,10,10,5"
+                        HorizontalAlignment="Center"
+                        Command="{Binding ShutdownCommand}"
+                        CommandParameter="{Binding ElementName=ExitBTN}"
+                        Style="{StaticResource ResourceKey=BTN}">
+                        <Button.Background>
+                            <ImageBrush ImageSource="pack://application:,,,/Assets/Imgs/Exit_BTN.png" />
+                        </Button.Background>
+                    </Button>
 
 
 
-    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Canvas>
+    </Border>
 </Page>

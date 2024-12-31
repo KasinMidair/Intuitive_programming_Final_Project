@@ -243,15 +243,14 @@
             <TextBlock
                 Canvas.Left="667"
                 Canvas.Top="356"
-                Width="66"
+                Width="226" TextAlignment="Center"
                 Height="30"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontFamily="pack://application:,,,/Assets/Fonts/#Itim"
-                FontSize="22"
+                FontSize="22" Text="{Binding timestatus}"
                 FontWeight="SemiBold"
                 Foreground="#15161C">
-                TIMER
             </TextBlock>
 
 
