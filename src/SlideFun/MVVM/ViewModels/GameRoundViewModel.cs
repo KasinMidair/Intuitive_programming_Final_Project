@@ -118,6 +118,17 @@ namespace SlideFun.MVVM.ViewModels
                 OnPropertyChanged();
             }
         }
+        private TimeSpan _completionTime;
+        private string _completionTimeStr;
+        public string CompletionTimeStr
+        {
+            get => _completionTimeStr;
+            set
+            {
+                _completionTimeStr = value;
+                OnPropertyChanged();
+            }
+        }
         private TimeSpan _lastGameTime;
         private string _lastGameTimeStr;
         public string LastGameTimeStr
@@ -188,12 +199,14 @@ namespace SlideFun.MVVM.ViewModels
             IsEndGameVisible = true;
             GameModel.Instance.Status=GameStatus.StartGame;
 
-            //Create CounDown timer
+            //Create CountDown timer
             _clock = new DispatcherTimer();
             _clock.Tick += _countDownClock_Tick;
             _clock.Interval = TimeSpan.FromSeconds(1);
+            _completionTime = new TimeSpan(0, 0, 0);
             _lastGameTime = (GameModel.Instance.isSetCountDown)? TimeSpan.FromSeconds(GameModel.Instance.PlayTime):new TimeSpan(0,0,0);
             LastGameTimeStr = _lastGameTime.ToString(@"hh\:mm\:ss");
+            CompletionTimeStr = _lastGameTime.ToString(@"hh\:mm\:ss");
 
             //command def
             GoToLeaderboardCommand = new RelayCommand<object>((o) => { CurrentPage = new LeaderBoardViewModel(); });
@@ -444,7 +457,7 @@ namespace SlideFun.MVVM.ViewModels
             GameModel.Instance.GameRound.PlayerID = GameModel.Instance.Player.Id;
             GameModel.Instance.GameRound.PlayerName = GameModel.Instance.Player.Name;
             GameModel.Instance.GameRound.Pieces = Row.ToString() + " x " + Col.ToString();
-            GameModel.Instance.GameRound.Time = LastGameTimeStr;
+            GameModel.Instance.GameRound.Time = CompletionTimeStr;
             GameModel.Instance.GameRound.Date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
             GameModel.Instance.LeaderBoardService.AddGameRound(GameModel.Instance.GameRound);
         }
