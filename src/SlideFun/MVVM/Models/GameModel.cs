@@ -1,4 +1,5 @@
 ﻿using SlideFun.Stores;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -116,12 +117,23 @@ namespace SlideFun.MVVM.Models
             isSetCountDown = (_playTime==0)? false:true;
         }
 
-        public void PicDeviding()
+        public void PicResize()
         {
             BitmapImage originalImage = new BitmapImage(new Uri(srcPath, UriKind.RelativeOrAbsolute));
-            double scaleX = (double)gamePlayBoxX * originalImage.DpiX / (originalImage.PixelWidth * 96);
-            double scaleY = (double)gamePlayBoxY * originalImage.DpiY / (originalImage.PixelHeight * 96);
-            SrcImg = new TransformedBitmap(originalImage, new ScaleTransform(scaleX, scaleY));
+
+            // caculate to crop Image to filltoUniform
+            int originPixeldimension= Math.Min(originalImage.PixelWidth,originalImage.PixelHeight);
+            int offsetX = (originalImage.PixelWidth - originPixeldimension) / 2;
+            int offsetY = (originalImage.PixelHeight - originPixeldimension) / 2;
+            CroppedBitmap croppedImage = new CroppedBitmap(originalImage,
+                new Int32Rect(offsetX, offsetY, originPixeldimension, originPixeldimension));
+
+            //resize image to fit diff DPI
+            double uniformScale = (double)gamePlayBoxX * originalImage.DpiX / (croppedImage.PixelWidth * 96);
+
+            SrcImg = new TransformedBitmap(croppedImage, new ScaleTransform(uniformScale, uniformScale));
+
+            //set dimension of Piece
             UnitX = SrcImg.PixelWidth / col;
             UnitY = SrcImg.PixelHeight / row;
         }

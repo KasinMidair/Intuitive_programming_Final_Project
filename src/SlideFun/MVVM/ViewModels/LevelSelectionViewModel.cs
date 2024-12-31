@@ -143,7 +143,7 @@ namespace SlideFun.MVVM.ViewModels
             //check if countdown timer is on
             long PlayTime = (isCounting)? (long.Parse(_hour)*60*60+ int.Parse(_minute)*60+ int.Parse(_second)):0;
             GameModel.Instance.SetData(piecesNum, piecesNum, SelectedPicture.Url, PlayTime);
-            GameModel.Instance.PicDeviding();
+            GameModel.Instance.PicResize();
             CurrentPage = new GameRoundViewModel();
         }
     }

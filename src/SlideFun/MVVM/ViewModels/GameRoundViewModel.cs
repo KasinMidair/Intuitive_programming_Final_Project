@@ -4,6 +4,7 @@ using SlideFun.MVVM.Models;
 using SlideFun.MVVM.Views.Pages;
 using SlideFun.Stores;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -429,17 +430,23 @@ namespace SlideFun.MVVM.ViewModels
             }
             else
                 time = "Time: " + LastGameTimeStr;
+
+            SaveGameRoundData();
+            EndGameImmageSource = "pack://application:,,,/Assets/Imgs/Win.png";
+            EndGameText = $"\"You completed the round in just {time}!You're a true champion! Keep up the amazing work!\"";
+            GameModel.Instance.Status = GameStatus.EndGame;
+            IsEndGameVisible = false;
+           ReleaseClock();
+        }
+
+        public void SaveGameRoundData()
+        {
             GameModel.Instance.GameRound.PlayerID = GameModel.Instance.Player.Id;
             GameModel.Instance.GameRound.PlayerName = GameModel.Instance.Player.Name;
             GameModel.Instance.GameRound.Pieces = Row.ToString() + " x " + Col.ToString();
             GameModel.Instance.GameRound.Time = LastGameTimeStr;
             GameModel.Instance.GameRound.Date = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
             GameModel.Instance.LeaderBoardService.AddGameRound(GameModel.Instance.GameRound);
-            EndGameImmageSource = "pack://application:,,,/Assets/Imgs/Win.png";
-            EndGameText = $"\"You completed the round in just {time}!You're a true champion! Keep up the amazing work!\"";
-            GameModel.Instance.Status = GameStatus.EndGame;
-            IsEndGameVisible = false;
-           ReleaseClock();
         }
         private void ReleaseClock()
         {
