@@ -210,9 +210,9 @@ namespace SlideFun.MVVM.ViewModels
 
         private void IsTimerCounting(bool isCounting)
         {
-            if(GameModel.Instance.Status == GameStatus.EndGame) { return; } 
-            if (isCounting==false) _clock.Stop();
-            else _clock.Start();
+            if(GameModel.Instance.Status == GameStatus.EndGame && _clock == null) { return; } 
+            if (GameModel.Instance.PlayTime==0 && _clock.IsEnabled==true) _clock.Stop();
+            else if(GameModel.Instance.Status==GameStatus.StartGame ) _clock.Start();
         }
 
         /// <summary>

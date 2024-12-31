@@ -25,5 +25,6 @@ namespace SlideFun.MVVM.Views.Pages
             InitializeComponent();
         }
 
+
     }
 }

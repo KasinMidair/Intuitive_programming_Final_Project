@@ -10,7 +10,6 @@ namespace SlideFun.MVVM.Models
     {
         PreStart,
         StartGame,
-        Playing,
         EndGame,
         QuitApp
     }
