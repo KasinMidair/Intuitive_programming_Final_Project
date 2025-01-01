@@ -284,17 +284,17 @@ namespace SlideFun.MVVM.ViewModels
 
         private void Mute_UnMute()
         {
-            if (IsMusicMute=="UnMute")
+            if (IsMusicMute == "UnMute")
             {
-                MusicSystemService.Instance.SetVolume(AudioType.ALL, 1, 1);
+                MusicSystemService.Instance.SetVolume(AudioType.ALL, sfxVolume / 50.0, backgroundVolume / 50.0);
                 IsMusicMute = "Mute";
             }
-            else 
+            else
             {
                 MusicSystemService.Instance.SetVolume(AudioType.ALL, 0, 0);
                 IsMusicMute = "UnMute";
-            } 
-            
+            }
+
         }
 
         private void GoToMainMenu()
