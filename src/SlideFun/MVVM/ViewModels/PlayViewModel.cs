@@ -311,6 +311,7 @@ namespace SlideFun.MVVM.ViewModels
                     return;
                 }
             }
+            GameModel.Instance.Status =GameStatus.PreStart;
             GameModel.Instance.Player = null;
             FrameNavigation(new MainMenuViewModel());
             AvoidNavigate();

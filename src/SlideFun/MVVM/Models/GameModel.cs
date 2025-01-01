@@ -100,8 +100,6 @@ namespace SlideFun.MVVM.Models
 
         private GameModel()
         {
-
-
             gamePlayBoxX = 488;
             gamePlayBoxY = 488;
             status = GameStatus.PreStart;

@@ -17,6 +17,6 @@ namespace SlideFun.MVVM.Models
         public SqlConnection Conn = new SqlConnection(_connStr);
         public SqlDataAdapter dataAdapter;
         public DataSet ds = new DataSet();
-        public  DataTable dt = new DataTable();
+        public  DataTable dt = new DataTable();                             
     }
 }

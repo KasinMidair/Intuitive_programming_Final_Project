@@ -5,6 +5,7 @@ using SlideFun.MVVM.Views.Pages;
 using SlideFun.Stores;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -426,17 +427,20 @@ namespace SlideFun.MVVM.ViewModels
 
         public void IsLose()
         {
+            ReleaseClock();
+            if (GameModel.Instance.Status == GameStatus.PreStart) return;
             MusicSystemService.Instance.EndGame_Sound(0);
             EndGameImmageSource = "pack://application:,,,/Assets/Imgs/Lose.png";
             EndGameText = "\"Amazing try, Don't sad! Winning takes practice, and you're on the right path!\"";
             GameModel.Instance.Status = GameStatus.EndGame;
             IsEndGameVisible = false;
-            ReleaseClock();
         }
 
 
         public void IsWin()
         {
+            ReleaseClock();
+            if (GameModel.Instance.Status == GameStatus.PreStart) return;
             MusicSystemService.Instance.EndGame_Sound(1);
             if (GameModel.Instance.isSetCountDown)
             {
@@ -450,7 +454,6 @@ namespace SlideFun.MVVM.ViewModels
             EndGameText = $"\"You completed the round in just {time}!You're a true champion! Keep up the amazing work!\"";
             GameModel.Instance.Status = GameStatus.EndGame;
             IsEndGameVisible = false;
-           ReleaseClock();
         }
 
         public void SaveGameRoundData()
