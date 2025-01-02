@@ -79,7 +79,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Imgs\Achievement_Frame.png" />
     <Resource Include="Assets\Imgs\Focus_Frame.png" />
     <Resource Include="Assets\Imgs\Decorate_01.png" />
     <Resource Include="Assets\Imgs\GamePlay_Frame.png" />

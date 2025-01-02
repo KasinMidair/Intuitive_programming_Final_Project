@@ -32,14 +32,14 @@ namespace SlideFun.Stores
         // Find all records in GAMEROUNDTABLE matching inputPieces and playerID or just inputPieces when playerId = null
         public void LoadGameRounds(ObservableCollection<GameRound> gameRounds, string inputPieces, string playerId = null)
         {
-            string sql = $"SELECT GAMEID, PLAYERNAME, PLAYERID, PIECES, PLAYTIME, PLAYDATE FROM GAMEROUND WHERE PIECES = '{inputPieces}'";
+            string sql = $"SELECT GAMEID, PLAYERNAME, PLAYERID, PIECES, PLAYTIME, PLAYDATE, RANK() OVER (ORDER BY PLAYTIME ASC) AS RANKING FROM GAMEROUND WHERE PIECES = '{inputPieces}'";
 
             if (!string.IsNullOrEmpty(playerId))
             {
                 sql += $" AND PLAYERID = '{playerId}'";
             }
 
-            sql += " ORDER BY PLAYTIME";
+            sql += " ORDER BY RANKING";
 
             connection.dataAdapter = new SqlDataAdapter(sql, connection.connStr);
 
@@ -59,6 +59,7 @@ namespace SlideFun.Stores
             {
                 gameRounds.Add(new GameRound
                 {
+                    Ranking  = Convert.ToString(dr["RANKING"]),
                     PlayerName = Convert.ToString(dr["PLAYERNAME"]),
                     PlayerID = Convert.ToString(dr["PLAYERID"]),
                     Pieces = Convert.ToString(dr["PIECES"]),

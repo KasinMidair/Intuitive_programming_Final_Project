@@ -352,19 +352,23 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn
-                            Width="180"
+                            Width="100"
+                            DisplayMemberBinding="{Binding Ranking}"
+                            Header="Ranking" />
+                        <GridViewColumn
+                            Width="150"
                             DisplayMemberBinding="{Binding PlayerName}"
                             Header="Player name" />
                         <GridViewColumn
-                            Width="120"
+                            Width="100"
                             DisplayMemberBinding="{Binding PlayerID}"
                             Header="Player ID" />
                         <GridViewColumn
-                            Width="100"
+                            Width="70"
                             DisplayMemberBinding="{Binding Pieces}"
                             Header="Pieces" />
                         <GridViewColumn
-                            Width="130"
+                            Width="110"
                             DisplayMemberBinding="{Binding Time}"
                             Header="Play time" />
                         <GridViewColumn

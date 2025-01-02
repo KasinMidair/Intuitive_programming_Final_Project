@@ -112,7 +112,7 @@
                             <ContentPresenter
                                 Name="ContentSite"
                                 Width="185"
-                                Height="24" 
+                                Height="24"
                                 Margin="24,4,124,10"
                                 Content="{TemplateBinding SelectionBoxItem}"
                                 ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
@@ -304,9 +304,10 @@
             x:Name="NumberSelection_Combobox"
             Grid.Row="2"
             Grid.ColumnSpan="2"
-            Height="40" FocusVisualStyle="{x:Null}"
+            Height="40"
             Margin="-3,88,34,22"
             Background="Snow"
+            FocusVisualStyle="{x:Null}"
             FontSize="20"
             FontWeight="SemiBold"
             Foreground="#15161C"
@@ -409,7 +410,7 @@
             Grid.Row="4"
             Grid.Column="1"
             Width="133"
-            Height="34" IsChecked="{Binding TimerChecked}"
+            Height="34"
             Margin="39,24,0,0"
             VerticalAlignment="Top"
             VerticalContentAlignment="Center"
@@ -418,6 +419,7 @@
             FontSize="25"
             FontWeight="SemiBold"
             Foreground="#15161C"
+            IsChecked="{Binding TimerChecked}"
             Style="{StaticResource MaterialDesignFilterChipOutlineCheckBox}" />
 
         <!--  Timer set  -->

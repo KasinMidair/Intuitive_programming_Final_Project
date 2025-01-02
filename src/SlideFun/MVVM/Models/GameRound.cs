@@ -10,7 +10,7 @@ namespace SlideFun.MVVM.Models
 {
     public class GameRound 
     {
-        public string GameId { get; set; }
+        public string Ranking { get; set; }
         public string PlayerName { get; set; }
         public string PlayerID { get; set; }
         public string Pieces { get; set; }
