@@ -7,6 +7,8 @@
 - Giảng Viên hướng dẫn : **Nguyễn Thị Xuân Hương**
 
 ___
+
+
 ### Tên dự án: **Game Xếp Hình**
 
 Đây là dự án cuối kỳ của nhóm sinh viên thực hiện trong khuôn khổ môn **Lập Trình Trực Quan** tại trường. Ứng dụng là một trò chơi xếp hình đơn giản, người chơi sẽ kéo thả các mảnh nhỏ để ghép lại thành một bức tranh hoàn chỉnh.
@@ -33,7 +35,10 @@ ___
 -  **Xếp hình**: Sử dụng chuột hoặc bàn phím để di chuyển các mảnh hình ảnh về đúng vị trí bạn đầu.
 -  **Chọn ảnh**: Cho phép người dùng chọn ảnh mặc định hoặc tải hình ảnh lên để tạo thử thách mới.
 -  **Bộ đếm thời gian**: Tính thời gian người chơi hoàn thành game, hoặc cho phép thiết lập thời gian chơi tối đa.
--  
+  
+___  
+
+
 ### Giao diện chính
 - Giao diện Main menu
 <p align="center">
@@ -50,10 +55,14 @@ ___
   <img src="https://imgur.com/UlvMrMT.png" alt="MainMenu" width="400" />
 </p>
 
+___
+
 
 ### Demo
 
 - https://drive.google.com/file/d/1gfKKg2xden1hASrLd3dDZYaxIzz_-muw/view?usp=sharing
+___
+
 
 ###  License
 Dự án này thuộc sở hữu của nhóm sinh viên thực hiện đồ án và được chia sẻ công khai với mục đích học tập.
