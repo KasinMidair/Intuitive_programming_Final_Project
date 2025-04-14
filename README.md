@@ -6,7 +6,7 @@
 ##  Đồ Án Cuối Kỳ - Môn Lập Trình Trực Quan IT008
 - Giảng Viên hướng dẫn : **Nguyễn Thị Xuân Hương**
 
-
+___
 ### Tên dự án: **Game Xếp Hình**
 
 Đây là dự án cuối kỳ của nhóm sinh viên thực hiện trong khuôn khổ môn **Lập Trình Trực Quan** tại trường. Ứng dụng là một trò chơi xếp hình đơn giản, người chơi sẽ kéo thả các mảnh nhỏ để ghép lại thành một bức tranh hoàn chỉnh.
