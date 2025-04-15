@@ -11,7 +11,7 @@ ___
 
 ### Tên dự án: **Game Xếp Hình**
 
-Đây là dự án cuối kỳ của nhóm sinh viên thực hiện trong khuôn khổ môn **Lập Trình Trực Quan** tại trường. Ứng dụng là một trò chơi xếp hình đơn giản, người chơi sẽ kéo thả các mảnh nhỏ để ghép lại thành một bức tranh hoàn chỉnh.
+Đây là dự án cuối kỳ của nhóm sinh viên thực hiện trong khuôn khổ môn **Lập Trình Trực Quan** tại trường. Ứng dụng là một trò chơi xếp hình đơn giản, người chơi sẽ di chuyển các mảnh nhỏ để ghép lại thành một bức tranh hoàn chỉnh.
 
 ### Thành viên 
 - Trần Thị Thu Hoài - 23520509
